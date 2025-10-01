@@ -1,0 +1,20 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ItemDetailController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CommentController;
+
+Route::get('/', [ItemController::class, 'index'])->name('items.index');
+Route::get('/item/search', [ItemController::class, 'search']);
+Route::get('/item/{item_id}', [ItemDetailController::class, 'show']);
+
+Route::get('/purchase/{item_id}', [PurchaseController::class, 'order']);
+Route::post('/item/{item}/like', [LikeController::class, 'like']);
+
+Route::post('/item/{item}/comments', [CommentController::class, 'store']);
+
+

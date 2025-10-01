@@ -1,0 +1,18 @@
+.auth {
+    max-width: 1540px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    height: 82px;
+    align-items: center;
+    background: #000;
+}
+
+.header__heading-logo {
+    width: 370px;
+    height: auto;
+    margin-left: 35px;
+}
