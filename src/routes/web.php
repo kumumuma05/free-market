@@ -26,5 +26,7 @@ Route::get('mypage/profile', [ProfileController::class, 'profile'])->name('mypag
 
 Route::patch('mypage/profile/update', [ProfileController::class, 'update']);
 
+Route::get('/sell',[SellController::class, 'sell']);
+
 
 
