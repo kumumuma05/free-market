@@ -31,7 +31,7 @@
                     </li>
                     @endif
                     <li class="header__nav-item"><a href="/mypage">マイページ</a></li>
-                    <li class="header__nav-item--listing"><a  href="">出品</a></li>
+                    <li class="header__nav-item--listing"><a href="/sell">出品</a></li>
                 </ul>
             </nav>
         </header>
