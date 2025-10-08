@@ -9,6 +9,7 @@ use Tests\TestCase;
 class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * 名前入力必須
      */

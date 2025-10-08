@@ -11,6 +11,7 @@ use App\Models\User;
 class LoginTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * メールアドレス入力必須
      */

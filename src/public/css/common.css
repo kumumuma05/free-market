@@ -32,7 +32,7 @@
     opacity: 1;
 }
 
-.auth-logout__button {
+.header__logout-button {
     border: none;
     background: inherit;
     color: #FFF;
@@ -56,6 +56,10 @@
     text-decoration: none;
     color: #FFF;
     font-size: 24px;
+}
+
+.header__nav-item:first-child a {
+    margin-right: 28px ;
 }
 
 .header__nav-item--listing {
