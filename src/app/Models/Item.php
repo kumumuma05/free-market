@@ -45,24 +45,19 @@ class Item extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function images()
-    {
-        return $this->hasMany(ItemImage::class);
-    }
-
-    public function favorites()
-    {
-        return $this->hasMany(Favorite::class);
-    }
-
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
 
-    public function order()
+    public function purchase()
     {
-        return $this->hasOne(Order::class);
+        return $this->hasOne(Purchase::class);
+    }
+
+    public function seller()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function likedUsers()

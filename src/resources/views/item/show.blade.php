@@ -7,9 +7,7 @@
 @section('content')
 <div class="item-show">
     <div class="item-image">
-        <div class="image-image__inner">
             <img src="{{ $item->image_path }}" alt="商品画像">
-        </div>
     </div>
 
     <div class="item-detail">

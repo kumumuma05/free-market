@@ -22,7 +22,7 @@
             </form>
             <nav class="header__nav">
                 <ul class="header__nav-list">
-                    <li class="header__nav-item"><a href="">マイページ</a></li>
+                    <li class="header__nav-item"><a href="/mypage">マイページ</a></li>
                     <li class="header__nav-item--listing"><a  href="">出品</a></li>
                 </ul>
             </nav>

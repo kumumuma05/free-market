@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -22,8 +23,10 @@ class User extends Authenticatable
         'email',
         'password',
         'tel',
-        'avatar',
-        'profile_text',
+        'profile_image',
+        'postal',
+        'address',
+        'building',
         'profile_completed',
     ];
 
@@ -52,12 +55,7 @@ class User extends Authenticatable
      */
     public function items()
     {
-        return $this->hasMany(item::class);
-    }
-
-    public function favorites()
-    {
-        return $this->hasMany(Favorite::class);
+        return $this->hasMany(Item::class);
     }
 
     public function comments()
@@ -65,14 +63,14 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function orders()
+    public function purchases()
     {
-        return $this->hasMany(Order::class, 'buyer_id');
+        return $this->hasMany(Purchase::class, 'buyer_id');
     }
 
-    public function addresses()
+    public function purchasedItems()
     {
-        return $this->hasMany(Address::class);
+        return $this->belongsToMany(Item::class, 'purchases', 'buyer_id', 'item_id')->withTimestamps();
     }
 
     public function likedItems()

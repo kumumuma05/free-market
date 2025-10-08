@@ -18,6 +18,10 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
+use App\Http\Responses\RegisterResponse as AppRegisterResponse;
+use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
+use App\Http\Requests\LoginRequest as AppLoginRequest;
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -27,7 +31,11 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // 新規登録時のレスポンス変更
+        $this->app->singleton(RegisterResponseContract::class, AppRegisterResponse::class);
+
+        // ログイン画面でformrequestを使用
+        $this->app->bind(FortifyLoginRequest::class, AppLoginRequest::class);
     }
 
     /**
@@ -56,20 +64,19 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         // 認証処理,バリデーションは独自のLoginRequestを使用,認証失敗時のエラーメッセージを日本語に変更
-        Fortify::authenticateUsing(function (Request $request){
-            $form = app(LoginRequest::class);
-            $form->setContainer(app())->setRedirector(app('redirect'));
-            $form->merge($request->all());
-            $form->validateResolved();
+        // Fortify::authenticateUsing(function (Request $request){
+        //     $form = app(LoginRequest::class);
+        //     $form->setContainer(app())->setRedirector(app('redirect'));
+        //     $form->merge($request->all());
+        //     $form->validateResolved();
 
-            $user = User::where('email', $request->email)->first();
-            if($user && Hash::check($request->password, $user->password)) {
-                return $user;
-            }
+        //     $user = User::where('email', $request->email)->first();
+        //     if($user && Hash::check($request->password, $user->password)) {
+        //         return $user;
+        //     }
 
-            throw ValidationException::withMessages([
-                'email' => ['ログイン情報が登録されていません'],
-            ]);
-        });
+            // throw ValidationException::withMessages([
+            //     'email' => ['ログイン情報が登録されていません'],
+            // ]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
 use App\Http\Requests\LoginRequest as AppLoginRequest;
+use App\Http\Responses\RegisterResponse;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,10 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         // fortifyがユーザー登録後に呼び出すレスポンスクラスをデフォルトからRegisterResponseに差し替える
-        $this->app->singleton(RegisterResponseContract::class, RegisterResponse::class);
-
-        // fortifyがログイン処理で使用するデフォルトのLoginRequestを差し替える
-        $this->app->bind(FortifyLoginRequest::class,AppLoginRequest::class);
+        $this->app->singleton(RegisterResponseContract::class, AppRegisterResponse::class);
     }
 
     /**

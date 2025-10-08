@@ -35,19 +35,11 @@
 .item-list__item {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: baseline;
-    text-decoration: none;
-    overflow: hidden;
+    align-items: center;
 }
 
 .item-list__card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: baseline;
     text-decoration: none;
-    overflow: hidden;
 }
 
 .item-list__card-image {
@@ -65,10 +57,19 @@
     object-fit: cover;
 }
 
+.item-list__card-sold {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    color: #F00;
+    font-size: 20px;
+
+}
 .item-list__card-title {
     margin: 10px;
+    text-decoration: none;
     font-size: 25px;
     color: #333;
-    text-align: center;
+    text-align: start;
 }
 

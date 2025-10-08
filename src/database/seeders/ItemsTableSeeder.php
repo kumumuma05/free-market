@@ -18,6 +18,7 @@ class itemsTableSeeder extends Seeder
     {
 
         Item::create([
+            
             'product_name' => '腕時計',
             'brand' => 'Rolax',
             'description' => 'スタイリッシュなデザインのメンズ腕時計',

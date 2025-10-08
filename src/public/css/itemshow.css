@@ -1,0 +1,21 @@
+.content {
+    max-width: 1540px;
+    margin: 0 auto;
+}
+
+.item-show {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 30px;
+}
+
+.item-image {
+    width: 600px;
+    height: 600px;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+}
