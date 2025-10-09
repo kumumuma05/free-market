@@ -43,10 +43,10 @@
             <div class="sell__group">
                 <label class="sell__group-label" for="condition">商品の状態</label>
                 <select name="condition" id="condition">
-                    <option value="1">良好</option>
-                    <option value="2">目立った傷や汚れなし</option>
-                    <option value="3">やや傷や汚れあり</option>
-                    <option value="4">状態が悪い</option>
+                    <option value="1" {{ old('condition') == 1 ? 'selected' : '' }}>良好</option>
+                    <option value="2" {{ old('condition') == 2 ? 'selected' : '' }}>目立った傷や汚れなし</option>
+                    <option value="3" {{ old('condition') == 3 ? 'selected' : '' }}>やや傷や汚れあり</option>
+                    <option value="4" {{ old('condition') == 4 ? 'selected' : '' }}>状態が悪い</option>
                 </select>
             </div>
         </div>
@@ -57,17 +57,17 @@
             <!-- 商品名 -->
             <div class="sell__group">
                 <label class="sell__group-label" for="product_name">商品名</label>
-                <input class="sell__group-input" id="product_name" type="text" name="product_name" />
+                <input class="sell__group-input" id="product_name" type="text" name="product_name" value="{{ old('product_name') }}" />
             </div>
             <!-- ブランド名 -->
             <div class="sell__group">
                 <label class="sell__group-label" for="brand">ブランド名</label>
-                <input class="sell__group-input" id="brand" type="text" name="brand" />
+                <input class="sell__group-input" id="brand" type="text" name="brand" value="{{ old('brand') }}" />
             </div>
             <!-- 商品説明 -->
             <div class="sell__group">
                 <label class="sell__group-label" for="description">商品の説明</label>
-                <textarea class="sell__group-input" id="description"></textarea>
+                <textarea class="sell__group-input" id="description" value="{{ old('description') }}"></textarea>
             </div>
             <!-- 販売価格 -->
             <div class="sell__group">
