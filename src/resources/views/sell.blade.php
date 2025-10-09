@@ -12,48 +12,72 @@
         @csrf
 
         <!-- 画像 -->
-        <div class="sell__group">
-            <label class="sell__group-label" for="image_path">商品画像</label>
-            <div class="sell__image">
-                <label class="sell__image-button" for="image_path">画像を選択する</label>
-                <input type="file" id="image_path"  name="image_path" accept="image/*" hidden/>
+        <section class="sell__section">
+            <div class="sell__group">
+                <label class="sell__group-label" for="image_path">商品画像</label>
+                <div class="sell__image"></div>
+                    <label class="sell__image-button" for="image_path">画像を選択する
+                    <input type="file" id="image_path"  name="image_path" accept="image/*" hidden />
+                    </label>
+                </div>
+                @error('image_path')
+                    <p class="sell__error">{{ $message }}</p>
+                @enderror
             </div>
-            @error('image_path')
-                <p class="sell__error">{{ $message }}</p>
-            @enderror
-        </div>
+        </section>
 
-        <!-- 商品詳細 -->
+        <!-- 商品の詳細 -->
         <div class="sell__section">
             <h3 class="sell__section-title">商品の詳細</h3>
-
+            <!-- カテゴリ -->
             <div class="sell__group">
-                <label class="sell__group-label">カテゴリー</label>
+                <label class="sell__group-label" for="category">カテゴリー</label>
                 @foreach($categories as $category)
                     <label class="sell__category-item">
-                        <input type="checkbox" name="category_ids[]" value="{{ $category->id }}" {{ in_array($category->id, old('category_ids', [])) ? 'checked' : '' }}>
+                        <input type="checkbox" name="category_ids[]" id="category" value="{{ $category->id }}" {{ in_array($category->id, old('category_ids', [])) ? 'checked' : '' }} />
                         <span class="sell__detail-category-button">{{ $category->name }}</span>
                     </label>
                 @endforeach
             </div>
-            
-            <div class="sell__detail-condition">
-                <label class="sell__detail-category-label">商品の状態</label>
-                <select name="condition" id="">
+            <!-- 商品の状態 -->
+            <div class="sell__group">
+                <label class="sell__group-label" for="condition">商品の状態</label>
+                <select name="condition" id="condition">
                     <option value="1">良好</option>
                     <option value="2">目立った傷や汚れなし</option>
                     <option value="3">やや傷や汚れあり</option>
                     <option value="4">状態が悪い</option>
                 </select>
-
             </div>
-                
-
-                </div>
-
         </div>
+
+        <!-- 商品名と説明 -->
+        <section class="sell__section">
+            <h3 class="sell__section-title">商品名と説明</h3>
+            <!-- 商品名 -->
+            <div class="sell__group">
+                <label class="sell__group-label" for="product_name">商品名</label>
+                <input class="sell__group-input" id="product_name" type="text" name="product_name" />
+            </div>
+            <!-- ブランド名 -->
+            <div class="sell__group">
+                <label class="sell__group-label" for="brand">ブランド名</label>
+                <input class="sell__group-input" id="brand" type="text" name="brand" />
+            </div>
+            <!-- 商品説明 -->
+            <div class="sell__group">
+                <label class="sell__group-label" for="description">商品の説明</label>
+                <textarea class="sell__group-input" id="description"></textarea>
+            </div>
+            <!-- 販売価格 -->
+            <div class="sell__group">
+                <label class="sell__group-label" for="price">販売価格</label>
+                <span class="price-input__symbol">¥</span>
+                <input class="sell__group-input" id="price" type="text" value="{{ old('price') }}" />
+            </div>
+        </section>
+
+        <button class="sell__form-button">出品する</button>
     </form>
 </div>
-
-
 @endsection
