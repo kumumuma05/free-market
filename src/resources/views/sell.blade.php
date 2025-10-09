@@ -8,7 +8,7 @@
 <div class="sell">
     <h2 class="sell__title">商品の出品</h2>
 
-    <form class="sell-form" action="/sell/store" method="post" enctype="multipart/form-data">
+    <form class="sell-form" action="/sell" method="post" enctype="multipart/form-data">
         @csrf
 
         <!-- 画像 -->

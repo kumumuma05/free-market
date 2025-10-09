@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\SellRequest;
+use App\Http\Requests\ExhibitionRequest;
 use App\Models\Category;
 use App\Models\Item;
 
 class SellController extends Controller
 {
-    public function sell(Request $request)
+
+    /**
+     * 商品出品画面表示
+     */
+    public function create(Request $request)
     {
         $categories = Category::all();
         $labels = Item::CONDITION;
@@ -17,8 +21,21 @@ class SellController extends Controller
         return view('sell', compact('categories', 'items', 'labels'));
     }
 
-    public function store(SellRequest $request)
+    /**
+     * 出品商品の登録
+     */
+    public function store(ExhibitionRequest $request)
     {
+        $path = $request->file('image_path')->store('items', 'public');
 
+        $item = Item::create([
+            'user_id' => auth()->id(),
+            'product_name' => $request->product_name,
+            'brand'=> $request->brand, 'description' => $request->description,
+            'price' => $request->price, 'condition' => $request->condition, 'image_path' => $path]);
+
+        $item->categories()->sync($request->category_ids);
+
+        return redirect('/sell');
     }
 }
