@@ -32,7 +32,7 @@ class ProfileRequest extends FormRequest
     }
 
     /**
-     * パリで―ションメッセージ
+     * パリシーションメッセージ
      */
     public function messages()
     {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\SellRequest;
 use App\Models\Category;
 use App\Models\Item;
 
@@ -14,5 +15,10 @@ class SellController extends Controller
         $labels = Item::CONDITION;
         $items = Item::all();
         return view('sell', compact('categories', 'items', 'labels'));
+    }
+
+    public function store(SellRequest $request)
+    {
+
     }
 }
