@@ -21,7 +21,7 @@ class ItemFactory extends Factory
             'description' => $this->faker->sentence(10),
             'price' => $this->faker->numberBetween(500, 5000),
             'condition' => $this->faker->numberBetween(1, 4),
-            'image_path' => null,
+            'image_path' => 'item_image/' . $this->faker->lexify('image_????') . '.png',
             'is_sold' => $this->faker->boolean(20),
         ];
     }
