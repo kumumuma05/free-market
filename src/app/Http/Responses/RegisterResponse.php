@@ -8,7 +8,7 @@ class RegisterResponse implements RegisterResponseContract
 {
     public function toResponse($request)
     {
-        // 登録直後だけプロフィール画面へ
+        // 新規登録後はプロフィール画面へ
     return redirect()->route('mypage.profile')->with('first_login', true);
     }
 }

@@ -126,12 +126,13 @@ class RegistrationTest extends TestCase
         $response = $this->get('/register');
         $response->assertStatus(200);
 
-        $response = $this->followingRedirects()->from('register')->post('/register', [
+        $response = $this->from('register')->post('/register', [
             'name' => '山田　太郎',
             'email' => 'user@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
+        $response->assertRedirect('/mypage/profile');
 
         $response = $this->get('/mypage/profile');
         $response->assertStatus(200);

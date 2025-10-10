@@ -98,6 +98,7 @@ class LoginTest extends TestCase
             'email' => 'user@example.com',
             'password' => 'password',
         ]);
+        $response->assertRedirect('/');
 
         $response = $this->get('/');
         $response->assertStatus(200);
