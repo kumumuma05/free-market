@@ -26,7 +26,7 @@ class SellController extends Controller
      */
     public function store(ExhibitionRequest $request)
     {
-        $path = $request->file('image_path')->store('items', 'public');
+        $path = $request->file('image_path')->store('item_image', 'public');
 
         $item = Item::create([
             'user_id' => auth()->id(),
@@ -36,6 +36,6 @@ class SellController extends Controller
 
         $item->categories()->sync($request->category_ids);
 
-        return redirect('/sell');
+        return redirect()->back()->withInput()->with('temp_image', $path );
     }
 }

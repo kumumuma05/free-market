@@ -17,7 +17,7 @@
             <li class="item-list__item">
                 <a class="item-list__card" href="/item/{{ $item->id }}">
                     <div class="item-list__card-image">
-                        <img src="{{ $item->image_path }}" alt="商品画像">
+                        <img src="{{ $item->image_url }}" alt="商品画像">
                         @if($item->is_sold)
                             <span class="item-list__card-sold">Sold</span>
                         @endif

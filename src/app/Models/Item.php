@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Item extends Model
 {
@@ -38,6 +39,17 @@ class Item extends Model
         }
     }
 
+    /**
+     * 商品画像表示方法
+     */
+    public function getImageUrlAttribute()
+    {
+        if(preg_match('#^https?://#', $this->image_path)){
+            return $this->image_path;
+        }
+
+        return Storage::url($this->image_path);
+    }
 
 
     public function user()
