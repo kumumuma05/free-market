@@ -52,4 +52,37 @@ class MyListPageTest extends TestCase
         $page->assertDontSeeText('other');
         $page->assertDontSee('other.png');
     }
+
+    /**
+     * マイページの購入済み商品に「sold」ラベルを表示
+     */
+    public function test_sold_display_check()
+    {
+        $user = User::factory()->create([
+            'email' => 'user@example.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        $item = Item::factory()->create([
+            'product_name' => 'aaa',
+            'image_path' => 'item_image/testa.image.png',
+            'is_sold' => true
+        ]);
+
+        Like::create([
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+        ]);
+
+        $this->followingRedirects()->post('/login', [
+            'email' => 'user@example.com',
+            'password' => 'password'
+        ])->assertOk();
+
+        $this->get('/?tab=mylist')->assertOk()
+            ->assertSee('aaa')
+            ->assertSee('testa.image.png')
+            ->assertSeeText('Sold');
+    }
 }
+
