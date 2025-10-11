@@ -84,5 +84,17 @@ class MyListPageTest extends TestCase
             ->assertSee('testa.image.png')
             ->assertSeeText('Sold');
     }
-}
 
+    /**
+     * 未ログインの場合はマイリストリンクしない
+     */
+    public function test_guest_clicked_mylist_changes_nothing()
+    {
+        $home = $this->get('/')->assertOk();
+        $home->assertSeeText('マイリスト');
+
+        $mylist = $this->get('/?tab=mylist')->assertOk();
+
+        $this->assertSame($home->getContent(), $mylist->getContent());
+    }
+}
