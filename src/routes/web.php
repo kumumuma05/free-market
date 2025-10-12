@@ -14,6 +14,7 @@ use App\Http\Controllers\SellController;
 
 Route::get('/', [ItemController::class, 'index'])->name('item.index');
 Route::get('/item/search', [ItemController::class, 'search']);
+
 Route::get('/item/{item_id}', [ItemDetailController::class, 'show']);
 
 Route::get('/purchase/{item_id}', [PurchaseController::class, 'order']);
