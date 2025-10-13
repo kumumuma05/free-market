@@ -5,8 +5,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemDetailController;
 use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\LikeController;
-use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\SellController;
 
@@ -18,9 +16,9 @@ Route::get('/item/search', [ItemController::class, 'search']);
 Route::get('/item/{item_id}', [ItemDetailController::class, 'show']);
 
 Route::get('/purchase/{item_id}', [PurchaseController::class, 'order']);
-Route::post('/item/{item}/like', [LikeController::class, 'like']);
+Route::post('/item/{item}/like', [ItemDetailController::class, 'like']);
 
-Route::post('/item/{item}/comments', [CommentController::class, 'store']);
+Route::post('/item/{item}/comments', [ItemDetailController::class, 'store']);
 
 Route::get('/mypage', [MypageController::class, 'mypage']);
 
