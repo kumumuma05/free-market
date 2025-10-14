@@ -13,6 +13,8 @@ use App\Models\Like;
 
 class ProductDetailsInformationTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * 商品詳細一覧画面の表示チェック
      */
@@ -91,5 +93,29 @@ class ProductDetailsInformationTest extends TestCase
         $response->assertSeeText('aaa');
         $response->assertSee('profile_image/aaa.png');
         $response->assertSee('user1_comment');
+    }
+
+    /**
+     * カテゴリの複数選択
+     */
+    public function test_category_multiple_selection()
+    {
+
+        // 商品
+        $item = Item::factory()->create();
+
+        // カテゴリー
+        $category1 = Category::create([
+            'name' => 'category1'
+        ]);
+        $category2 = Category::create([
+            'name' => 'category2'
+        ]);
+        $item->categories()->attach([$category1->id, $category2->id]);
+
+        // 商品詳細画面表示
+        $response = $this->get("/item/{$item->id}")->assertOk();
+        $response->assertSeeText('category1');
+        $response->assertSeeText('category2');
     }
 }
