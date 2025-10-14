@@ -51,10 +51,10 @@
             </dl>
         </div>
         <div class="item-detail__comment">
-            <h3 class="comment-title">コメント {{ $item->comments->count()}} </h3>
+            <h3 class="comment-title">コメント({{ $item->comments->count() }}) </h3>
             @foreach($item->comments as $comment)
                 <div class="item-detail__user-comment">
-                    <p> </p>
+                    <img class="comment__avatar" src="{{ asset('storage/' . $comment->user->profile_image) }}" alt="{{ $comment->user->name }}のプロフィール画像">
                     <div class="comment__meta">
                         <p class="comment__name">{{ $comment->user->name }}</p>
                         <p class="comment__body">{{ $comment->body }}</p>
