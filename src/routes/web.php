@@ -31,3 +31,7 @@ Route::get('/sell', [SellController::class, 'create']);
 Route::post('/sell', [SellController::class, 'store']);
 
 Route::post('/purchase/{item_id}', [PurchaseController::class, 'store']);
+
+Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'shippingshow']);
+
+Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'shippingupdate']);

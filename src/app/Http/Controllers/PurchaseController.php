@@ -45,4 +45,23 @@ class PurchaseController extends Controller
 
         return redirect('/');
     }
+
+    /**
+     * 住所変更ページ表示
+     */
+    public function shippingshow($item_id)
+    {
+        $item = Item::findOrFail($item_id);
+        $user = Auth::user();
+
+        return view('address', compact('item','user'));
+    }
+
+    /**
+     * 配送先住所変更実行
+     */
+    public function shippingupdate($item_id)
+    {
+
+    }
 }

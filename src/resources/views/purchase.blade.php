@@ -38,9 +38,10 @@
         <!-- 配送先 -->
         <div class="shipping-address__select">
             <label class="shipping-address__select-label" for="shipping-address">配送先</label>
+            <a class="shipping-address__change-link" href="/purchase/address/{{$item->id}}">変更する</a>
             <input type="text" name="shipping_postal" value="{{ old('shipping_postal', $user->postal ?? '') }}">
             <input class="shipping-address__input" type="text" name="shipping_address" value="{{ old('shipping_address', $user->address ?? '') }}" />
-            <input class="shipping-address__input" type="text" value="{{ old('shipping_building', $user->building ?? '') }}" />
+            <input class="shipping-address__input" type="text" name="shipping_building" value="{{ old('shipping_building', $user->building ?? '') }}" />
             @error('shipping_address')
                 {{ $message }}
             @enderror
