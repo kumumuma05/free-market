@@ -19,7 +19,7 @@
     </div>
 
     <!-- 注文フォーム -->
-    <form class="purchase__form" action="/purchase/order" method="post">
+    <form class="purchase__form" action="/purchase/{{$item->id}}" method="post">
         @csrf
 
         <!-- 支払方法 -->
@@ -27,8 +27,8 @@
             <label class="payment__select-label" for="payment-select">支払い方法</label>
                 <select name="payment_method" id="payment-select">
                 <option value="" selected disabled>選択してください</option>
-                <option value="1" {{ old('payment-method') == 1 ? 'selected' : '' }}>コンビニ払い</option>
-                <option value="2" {{ old('payment-method') == 2 ? 'selected' : '' }}>カード支払い</option>
+                <option value="1" {{ old('payment_method') == 1 ? 'selected' : '' }}>コンビニ払い</option>
+                <option value="2" {{ old('payment_method') == 2 ? 'selected' : '' }}>カード支払い</option>
             </select>
             @error('payment_method')
                 {{ $message }}
@@ -38,7 +38,7 @@
         <!-- 配送先 -->
         <div class="shipping-address__select">
             <label class="shipping-address__select-label" for="shipping-address">配送先</label>
-            <input type="text" name="shipping_postal_code" value="{{ old('shipping_postal', $user->postal ?? '') }}">
+            <input type="text" name="shipping_postal" value="{{ old('shipping_postal', $user->postal ?? '') }}">
             <input class="shipping-address__input" type="text" name="shipping_address" value="{{ old('shipping_address', $user->address ?? '') }}" />
             <input class="shipping-address__input" type="text" value="{{ old('shipping_building', $user->building ?? '') }}" />
             @error('shipping_address')
