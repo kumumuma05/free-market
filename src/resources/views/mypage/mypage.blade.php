@@ -12,7 +12,7 @@
             <img class="profile-info__avatar-img" src="{{ $user->profile_image ? asset('storage/'.$user->profile_image) : asset('images/green.png') }}" alt="プロフィール画像">
         </div>
         <div class="profile-info__user-name">
-            <h2>ユーザー名</h2>
+            <h2>{{ $user->name }}</h2>
         </div>
         <div class="profile-info__action">
             <a class="profile-info__action-link" href="/mypage/profile">プロフィールを編集</a>

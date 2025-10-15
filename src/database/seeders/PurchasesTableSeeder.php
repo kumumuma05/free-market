@@ -50,10 +50,5 @@ class PurchasesTableSeeder extends Seeder
             'item_id' => 9,
             'buyer_id' => 1,
         ]);
-        Purchase::create([
-            'item_id' => 10,
-            'buyer_id' => 3,
-        ]);
-
     }
 }

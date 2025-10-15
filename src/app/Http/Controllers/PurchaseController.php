@@ -3,13 +3,46 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PurchaseRequest;
 use App\Models\Item;
+use App\Models\Purchase;
+
+
 
 class PurchaseController extends Controller
 {
-    public function order($item_id)
+
+    /**
+     * 商品購入画面表示
+     */
+    public function show($item_id)
     {
         $item = Item::findOrFail($item_id);
-        return view('/order', compact('item',));
+        $user = Auth::user();
+
+        return view('purchase', compact('item','user'));
+    }
+
+    /**
+     * 購入情報登録
+     */
+    public function store(PurchaseRequest $request, $item_id)
+    {
+        $item = Item::findOrFail($item_id);
+        if (!Auth::check()){
+            return back();
+        }
+
+        Purchase::create([
+            'item_id' =>$item->id,
+            'buyer_id' =>Auth::id(),
+            'payment_method' => $request->payment_method,
+            'shipping_postal' => $request->shipping_postal,
+            'shipping_address' => $request->shipping_address,
+            'shipping_building' => $request->shipping_building,
+        ]);
+
+        return redirect('/');
     }
 }

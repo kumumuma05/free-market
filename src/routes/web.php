@@ -15,7 +15,7 @@ Route::get('/item/search', [ItemController::class, 'search']);
 
 Route::get('/item/{item_id}', [ItemDetailController::class, 'show']);
 
-Route::get('/purchase/{item_id}', [PurchaseController::class, 'order']);
+Route::get('/purchase/{item_id}', [PurchaseController::class, 'show']);
 Route::post('/item/{item}/like', [ItemDetailController::class, 'like']);
 
 Route::post('/item/{item}/comments', [ItemDetailController::class, 'store']);
@@ -29,3 +29,5 @@ Route::patch('mypage/profile/update', [ProfileController::class, 'update']);
 Route::get('/sell', [SellController::class, 'create']);
 
 Route::post('/sell', [SellController::class, 'store']);
+
+Route::post('/purchase/{item_id}', [PurchaseController::class, 'store']);
