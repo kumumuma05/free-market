@@ -40,8 +40,8 @@ class ProfileRequest extends FormRequest
             'profile_image.mimes' => '画像は拡張子が.jpegもしくはpngを選択してください',
             'name.required' => 'お名前を入力してください',
             'postal.required' => '郵便番号を入力してください',
-            'postal' => '郵便番号はハイフンをつけてください',
-            '<address.required></address.required>required' => '住所を入力してください',
+            'postal.regex' => '郵便番号はハイフンをつけてください',
+            'address.required' => '住所を入力してください',
         ];
     }
 }

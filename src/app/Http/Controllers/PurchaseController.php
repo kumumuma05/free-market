@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PurchaseRequest;
+use App\Http\Requests\AddressRequest;
 use App\Models\Item;
 use App\Models\Purchase;
 
@@ -21,7 +22,22 @@ class PurchaseController extends Controller
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
-        return view('purchase', compact('item','user'));
+        $changed = session("changed_address.$item_id", []);
+        $shipping = [
+        'shipping_postal'   => $changed['shipping_postal'] ?? ($user->postal),
+        'shipping_address'  => $changed['shipping_address'] ?? ($user->address),
+        'shipping_building' => $changed['shipping_building'] ?? ($user->building),
+    ];
+
+        return view('purchase', compact('item','user', 'shipping'));
+    }
+
+    /**
+     * 住所の変更は商品ごとに行う
+     */
+    public function complete($item_id)
+    {
+        session()->forget("changed_address.$item_id");
     }
 
     /**
@@ -60,8 +76,18 @@ class PurchaseController extends Controller
     /**
      * 配送先住所変更実行
      */
-    public function shippingupdate($item_id)
+    public function shippingupdate(AddressRequest $request, $item_id)
     {
+        $changed = $request->validated();
 
+        session([
+            "changed_address.$item_id" => [
+                'shipping_postal' => $changed['shipping_postal'],
+                'shipping_address' => $changed['shipping_address'],
+                'shipping_building' => $changed['shipping_building'] ?? '',
+            ],
+        ]);
+
+        return redirect("/purchase/{$item_id}");
     }
 }
