@@ -57,4 +57,42 @@ class LikeFunctionTest extends TestCase
     /**
      * いいね追加済みアイコンは色が変化する
      */
+    public function test_the_color_of_the_like_icon_changes(){
+
+        // ユーザー作成
+        $user = User::factory()->create([
+            'email' => 'user@example.com',
+            'password' => Hash::make('password'),
+        ]);
+        $seller = User::factory()->create();
+
+        // アイテム作成
+        $item = Item::factory()->create([
+            'user_id' => $seller->id,
+        ]);
+
+        // ログイン
+        $this->followingRedirects()->post('/login', [
+            'email' => 'user@example.com',
+            'password' => 'password'
+        ])->assertOk();
+
+        // 商品詳細画面へ移動(いいねされていない状態)
+        $response = $this->get("/item/{$item->id}")->assertOk();
+        $response->assertDontSee('is-active');
+
+        // いいね送信
+        $this->post("/item/{$item->id}/like")->assertRedirect();
+
+        // データベースへの登録確認
+        $this->assertDatabaseHas('likes', [
+            'user_id' => $user->id,
+            'item_id' => $item->id,
+        ]);
+
+        // 商品詳細画面へ移動(is-activeクラスが追加されている（いいねされている状態)）
+        $response = $this->get("/item/{$item->id}")->assertOk();
+        $response->assertSee('is-active', false);
+
+    }
 }
