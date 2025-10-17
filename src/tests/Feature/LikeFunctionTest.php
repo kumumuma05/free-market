@@ -54,5 +54,7 @@ class LikeFunctionTest extends TestCase
         $this->assertEquals(1, $item->fresh()->likedUsers()->count());
     }
 
-
+    /**
+     * いいね追加済みアイコンは色が変化する
+     */
 }

@@ -81,9 +81,11 @@ class ProductDetailsInformationTest extends TestCase
         $response->assertSee('item_image/test.png');
         $response->assertSee(e(number_format(10000)));
 
-        $response->assertSeeInOrder([
-            '☆', (string)$item->likes_count,
-            '💬', (string)$item->comment_count
+        $response->assertSee('data-testid="like-icon"', false);
+        $response->assertSee('data-testid="comment-icon"', false);
+        $response->assertSee([
+            (string)$item->likes_count,
+            (string)$item->comment_count
         ]);
         $response->assertSeeText('description');
         $response->assertSeeText('category1');
