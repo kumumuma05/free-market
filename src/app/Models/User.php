@@ -73,6 +73,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Item::class, 'purchases', 'buyer_id', 'item_id')->withTimestamps();
     }
 
+    /**
+     * likesテーブルとのリレーション
+     */
     public function likedItems()
     {
         return $this->belongsToMany(Item::class, 'likes')->withTimestamps();

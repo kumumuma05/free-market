@@ -9,30 +9,60 @@ use App\Models\Item;
 
 class ItemController extends Controller
 {
+
+    /**
+     * 商品一覧画面表示
+     */
     public function index(Request $request)
     {
-        $tab = $request->query('tab');
-        $activeTab = 'rec';
+        $tab = $request->query('tab', 'recommend');
+        $activeTab = 'recommend';
+        $keyword = $request->query('keyword', '');
+        // ログインユーザのみ限定、いいねした商品リスト（マイリスト）を表示する
         if($tab === 'mylist' && Auth::check())
         {
-            $items = Auth::user()->likedItems()->latest()->get();
+            $query = Auth::user()->likedItems()->latest();
             $activeTab = 'mylist';
         } else {
             $query = Item::query()->latest();
+
+            // ログインユーザは自分の出品商品以外の商品のみを表示
             if (Auth::check()) {
                 $query->where('user_id', '!=', Auth::id());
             }
-            $items = $query->get();
         }
+        if ($keyword !== '') {
+            $query->keywordSearch($keyword);
+        }
+            $items = $query->get();
 
-        return view('item.index', compact('items', 'activeTab'));
+        return view('item.index', compact('items', 'activeTab', 'keyword'));
     }
 
+    /**
+     * 商品検索
+     */
     public function search(Request $request)
     {
-        $items = Item::KeywordSearch($request->keyword)->get();
-        $activeTab = 'recommend';
+        $activeTab = $request->query('tab', 'recommend');
+        $keyword = $request->input('keyword', '');
 
-        return view('item.index', compact('items', 'activeTab'));
+        if ($activeTab === 'mylist' && Auth::check()){
+            $query = Auth::user()->likedItems()->latest();
+        } else {
+            $query = Item::query()->latest();
+
+            if (Auth::check()) {
+                $query->where('user_id', '!=', Auth::id());
+            }
+        }
+
+        if ($keyword !== '') {
+                $query->keywordSearch($keyword);
+        }
+
+        $items = $query->get();
+
+        return view('item.index', compact('items', 'activeTab', 'keyword'));
     }
 }

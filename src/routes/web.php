@@ -8,10 +8,21 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\SellController;
 
-
-
+// 商品一覧（ホーム）画面表示
 Route::get('/', [ItemController::class, 'index'])->name('item.index');
+// 商品検索
 Route::get('/item/search', [ItemController::class, 'search']);
+// 商品詳細画面表示
+Route::get('/item/{item_id}', [ItemDetailController::class, 'show']);
+
+// ログイン機能
+Route::middleware('auth')->group(function(){
+
+});
+
+
+
+
 
 Route::get('/item/{item_id}', [ItemDetailController::class, 'show']);
 

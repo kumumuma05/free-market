@@ -30,7 +30,7 @@ class Item extends Model
     ];
 
     /**
-     * 商品名検索
+     * 商品名検索ローカルスコープ
      */
     public function scopeKeywordSearch($query, $keyword)
     {
