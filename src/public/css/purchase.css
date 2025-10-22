@@ -1,0 +1,134 @@
+.content {
+    max-width: 1540px;
+    margin: 0 auto;
+}
+
+.purchase {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 440px;
+    gap: 30px;
+    margin: 80px;
+    align-items: start;
+}
+
+.item__group {
+    display: flex;
+    padding-bottom: 60px;
+    border-bottom: 1px solid;
+}
+
+.item__group-img {
+    width: 177px;
+    height: 177px;
+    background: #D9D9D9;
+}
+
+.item__group-info {
+    margin-left: 30px;
+}
+.item__group-product-name {
+    margin-top: 0;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.item__group-price {
+    font-size: 30px;
+}
+
+.item__group-price span {
+    font-size: 27px;
+    font-weight: 400;
+}
+
+.payment-select__form {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid;
+}
+
+.payment-select__label {
+    margin: 30px auto 40px 40px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.payment-select__wrap {
+    position: relative;
+    width: 300px;
+    margin-left: 100px;
+    margin-bottom: 50px;
+}
+
+.payment-select__wrap::after {
+    position: absolute;
+    top: 50%;
+    right: 3%;
+    width: 0;
+    height: 0;
+    border-top: 12px solid #5F5F5F;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+    content: "";
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.payment-select__select {
+    width: 300px;
+    height: 30px;
+    padding: 0 10px;
+    border: 1px solid #5F5F5F;
+    border-radius: 4px;
+    color: #5F5F5F;
+    font-size: 16px;
+    font-weight: 700;
+    appearance: none;
+}
+
+.payment-select__select option {
+    background: #636769;
+    color: #FFF;
+}
+
+.shipping-address__select {
+    border-bottom: 1px solid;
+
+}
+
+.shipping-address__titles {
+    display: flex;
+    justify-content: space-between;
+    margin: 40px;
+}
+
+.shipping-address__select-title {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.shipping-address__change-link {
+    font-size: 20px;
+    color: #0073CC;
+    text-decoration: none;
+}
+
+.shipping-address__form {
+
+}
+
+.shipping-address__input {
+    border: none;
+}
+
+.shipping-address__display {
+    margin-left: 150px;
+    margin-bottom: 50px;
+}
+
+.shipping-address__postal,
+.shipping-address__full {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 10px 0;
+}

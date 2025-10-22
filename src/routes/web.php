@@ -15,34 +15,50 @@ Route::get('/item/search', [ItemController::class, 'search']);
 // 商品詳細画面表示
 Route::get('/item/{item_id}', [ItemDetailController::class, 'show']);
 
-// ログイン機能
-Route::middleware('auth')->group(function(){
 
+
+// 認証必須
+Route::middleware('auth')->group(function(){
+    Route::post('/item/{item}/like', [ItemDetailController::class, 'like']);
+
+    Route::post('/item/{item}/comments', [ItemDetailController::class, 'store']);
+
+    Route::get('/purchase/{item_id}', [PurchaseController::class, 'show']);
+
+    Route::post('/purchase/{item_id}', [PurchaseController::class, 'store']);
+
+    Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'shippingshow']);
+
+    Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'shippingupdate']);
+
+    Route::get('/mypage', [MypageController::class, 'mypage']);
+
+    Route::get('/sell', [SellController::class, 'create']);
+
+    Route::post('/sell', [SellController::class, 'store']);
+
+    Route::patch('mypage/profile/update', [ProfileController::class, 'update']);
+
+    Route::get('mypage/profile', [ProfileController::class, 'profile'])->name('mypage.profile');
 });
 
 
 
 
 
-Route::get('/item/{item_id}', [ItemDetailController::class, 'show']);
 
-Route::get('/purchase/{item_id}', [PurchaseController::class, 'show']);
-Route::post('/item/{item}/like', [ItemDetailController::class, 'like']);
 
-Route::post('/item/{item}/comments', [ItemDetailController::class, 'store']);
 
-Route::get('/mypage', [MypageController::class, 'mypage']);
 
-Route::get('mypage/profile', [ProfileController::class, 'profile'])->name('mypage.profile');
 
-Route::patch('mypage/profile/update', [ProfileController::class, 'update']);
 
-Route::get('/sell', [SellController::class, 'create']);
 
-Route::post('/sell', [SellController::class, 'store']);
 
-Route::post('/purchase/{item_id}', [PurchaseController::class, 'store']);
 
-Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'shippingshow']);
 
-Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'shippingupdate']);
+
+
+
+
+
+

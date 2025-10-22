@@ -32,10 +32,11 @@ class SellController extends Controller
             'user_id' => auth()->id(),
             'product_name' => $request->product_name,
             'brand'=> $request->brand, 'description' => $request->description,
-            'price' => $request->price, 'condition' => $request->condition, 'image_path' => $path]);
+            'price' => $request->price, 'condition' => $request->condition,
+            'image_path' => $path]);
 
         $item->categories()->sync($request->category_ids);
 
-        return redirect()->back()->withInput()->with('temp_image', $path );
+        return redirect('/sell');
     }
 }

@@ -17,19 +17,21 @@ class PurchaseController extends Controller
     /**
      * 商品購入画面表示
      */
-    public function show($item_id)
+    public function show(Request $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
         $changed = session("changed_address.$item_id", []);
         $shipping = [
-        'shipping_postal'   => $changed['shipping_postal'] ?? ($user->postal),
-        'shipping_address'  => $changed['shipping_address'] ?? ($user->address),
+        'shipping_postal' => $changed['shipping_postal'] ?? ($user->postal),
+        'shipping_address' => $changed['shipping_address'] ?? ($user->address),
         'shipping_building' => $changed['shipping_building'] ?? ($user->building),
     ];
 
-        return view('purchase', compact('item','user', 'shipping'));
+        $payment = $request->query('payment_method', '');
+
+        return view('purchase', compact('item','user', 'shipping', 'payment'));
     }
 
     /**

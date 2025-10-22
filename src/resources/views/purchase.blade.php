@@ -1,86 +1,88 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/order.css') }}">
+<link rel="stylesheet" href="{{ asset('css/purchase.css') }}">
 @endsection
 
 @section('content')
 <div class="purchase">
+    <section class="purchase-info">
 
-    <!-- 商品情報 -->
-    <div class="item__group">
-        <img class="item__group-img" src="{{ $item->image_url }}" alt="商品画像">
-        <p class="item__group-product-name">
-            {{ $item->product_name}}
-        </p>
-        <p class="item__group-price">
-            <span>¥</span>{{ number_format($item->price)}}
-        </p>
-    </div>
+        <!-- 商品情報 -->
+        <div class="item__group">
+            <img class="item__group-img" src="{{ $item->image_url }}" alt="商品画像">
+            <div class="item__group-info">
+                <p class="item__group-product-name">
+                    {{ $item->product_name}}
+                </p>
+                <p class="item__group-price">
+                    <span>¥</span>  {{ number_format($item->price)}}
+                </p>
+            </div>
+        </div>
 
-    <!-- 注文フォーム -->
-    <form class="purchase__form" action="/purchase/{{$item->id}}" method="post">
-        @csrf
-
-        <!-- 支払方法 -->
-        <div class="payment__select">
-            <label class="payment__select-label" for="payment-select">支払い方法</label>
-                <select name="payment_method" id="payment-select">
-                <option value="" selected disabled>選択してください</option>
-                <option value="1" {{ old('payment_method') == 1 ? 'selected' : '' }}>コンビニ払い</option>
-                <option value="2" {{ old('payment_method') == 2 ? 'selected' : '' }}>カード支払い</option>
-            </select>
+        <!-- 支払い方法 -->
+        <form class="payment-select__form" action="/purchase/{{$item->id}}" method="get">
+            <label class="payment-select__label" for="payment-select">支払い方法</label>
+            <div class="payment-select__wrap">
+                <select class="payment-select__select" name="payment_method" id="payment-select" onchange="this.form.submit()">
+                    <option value="" disabled {{ request('payment_method') ? '' : 'selected' }}>選択してください</option>
+                    <option value="1" {{ request('payment_method') == 1 ? 'selected' : '' }}>コンビニ払い</option>
+                    <option value="2" {{ request('payment_method') == 2 ? 'selected' : '' }}>カード支払い</option>
+                </select>
+            </div>
             @error('payment_method')
                 {{ $message }}
             @enderror
-        </div>
+        </form>
 
         <!-- 配送先 -->
         <div class="shipping-address__select">
-            <label class="shipping-address__select-label" for="shipping-address">配送先</label>
-            <a class="shipping-address__change-link" href="/purchase/address/{{$item->id}}">変更する</a>
-            <input class="shipping-address__input" type="text" name="shipping_postal" value="{{ old('shipping_postal', $shipping['shipping_postal']) }}">
-            <input class="shipping-address__input" type="text" name="shipping_address" value="{{ old('shipping_address', $shipping['shipping_address']) }}" />
-            <input class="shipping-address__input" type="text" name="shipping_building" value="{{ old('shipping_building', $shipping['shipping_building']) }}" />
+            <div class="shipping-address__titles">
+                <span class="shipping-address__select-title">配送先</span>
+                <a class="shipping-address__change-link" href="/purchase/address/{{$item->id}}">変更する</a>
+            </div>
+
+            <div class="shipping-address__display">
+                <p class="shipping-address__postal">〒 {{ $shipping['shipping_postal'] }}</p>
+                <p class="shipping-address__full">{{ $shipping['shipping_address'] . ' ' . $shipping['shipping_building'] }}</p>
+            </div>
             @error('shipping_address')
                 {{ $message }}
             @enderror
         </div>
+    </section>
 
-        <!-- 確認表示 -->
-        <div class="purchase-confirm__table-inner">
-            <table class="purchase-confirm__table">
-                <th class="purchase-confirm__table-header">
-                    商品代金
-                    <td class="purchase-confirm__table-data">
-                        <span>¥</span>{{ number_format($item->price) }}
-                    </td>
-                </th>
-                <th class="purchase-confirm__table-header">
-                    支払方法
-                    <td class="purchase-confirm__table-data">
-                        <span id="confirm-payment">コンビニ払い</span>
-                    </td>
-                </th>
-            </table>
-        </div>
+    <!-- 確認表示 -->
+    <aside class="purchase-conf">
+        <form class="purchase-conf__form" action="/purchase/{{$item->id}}" method="post">
+            @csrf
+            <div class="purchase-confirm__table-inner">
+                <table class="purchase-confirm__table">
+                    <th class="purchase-confirm__table-header">
+                        商品代金
+                        <td class="purchase-confirm__table-data">
+                            <span>¥</span>{{ number_format($item->price) }}
+                        </td>
+                    </th>
+                    <th class="purchase-confirm__table-header">
+                        支払方法
+                        <td class="purchase-confirm__table-data">
+                            <span id="confirm-payment">
+                            {{ ['1' => 'コンビニ払い', '2' => 'カード払い'][$payment] ?? 'カード払い' }}</span>
+                        </td>
+                    </th>
+                </table>
+            </div>
 
-        <div class="purchase-form__button">
-            <button type="submit">購入する</button>
-        </div>
-    </form>
+            <input type="hidden" name="shipping_postal" value="{{ $shipping['shipping_postal'] }}">
+            <input type="hidden" name="shipping_address" value="{{  $shipping['shipping_address'] }}" />
+            <input type="hidden" name="shipping_building" value="{{ $shipping['shipping_building'] }}" />
+
+            <div class="purchase-form__button">
+                <button type="submit">購入する</button>
+            </div>
+        </form>
+    </aside>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function(){
-        const select = document.getElementById('payment-select');
-        const out = document.getElementById('confirm-payment');
-        function syncPayment(){
-            out.textContent = select.options[select.selectedIndex].text;
-        }
-
-        select.addEventListener('change', syncPayment);
-        syncPayment();
-    });
-</script>
 @endsection

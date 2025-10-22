@@ -18,6 +18,7 @@ class ItemController extends Controller
         $tab = $request->query('tab', 'recommend');
         $activeTab = 'recommend';
         $keyword = $request->query('keyword', '');
+
         // ログインユーザのみ限定、いいねした商品リスト（マイリスト）を表示する
         if($tab === 'mylist' && Auth::check())
         {
@@ -31,6 +32,8 @@ class ItemController extends Controller
                 $query->where('user_id', '!=', Auth::id());
             }
         }
+
+        // 商品検索をマイリストにも保持
         if ($keyword !== '') {
             $query->keywordSearch($keyword);
         }
@@ -44,25 +47,9 @@ class ItemController extends Controller
      */
     public function search(Request $request)
     {
-        $activeTab = $request->query('tab', 'recommend');
-        $keyword = $request->input('keyword', '');
+        $items = Item::keywordSearch($request->keyword)->latest()->get();
+        $activeTab = $request->query('tab');
 
-        if ($activeTab === 'mylist' && Auth::check()){
-            $query = Auth::user()->likedItems()->latest();
-        } else {
-            $query = Item::query()->latest();
-
-            if (Auth::check()) {
-                $query->where('user_id', '!=', Auth::id());
-            }
-        }
-
-        if ($keyword !== '') {
-                $query->keywordSearch($keyword);
-        }
-
-        $items = $query->get();
-
-        return view('item.index', compact('items', 'activeTab', 'keyword'));
+        return view('item.index', compact('items', 'activeTab'));
     }
 }
