@@ -57,22 +57,17 @@
     <aside class="purchase-conf">
         <form class="purchase-conf__form" action="/purchase/{{$item->id}}" method="post">
             @csrf
-            <div class="purchase-confirm__table-inner">
-                <table class="purchase-confirm__table">
-                    <th class="purchase-confirm__table-header">
-                        商品代金
-                        <td class="purchase-confirm__table-data">
-                            <span>¥</span>{{ number_format($item->price) }}
-                        </td>
-                    </th>
-                    <th class="purchase-confirm__table-header">
-                        支払方法
-                        <td class="purchase-confirm__table-data">
-                            <span id="confirm-payment">
-                            {{ ['1' => 'コンビニ払い', '2' => 'カード払い'][$payment] ?? 'カード払い' }}</span>
-                        </td>
-                    </th>
-                </table>
+            <div class="purchase-confirm__definition-inner">
+                <dl class="purchase-confirm__definition">
+                    <div class="purchase-confirm__definition-set">
+                        <dt>商品代金</dt>
+                        <dd><span>¥</span> {{ number_format($item->price) }}</dd>
+                    </div>
+                    <div class="purchase-confirm__definition-set">
+                        <dt>支払方法</dt>
+                        <dd id="confirm-payment">{{ ['1' => 'コンビニ払い', '2' => 'カード払い'][$payment] ?? 'カード払い' }}</dd>
+                    </div>
+                </dl>
             </div>
 
             <input type="hidden" name="shipping_postal" value="{{ $shipping['shipping_postal'] }}">

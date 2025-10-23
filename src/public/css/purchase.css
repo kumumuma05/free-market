@@ -6,8 +6,8 @@
 .purchase {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 440px;
-    gap: 30px;
-    margin: 80px;
+    gap: 100px;
+    margin: 80px 70px;
     align-items: start;
 }
 
@@ -131,4 +131,44 @@
     font-size: 20px;
     font-weight: 600;
     margin: 10px 0;
+}
+
+.purchase-confirm__definition{
+    border: 1px solid;
+}
+
+.purchase-confirm__definition-set {
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
+.purchase-confirm__definition-set:first-child {
+    border-bottom: 1px solid;
+}
+
+.purchase-confirm__definition dt {
+    padding: 40px 0px 40px 50px;
+    font-size: 20px;
+}
+
+.purchase-confirm__definition dd {
+    margin: 0;
+    padding: 38px 40px 38px 0;
+    font-size: 24px;
+}
+
+.purchase-confirm__definition span {
+    font-size: 20px;
+}
+
+.purchase-form__button button {
+    width: 100%;
+    height: 60px;
+    margin-top: 50px;
+    background: #F55;
+    border: none;
+    border-radius: 5px;
+    color: #FFF;
+    font-size: 26px;
+    font-weight: 700;
 }

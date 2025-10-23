@@ -37,7 +37,7 @@ class ItemController extends Controller
         if ($keyword !== '') {
             $query->keywordSearch($keyword);
         }
-            $items = $query->get();
+        $items = $query->get();
 
         return view('item.index', compact('items', 'activeTab', 'keyword'));
     }

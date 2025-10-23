@@ -20,7 +20,6 @@
         <div class="shipping-address__group">
             <label class="shipping-address__group-label" for="postal">郵便番号</label>
             <input class="shipping-address__group-text" type="text" name="shipping_postal" id="postal" value="{{ old('shipping_postal') }}" />
-            
         </div>
 
         <!-- 住所 -->

@@ -41,7 +41,11 @@ class ProfileController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('profile_image')){
-            $data['profile_image'] = $request->file('profile_image')->store('profile_image', 'public');
+            $file = $request->file('profile_image');
+            $filePath = $file->store('profile_image', 'public');
+            $data['profile_image'] = $filePath;
+
+            // $data['profile_image'] = $request->file('profile_image')->store('profile_image', 'public');
         } else {
             unset($data['profile_image']);
         }
@@ -50,6 +54,5 @@ class ProfileController extends Controller
 
         return redirect('/');
     }
-
 
 }
