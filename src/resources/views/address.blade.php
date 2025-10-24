@@ -33,7 +33,7 @@
         <div class="shipping-address__group">
             <label class="shipping-address__group-label" for="building">建物名</label>
             <input class="shipping-address__group-text" type="text" name="shipping_building" id="building" value="{{ old('shipping_building') }}" />
-            
+
         </div>
 
         <div class="shipping-address__button">

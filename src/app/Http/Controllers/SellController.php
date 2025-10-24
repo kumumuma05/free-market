@@ -18,7 +18,22 @@ class SellController extends Controller
         $categories = Category::all();
         $labels = Item::CONDITION;
         $items = Item::all();
-        return view('sell', compact('categories', 'items', 'labels'));
+
+        $image = $request->session()->get('temp_image');
+
+        return view('sell', compact('categories', 'items', 'labels', 'image'));
+    }
+
+    /**
+     * 商品画像のセッションアップロード
+     */
+    public function imagePostSession(Request $request)
+    {
+        $path = $request->file('image_path')->store('item_image', 'public');
+
+        $request->session()->put('temp_image', $path);
+
+        return redirect('/sell');
     }
 
     /**
@@ -26,16 +41,18 @@ class SellController extends Controller
      */
     public function store(ExhibitionRequest $request)
     {
-        $path = $request->file('image_path')->store('item_image', 'public');
+        $image = $request->session()->get('temp_image');
 
         $item = Item::create([
             'user_id' => auth()->id(),
             'product_name' => $request->product_name,
             'brand'=> $request->brand, 'description' => $request->description,
             'price' => $request->price, 'condition' => $request->condition,
-            'image_path' => $path]);
+            'image_path' => $image]);
 
         $item->categories()->sync($request->category_ids);
+
+        $request->session()->forget('temp_image');
 
         return redirect('/sell');
     }

@@ -21,16 +21,26 @@ class ExhibitionRequest extends FormRequest
      *
      * @return array
      */
+
     public function rules()
     {
         return [
             'product_name' => 'required',
             'description' => 'required|max:255',
-            'image_path' => 'required|image|mimes:jpeg,png',
+            'image_path' => 'required_without:temp_image|image|mimes:jpeg,png',
             'category_ids' => 'required|array|min:1',
             'condition' => 'required|integer|in:1,2,3,4',
             'price' => 'required|numeric|min:0',
         ];
+    }
+
+    /**
+     * セッション画像を本登録時のリクエストに送る
+     */
+    protected function prepareForValidation()
+    {
+        if (session()->has('temp_image')) {
+            $this->merge(['temp_image' => session('temp_image')]);        }
     }
 
     /**

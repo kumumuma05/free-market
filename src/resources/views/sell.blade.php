@@ -8,41 +8,46 @@
 <div class="sell">
     <h2 class="sell__title">商品の出品</h2>
 
-    <form class="sell-form" action="/sell" method="post" enctype="multipart/form-data">
-        @csrf
-
-        <!-- 画像 -->
-        <section class="sell__section">
-            <div class="sell__group">
-                <label class="sell__group-label" for="image_path">商品画像</label>
-                <div class="sell__image">
+    <!-- 画像 -->
+    <section class="sell__section">
+        <div class="sell__group">
+            <form method="get" action="/sell">
+                <label class="sell__group-label">商品画像</label>
+                <div class="sell__image {{ session('temp_image') ? 'sell__image--has-image' : '' }}">
+                    <label class="sell__image-button" for="image_path">画像を選択する</label>
                     @if(session('temp_image'))
                         <img src="{{ Storage::url(session('temp_image')) }}" alt="プレビュー">
                     @endif
-                    <label class="sell__image-button" for="image_path">画像を選択する
-                    <input type="file" id="image_path"  name="image_path" accept="image/*" hidden />
-                    </label>
                 </div>
-                @error('image_path')
-                    <p class="sell__error">{{ $message }}</p>
-                @enderror
-            </div>
-        </section>
+            </form>
 
+            <form class="sell-form" action="/sell/session" method="post" enctype="multipart/form-data">
+                @csrf
+                <input type="file" id="image_path"  name="image_path" accept="image/*" hidden  onchange="this.form.submit()" />
+            </form>
+            @error('image_path')
+                <p class="sell__error">{{ $message }}</p>
+            @enderror
+        </div>
+    </section>
+
+    <form class="sell-form" action="/sell" method="post" enctype="multipart/form-data">
+        @csrf
         <!-- 商品の詳細 -->
-        <div class="sell__section">
+        <section class="sell__section">
             <h3 class="sell__section-title">商品の詳細</h3>
             <!-- カテゴリ -->
             <div class="sell__group">
                 <label class="sell__group-label" for="category">カテゴリー</label>
                 @foreach($categories as $category)
-                    <input class="sell__category-input" type="checkbox" name="category_ids[]" id="category-{{ $category->id }}" value="{{ $category->id }}" {{ in_array($category->id, old('category_ids', [])) ? 'checked' : '' }} />
-                    <label class="sell__category-label" for="category-{{ $category->id }}">{{ $category->name }}</label>
+                <input class="sell__category-input" type="checkbox" name="category_ids[]" id="category-{{ $category->id }}" value="{{ $category->id }}" {{ in_array($category->id, old('category_ids', [])) ? 'checked' : '' }} />
+                <label class="sell__category-label" for="category-{{ $category->id }}">{{ $category->name }}</label>
                 @endforeach
                 @error('category_ids')
                     <p class="sell__error">{{ $message }}</p>
                 @enderror
             </div>
+
             <!-- 商品の状態 -->
             <div class="sell__group">
                 <label class="sell__group-label" for="condition">商品の状態</label>
@@ -59,7 +64,7 @@
                     <p class="sell__error">{{ $message }}</p>
                 @enderror
             </div>
-        </div>
+        </section>
 
         <!-- 商品名と説明 -->
         <section class="sell__section">

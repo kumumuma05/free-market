@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function(){
     Route::patch('mypage/profile/update', [ProfileController::class, 'update']);
 
     Route::get('mypage/profile', [ProfileController::class, 'profile'])->name('mypage.profile');
+
+    Route::post('sell/session', [SellController::class, 'imagePostSession']);
 });
 
 
