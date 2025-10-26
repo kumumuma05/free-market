@@ -62,9 +62,10 @@
 .item-list__card-sold {
     position: absolute;
     top: 8px;
-    left: 8px;
+    left: 15px;
     color: #F00;
-    font-size: 20px;
+    font-size: 26px;
+    font-weight: 700;
 
 }
 .item-list__card-title {
@@ -76,7 +77,7 @@
 }
 
 /* レスポンシブデザイン */
-@media screen and (min-width: 1400) and (mav-width: 1540px) {
+@media screen and (min-width: 1400) and (max-width: 1540px) {
 
 }
 
@@ -85,20 +86,31 @@
         width: 100%;
         margin: 0 auto;
     }
-    .item-index {
-        width: 500px;
-        margin: 0 auto;
+
+    .tab-menu {
+        gap: 50px;
+        margin-top: 50px;
+        padding-left: 50px;
+    }
+
+    .item-list {
+        grid-template-columns: repeat(2, minmax(290px, 1fr));
     }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
     .content {
         width: 100%;
         margin: 0 auto;
     }
 
-    .item-index {
-        width: 500px;
-        height: auto;
+    .tab-menu {
+        gap: 50px;
+        margin-top: 50px;
+        padding-left: 50px;
+    }
+
+    .item-list {
+        grid-template-columns: repeat(2, minmax(290px, 1fr));
     }
 }

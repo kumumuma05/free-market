@@ -21,10 +21,6 @@ body {
 
 
 /* サーチウィンドウ */
-.header__search {
-    margin: 0 auto;
-}
-
 .header__search-input {
     box-sizing: border-box;
     width: 500px;
@@ -37,7 +33,6 @@ body {
 
 .header__search-input::placeholder {
     color: #000;
-    font-size: 24px;
     opacity: 1;
 }
 
@@ -52,35 +47,22 @@ body {
     gap: 30px;
     list-style: none;
     margin: 0;
-}
-
-.header__nav-form {
-    margin: 0;
-}
-.header__logout-button {
-    border: none;
-    background: inherit;
-    color: #FFF;
-    font-size: 24px;
-    cursor: pointer;
+    padding: 0;
 }
 
 .nav__pill {
-    display: inline-block;
     text-decoration: none;
     color: #FFF;
     font-size: 24px;
+    line-height: 1;
 }
 
 .header__nav-form button {
-    background: inherit;
+    background: transparent;
     display: inline-flex;
-    line-height: 1;
     border: none;
-}
-
-.header__nav-item:first-child a {
-    margin-right: 28px ;
+    cursor: pointer;
+    line-height: 1;
 }
 
 .header__nav-item--listing {
@@ -96,20 +78,109 @@ body {
 .header__nav-item--listing a {
     color: #000;
     text-decoration: none;
-    font-size: 24px;
 }
 
 /* レスポンシブデザイン */
-@media screen and (max-width: 1400px) {
-    .header {
-        max-width: 1400px;
-        margin: 0 auto;
-    }
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+
 }
 
 @media screen and (min-width: 768px) and (max-width: 850px) {
     .header {
-        width: 100%;
-        margin: 0 auto;
+        display: grid;
+        grid-template-areas:
+            "logo nav"
+            "search search";
+        gap: 15px;
+        height: auto;
+        padding: 15px 0;
+    }
+
+    .header__logo {
+        grid-area: logo;
+        width: 300px;
+        margin-left: 30px;
+    }
+
+    .header__search {
+        display: flex;
+        grid-area: search;
+        margin-left: 30px;
+        justify-content: center;
+    }
+
+    .header__nav {
+        grid-area: nav;
+    }
+
+    .header__search-input {
+        box-sizing: border-box;
+        max-width: 500px;
+        height: 40px;
+        padding: 10px 30px;
+        font-size: 20px;
+    }
+
+    .nav__pill {
+        font-size: 20px;
+    }
+
+    .header__nav-list {
+        gap: 10px;
+    }
+
+    .header__nav-item--listing {
+        width: 70px;
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        display: grid;
+        grid-template-areas:
+            "logo nav"
+            "search search";
+        gap: 15px;
+        height: auto;
+        padding: 15px 0;
+    }
+
+    .header__logo {
+        grid-area: logo;
+        width: 300px;
+        margin-left: 30px;
+    }
+
+    .header__search {
+        display: flex;
+        grid-area: search;
+        margin-left: 30px;
+        justify-content: center;
+    }
+
+    .header__nav {
+        grid-area: nav;
+    }
+
+    .header__search-input {
+        box-sizing: border-box;
+        max-width: 500px;
+        height: 40px;
+        padding: 10px 30px;
+        font-size: 20px;
+    }
+
+    .nav__pill {
+        font-size: 20px;
+    }
+
+    .header__nav-list {
+        gap: 10px;
+    }
+
+    .header__nav-item--listing {
+        width: 70px;
+        height: 40px;
     }
 }
