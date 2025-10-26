@@ -31,6 +31,16 @@ class PurchaseRequest extends FormRequest
         ];
     }
 
+    /**
+     * セッション(支払い選択)を本登録時のリクエストに送る
+     */
+    protected function prepareForValidation()
+    {
+        if (session()->has('payment_method')) {
+            $this->merge(['payment_method' => session('payment_method')]);
+        }
+    }
+
     public function messages()
     {
         return [

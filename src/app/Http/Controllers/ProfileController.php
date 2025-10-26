@@ -13,11 +13,27 @@ class ProfileController extends Controller
     /**
      * プロフィール編集画面表示
      */
-    public function profile()
+    public function profile(Request $request)
     {
         $user = auth()->user();
-        return view('mypage.profile', compact('user'));
+        $image = $request->session()->get('temp_image');
+
+        return view('mypage.profile', compact('user', 'image'));
+
     }
+
+    /**
+     * プロフィール画像のセッションアップロード
+     */
+    public function imagePostSession(Request $request)
+    {
+        $path = $request->file('profile_image')->store('profile_image', 'public');
+
+        $request->session()->put('temp_image', $path);
+
+        return redirect('/mypage/profile');
+    }
+
     /**
      * プロフィール初回登録
      */
@@ -39,13 +55,17 @@ class ProfileController extends Controller
 
         $user = auth()->user();
         $data = $request->validated();
+        $sesImage = $request->session()->get('temp_image');
 
-        if ($request->hasFile('profile_image')){
-            $file = $request->file('profile_image');
-            $filePath = $file->store('profile_image', 'public');
-            $data['profile_image'] = $filePath;
+        if ($sesImage) {
 
-            // $data['profile_image'] = $request->file('profile_image')->store('profile_image', 'public');
+            if (!empty($user->profile_image) && $user->profile_image !== $sesImage) {
+                Storage::disk('public')->delete($user->profile_image);
+            }
+
+            $data['profile_image'] = $sesImage;
+
+            $request->session()->forget('temp_image');
         } else {
             unset($data['profile_image']);
         }

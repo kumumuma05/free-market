@@ -29,6 +29,14 @@ class SellController extends Controller
      */
     public function imagePostSession(Request $request)
     {
+        $request->validate([
+            'image_path' => ['image', 'mimes:jpeg,png']
+        ]);
+
+        if ($old = $request->session()->get('temp_image')) {
+            storage::disk('public')->delete($old);
+        }
+
         $path = $request->file('image_path')->store('item_image', 'public');
 
         $request->session()->put('temp_image', $path);

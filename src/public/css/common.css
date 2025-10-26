@@ -1,3 +1,4 @@
+/* 共通（フォント設定） */
 body {
     font-family: 'Inter', 'Noto Sans JP', sans-serif;
 }
@@ -12,14 +13,18 @@ body {
     background: #000;
 }
 
+/* タイトルロゴ */
 .header__logo {
     width: 370px;
     margin-left: 40px;
 }
 
+
+/* サーチウィンドウ */
 .header__search {
     margin: 0 auto;
 }
+
 .header__search-input {
     box-sizing: border-box;
     width: 500px;
@@ -36,14 +41,7 @@ body {
     opacity: 1;
 }
 
-.header__logout-button {
-    border: none;
-    background: inherit;
-    color: #FFF;
-    font-size: 24px;
-    cursor: pointer;
-}
-
+/* ナビボタン */
 .header__nav {
     margin:0 30px;
 }
@@ -59,6 +57,14 @@ body {
 .header__nav-form {
     margin: 0;
 }
+.header__logout-button {
+    border: none;
+    background: inherit;
+    color: #FFF;
+    font-size: 24px;
+    cursor: pointer;
+}
+
 .nav__pill {
     display: inline-block;
     text-decoration: none;
@@ -93,4 +99,17 @@ body {
     font-size: 24px;
 }
 
+/* レスポンシブデザイン */
+@media screen and (max-width: 1400px) {
+    .header {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+}
 
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .header {
+        width: 100%;
+        margin: 0 auto;
+    }
+}

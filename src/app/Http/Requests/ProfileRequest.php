@@ -32,6 +32,15 @@ class ProfileRequest extends FormRequest
     }
 
     /**
+     * セッション画像を本登録時のリクエストに送る
+     */
+    protected function prepareForValidation()
+    {
+        if (session()->has('temp_image')) {
+            $this->merge(['temp_image' => session('temp_image')]);        }
+    }
+
+    /**
      * パリシーションメッセージ
      */
     public function messages()

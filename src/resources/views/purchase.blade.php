@@ -65,7 +65,7 @@
                     </div>
                     <div class="purchase-confirm__definition-set">
                         <dt>支払方法</dt>
-                        <dd id="confirm-payment">{{ ['1' => 'コンビニ払い', '2' => 'カード払い'][$payment] ?? 'カード払い' }}</dd>
+                        <dd>{{ ['1' => 'コンビニ払い', '2' => 'カード払い'][$payment] ?? 'カード払い' }}</dd>
                     </div>
                 </dl>
             </div>

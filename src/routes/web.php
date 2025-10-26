@@ -9,7 +9,7 @@ use App\Http\Controllers\MypageController;
 use App\Http\Controllers\SellController;
 
 // 商品一覧（ホーム）画面表示
-Route::get('/', [ItemController::class, 'index'])->name('item.index');
+Route::get('/', [ItemController::class, 'index']);
 // 商品検索
 Route::get('/item/search', [ItemController::class, 'search']);
 // 商品詳細画面表示
@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function(){
     Route::get('mypage/profile', [ProfileController::class, 'profile'])->name('mypage.profile');
 
     Route::post('sell/session', [SellController::class, 'imagePostSession']);
+
+    Route::post('mypage/profile/session', [ProfileController::class, 'imagePostSession']);
 });
 
 

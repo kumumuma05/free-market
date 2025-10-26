@@ -3,6 +3,7 @@
     margin: 0 auto;
 }
 
+/* タブ */
 .tab-menu {
     display: flex;
     gap: 80px;
@@ -23,6 +24,7 @@
     color: #F00;
 }
 
+/* 一覧 */
 .item-list {
     list-style: none;
     display: grid;
@@ -73,3 +75,30 @@
     text-align: start;
 }
 
+/* レスポンシブデザイン */
+@media screen and (min-width: 1400) and (mav-width: 1540px) {
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .content {
+        width: 100%;
+        margin: 0 auto;
+    }
+    .item-index {
+        width: 500px;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .content {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .item-index {
+        width: 500px;
+        height: auto;
+    }
+}

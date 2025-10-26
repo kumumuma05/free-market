@@ -1,16 +1,18 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/itemindex.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/item/index.css') }}">
 @endsection
 
 @section('content')
     <div class="item-index">
+
         <!-- タブ -->
         <div class="tab-menu">
             <a class="tab-menu__link {{ $activeTab === 'recommend' ? 'tab-menu__link--active' : '' }}" href="/">おすすめ</a>
             <a class="tab-menu__link {{ $activeTab === 'mylist' ? 'tab-menu__link--active' : '' }}" href="/?tab=mylist&keyword={{ urlencode($keyword ?? request('keyword', '' )) }}">マイリスト</a>
         </div>
+
         <!-- 一覧 -->
         <ul class="item-list">
             @foreach($items as $item)

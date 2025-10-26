@@ -10,19 +10,19 @@
     <div class="profile-title">
         <h2>プロフィール設定</h2>
     </div>
+    <form class="profile-image__form" method="get" action="/mypage/profile">
+        <img class="profile__image" src="{{ session('temp_image') ? Storage::url(session('temp_image')) : Storage::url($user->profile_image) }}" alt="プロフィール画像">
+        <label class="profile-form__avatar-choice" for="profile-image">画像を選択する</label>
+    </form>
+
+    <form method="post" action="/mypage/profile/session" enctype="multipart/form-data">
+        @csrf
+        <input type="file" id="profile-image" name="profile_image" accept="image/*" hidden onchange="this.form.submit()" />
+    </form>
 
     <form class="profile-form" action="/mypage/profile/update" method="post" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
-
-        <div class="profile-form__avatar">
-            <img src="{{ $user->profile_image ? asset('storage/'.$user->profile_image) : asset('images/green.png') }}" alt="">
-            <label class="profile-form__avatar-choice">
-                画像を選択する
-                <input type="file" name="profile_image" accept="image/*" hidden>
-            </label>
-        </div>
-
         <div class="profile-form__group">
             <label>ユーザー名</label>
             <input type="text" name="name" value="{{ old('name',  $user->name) }}" />

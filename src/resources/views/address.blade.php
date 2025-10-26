@@ -26,7 +26,6 @@
         <div class="shipping-address__group">
             <label class="shipping-address__group-label" for="address">住所</label>
             <input class="shipping-address__group-text" type="text" name="shipping_address" id="address" value="{{ old('shipping_address') }}" />
-            
         </div>
 
         <!-- 建物名 -->

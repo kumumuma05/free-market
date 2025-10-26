@@ -22,46 +22,21 @@ class PurchaseController extends Controller
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
-        $changed = session("changed_address.$item_id", []);
+        $shipAddress = $request->session()->get("changed_address.$item_id", []);
         $shipping = [
-        'shipping_postal' => $changed['shipping_postal'] ?? ($user->postal),
-        'shipping_address' => $changed['shipping_address'] ?? ($user->address),
-        'shipping_building' => $changed['shipping_building'] ?? ($user->building),
+        'shipping_postal' => $shipAddress['shipping_postal'] ?? ($user->postal),
+        'shipping_address' => $shipAddress['shipping_address'] ?? ($user->address),
+        'shipping_building' => $shipAddress['shipping_building'] ?? ($user->building),
     ];
 
-        $payment = $request->query('payment_method', '');
-
-        return view('purchase', compact('item','user', 'shipping', 'payment'));
-    }
-
-    /**
-     * 住所の変更は商品ごとに行う
-     */
-    public function complete($item_id)
-    {
-        session()->forget("changed_address.$item_id");
-    }
-
-    /**
-     * 購入情報登録
-     */
-    public function store(PurchaseRequest $request, $item_id)
-    {
-        $item = Item::findOrFail($item_id);
-        if (!Auth::check()){
-            return back();
+        if ($request->has('payment_method')) {
+            $request->session()->put("payment_method.$item_id", $request->query('payment_method'));
         }
 
-        Purchase::create([
-            'item_id' =>$item->id,
-            'buyer_id' =>Auth::id(),
-            'payment_method' => $request->payment_method,
-            'shipping_postal' => $request->shipping_postal,
-            'shipping_address' => $request->shipping_address,
-            'shipping_building' => $request->shipping_building,
-        ]);
+        $payment = $request->session()->get("payment_method.$item_id");
+        // dd(session()->all());
 
-        return redirect('/');
+        return view('purchase', compact('item','user', 'shipping', 'payment'));
     }
 
     /**
@@ -76,20 +51,52 @@ class PurchaseController extends Controller
     }
 
     /**
-     * 配送先住所変更実行
+     * 配送先住所変更実行（商品ごとにセッションへ一時保存）
      */
-    public function shippingupdate(AddressRequest $request, $item_id)
+    public function shippingUpdate(AddressRequest $request, $item_id)
     {
         $changed = $request->validated();
 
-        session([
-            "changed_address.$item_id" => [
-                'shipping_postal' => $changed['shipping_postal'],
-                'shipping_address' => $changed['shipping_address'],
-                'shipping_building' => $changed['shipping_building'] ?? '',
-            ],
+        $request->session()->put("changed_address.$item_id", [
+            'shipping_postal' => $changed['shipping_postal'],
+            'shipping_address' => $changed['shipping_address'],
+            'shipping_building' => $changed['shipping_building'] ?? '',
         ]);
 
         return redirect("/purchase/{$item_id}");
     }
+
+    /**
+     * 購入情報登録
+     */
+    public function store(PurchaseRequest $request, $item_id)
+    {
+        $item = Item::findOrFail($item_id);
+        if (!Auth::check()){
+            return back();
+        }
+
+        $sesAddress = $request->session()->get("changed_address.$item_id", []);
+        $postal = $sesAddress['shipping_postal'] ?? $request->input('shipping_postal');
+        $address = $sesAddress['shipping_address'] ?? $request->input('shipping_address');
+        $building = $sesAddress['shipping_building'] ?? $request->input('shipping_building', '');
+
+        $payment = $request->session()->get("payment_method.$item_id", $request->input('payment_method', ''));
+
+        Purchase::create([
+            'item_id' =>$item->id,
+            'buyer_id' =>Auth::id(),
+            'payment_method' => $payment,
+            'shipping_postal' => $postal,
+            'shipping_address' => $address,
+            'shipping_building' => $building,
+        ]);
+
+        $request->session()->forget("changed_address.$item_id");
+        $request->session()->forget("payment_method.$item_id");
+
+        return redirect('/');
+    }
+
+
 }
