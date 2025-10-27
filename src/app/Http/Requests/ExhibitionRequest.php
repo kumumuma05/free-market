@@ -27,6 +27,7 @@ class ExhibitionRequest extends FormRequest
         return [
             'product_name' => 'required',
             'description' => 'required|max:255',
+            'temp_image' => 'required|image|mimes:jpeg,png',
             'image_path' => 'required_without:temp_image|image|mimes:jpeg,png',
             'category_ids' => 'required|array|min:1',
             'condition' => 'required|integer|in:1,2,3,4',
@@ -35,7 +36,7 @@ class ExhibitionRequest extends FormRequest
     }
 
     /**
-     * セッション画像を本登録時のリクエストに送る
+     * セッション画像パスを本登録時のリクエストデータに統合してバリデーション可能にする
      */
     protected function prepareForValidation()
     {
@@ -52,7 +53,7 @@ class ExhibitionRequest extends FormRequest
             'product_name.required' => '商品名を入力してください',
             'description.required' => '商品の説明を入力してください',
             'description.max' => '商品の説明は225文字以内でしてください',
-            'image_path.required' => '商品画像を貼付してください',
+            'image_path.required_without' => '商品画像を貼付してください',
             'image_path.image' => '商品画像は画像ファイルを選択してください',
             'image_path.mimes' => '拡張子はjpegまたはpngのみ有効です',
             'category_ids.required' => 'カテゴリーを1つ以上選択してください',

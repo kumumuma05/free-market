@@ -7,13 +7,18 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) 440px;
     gap: 100px;
-    margin: 80px 70px;
+    margin: 80px 85px;
     align-items: start;
 }
 
+.purchase-info {
+    margin-top: 10px;
+}
+
+/* 商品情報 */
 .item__group {
     display: flex;
-    padding-bottom: 60px;
+    padding-bottom: 55px;
     border-bottom: 1px solid;
 }
 
@@ -24,7 +29,7 @@
 }
 
 .item__group-info {
-    margin-left: 30px;
+    margin-left: 60px;
 }
 .item__group-product-name {
     margin-top: 0;
@@ -41,9 +46,11 @@
     font-weight: 400;
 }
 
+/* 支払い方法 */
 .payment-select__form {
     display: flex;
     flex-direction: column;
+    padding-bottom: 60px;
     border-bottom: 1px solid;
 }
 
@@ -55,9 +62,21 @@
 
 .payment-select__wrap {
     position: relative;
+    display: inline-block;
     width: 300px;
     margin-left: 100px;
-    margin-bottom: 50px;
+}
+
+.payment-select__select {
+    width: 300px;
+    height: 30px;
+    padding: 0 10px;
+    border: 1px solid #5F5F5F;
+    border-radius: 4px;
+    color: #5F5F5F;
+    font-size: 16px;
+    font-weight: 700;
+    appearance: none;
 }
 
 .payment-select__wrap::after {
@@ -74,32 +93,20 @@
     pointer-events: none;
 }
 
-.payment-select__select {
-    width: 300px;
-    height: 30px;
-    padding: 0 10px;
-    border: 1px solid #5F5F5F;
-    border-radius: 4px;
-    color: #5F5F5F;
-    font-size: 16px;
-    font-weight: 700;
-    appearance: none;
-}
-
 .payment-select__select option {
     background: #636769;
     color: #FFF;
 }
 
+/* 配送先 */
 .shipping-address__select {
     border-bottom: 1px solid;
-
 }
 
 .shipping-address__titles {
     display: flex;
     justify-content: space-between;
-    margin: 40px;
+    margin: 30px;
 }
 
 .shipping-address__select-title {
@@ -113,17 +120,13 @@
     text-decoration: none;
 }
 
-.shipping-address__form {
-
-}
-
 .shipping-address__input {
     border: none;
 }
 
 .shipping-address__display {
-    margin-left: 150px;
-    margin-bottom: 50px;
+    margin-left: 100px;
+    padding-bottom: 50px;
 }
 
 .shipping-address__postal,
@@ -133,6 +136,7 @@
     margin: 10px 0;
 }
 
+/* 確認表示 */
 .purchase-confirm__definition{
     border: 1px solid;
 }
@@ -171,4 +175,38 @@
     color: #FFF;
     font-size: 26px;
     font-weight: 700;
+}
+
+.purchase__error {
+    margin-top: 5px;
+    margin-left: 100px;
+    color: #F00;
+    font-size: 18px;
+}
+
+/* レスポンシブデザイン */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .purchase {
+        display: flex;
+        flex-direction: column;
+        margin: 80px 100px;
+        align-items: normal;
+    }
+
+    .purchase-conf__form {
+        margin: 0 70px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .purchase {
+        display: flex;
+        flex-direction: column;
+        margin: 80px 100px;
+        align-items: normal;
+    }
+
+    .purchase-conf__form {
+        margin: 0 70px;
+    }
 }

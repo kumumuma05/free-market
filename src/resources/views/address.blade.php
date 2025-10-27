@@ -20,19 +20,28 @@
         <div class="shipping-address__group">
             <label class="shipping-address__group-label" for="postal">郵便番号</label>
             <input class="shipping-address__group-text" type="text" name="shipping_postal" id="postal" value="{{ old('shipping_postal') }}" />
+            <div class="shipping-address__error">
+            @error('shipping_postal')
+            {{ $message }}
+            @enderror
+            </div>
         </div>
 
         <!-- 住所 -->
         <div class="shipping-address__group">
             <label class="shipping-address__group-label" for="address">住所</label>
             <input class="shipping-address__group-text" type="text" name="shipping_address" id="address" value="{{ old('shipping_address') }}" />
+            <div class="shipping-address__error">
+            @error('shipping_address')
+            {{ $message }}
+            @enderror
+            </div>
         </div>
 
         <!-- 建物名 -->
         <div class="shipping-address__group">
             <label class="shipping-address__group-label" for="building">建物名</label>
             <input class="shipping-address__group-text" type="text" name="shipping_building" id="building" value="{{ old('shipping_building') }}" />
-
         </div>
 
         <div class="shipping-address__button">

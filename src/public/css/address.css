@@ -8,6 +8,7 @@
     margin: 0 auto;
 }
 
+/* タイトル */
 .shipping-address__title {
     margin-top: 50px;
     margin-bottom: 100px;
@@ -16,10 +17,11 @@
     font-weight: 700;
 }
 
+/* 入力フォーム */
 .shipping-address__group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 50px;
+    margin-bottom: 75px;
 }
 
 .shipping-address__group-label {
@@ -39,11 +41,31 @@
 .shipping-address__button button {
     width: 100%;
     height: 60px;
-    margin-top: 80px;
+    margin-top: 50px;
     background: #F55;
     border: none;
     border-radius: 5px;
     color: #FFF;
     font-size: 26px;
     font-weight: 700;
+}
+
+/* エラー表示 */
+.shipping-address__error {
+    margin-top: 10px;
+    color: #F00;
+    font-size: 18px;
+}
+
+/* レスポンシブデザイン */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .shipping-address {
+        max-width: 530px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .shipping-address {
+        max-width: 530px;
+    }
 }

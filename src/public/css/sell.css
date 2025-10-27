@@ -3,36 +3,20 @@
     margin: 0 auto;
 }
 
-/* @media (max-width: 1400) {
-    .content {
-        max-width: 1400px;
-        margin: 0 auto;
-        }
-}
-
-@media (min-width: 768px) and (max-width: 850px) {
-    .content {
-        width: 100%;
-        margin: 0 auto;
-        }
-    .sell {
-        width: 500px;
-        margin: 0 auto;
-    }
-} */
-
-
 .sell {
     width: 680px;
     margin: 0 auto;
 }
 
 .sell__title {
+    margin-top: 50px;
+    margin-bottom: 40px;
     font-size: 36px;
     font-weight: 700;
     text-align: center;
 }
 
+/* 商品画像 */
 .sell__group-label {
     font-size: 24px;
     font-weight: 700;
@@ -76,6 +60,8 @@
 }
 
 .sell__section-title {
+    margin-top: 70px;
+    padding-bottom: 5px;
     font-size: 30px;
     font-weight: 700;
     color: #5F5F5F;
@@ -83,9 +69,10 @@
 }
 
 .sell__group {
-    margin-bottom: 40px;
+    margin-top: 30px;
 }
 
+/* カテゴリ選択 */
 .sell__category-label {
     display: inline-flex;
     border: 2px solid #FF5655;
@@ -93,8 +80,8 @@
     color: #FF5655;
     font-size: 15px;
     font-weight: 500;
-    margin: 25px 0 0 10px;
-    padding: 0 15px;
+    margin: 35px 0 5px 12px;
+    padding: 3px 15px;
 }
 
 .sell__category-input {
@@ -106,6 +93,7 @@
     color: #FFF;
 }
 
+/* 商品の状態 */
 .sell__group-condition-select {
     width: 100%;
     height: 45px;
@@ -145,14 +133,15 @@
     color: #FFF;
 }
 
+/* 商品名と説明 */
 .sell__group-input,
 .sell__group-textarea {
     width: 100%;
     border: 1px solid #5F5F5F;
     border-radius: 4px;
     margin: 5px 0;
-    padding: 0  20px;
-    font-size: 20px;
+    padding: 0px  20px;
+    font-size: 22px;
 }
 
 .sell__group-input{
@@ -183,7 +172,7 @@
 .sell__form-button {
     width: 100%;
     height: 60px;
-    margin: 80px auto;
+    margin: 110px 0;
     background: #F55;
     border-radius: 5px;
     border: none;
@@ -193,8 +182,25 @@
 
 }
 
+.sell__error {
+    color: #F00;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
 
+/* レスポンシブデザイン */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .sell {
+        max-width: 600px;
+    }
+}
 
+@media screen and (max-width: 768px) {
+    .sell {
+        max-width: 600px;
+    }
+}
 
 
 

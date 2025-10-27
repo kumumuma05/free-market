@@ -15,6 +15,7 @@ class SellController extends Controller
      */
     public function create(Request $request)
     {
+
         $categories = Category::all();
         $labels = Item::CONDITION;
         $items = Item::all();
@@ -29,9 +30,6 @@ class SellController extends Controller
      */
     public function imagePostSession(Request $request)
     {
-        $request->validate([
-            'image_path' => ['image', 'mimes:jpeg,png']
-        ]);
 
         if ($old = $request->session()->get('temp_image')) {
             storage::disk('public')->delete($old);
