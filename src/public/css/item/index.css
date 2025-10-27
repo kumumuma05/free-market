@@ -61,13 +61,17 @@
 
 .item-list__card-sold {
     position: absolute;
-    top: 8px;
-    left: 15px;
-    color: #F00;
+    top: 0;
+    left: 0;
+    padding: 0 10px;
+    border-top-left-radius: 4px;
+    background: #F00;
+    color: #FFF;
     font-size: 26px;
     font-weight: 700;
 
 }
+
 .item-list__card-title {
     margin: 10px;
     text-decoration: none;

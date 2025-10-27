@@ -8,6 +8,7 @@
     margin: 0 auto;
 }
 
+/* タイトル */
 .profile-title {
     margin-top: 50px;
 }
@@ -18,11 +19,14 @@
     font-weight: 700;
 }
 
+/* 画像入力フォーム用 */
 .profile-image__form {
     display: flex;
     align-items: center;
+    margin: 60px 0;
 }
 
+/* 画像選択 */
 .profile__image {
     width: 150px;
     height: 150px;
@@ -44,10 +48,11 @@
     font-weight: 700;
 }
 
+/* ユーザー情報入力フォーム用 */
 .profile-form__group {
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
+    margin-top: 60px;
 }
 
 .profile-form__group label {
@@ -75,4 +80,25 @@
     color: #FFF;
     font-size: 26px;
     font-weight: 700;
+}
+
+.profile__error {
+    color: #F00;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* レスポンシブデザイン */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .profile {
+        width: 550px;
+        margin: 0 auto;
+    }
+}
+@media screen and (max-width: 768px) {
+    .profile {
+        width: 550px;
+        margin: 0 auto;
+    }
 }
