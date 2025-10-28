@@ -12,7 +12,9 @@
 <body>
     <div class="auth">
         <header class="header">
-            <img class="header__heading-logo" src="{{ asset('images/logo.svg') }}" alt="ロゴ">
+            <a href="/">
+                <img class="header__heading-logo" src="{{ asset('images/logo.svg') }}" alt="ロゴ">
+            </a>
         </header>
 
         <main>

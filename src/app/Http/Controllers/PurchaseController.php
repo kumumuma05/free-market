@@ -42,7 +42,7 @@ class PurchaseController extends Controller
     /**
      * 住所変更ページ表示
      */
-    public function shippingshow($item_id)
+    public function shippingShow($item_id)
     {
         $item = Item::findOrFail($item_id);
         $user = Auth::user();

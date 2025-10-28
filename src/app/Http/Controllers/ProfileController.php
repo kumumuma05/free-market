@@ -13,7 +13,7 @@ class ProfileController extends Controller
     /**
      * プロフィール編集画面表示
      */
-    public function profile(Request $request)
+    public function edit(Request $request)
     {
         $user = auth()->user();
         $image = $request->session()->get('temp_image');

@@ -13,7 +13,7 @@
     </h2>
 
     <!-- アドレス入力フォーム -->
-    <form class="shipping-address__form" action="" method="post">
+    <form class="shipping-address__form" action="/purchase/address/{{ $item->id }}" method="post">
         @csrf
 
         <!-- 郵便番号 -->

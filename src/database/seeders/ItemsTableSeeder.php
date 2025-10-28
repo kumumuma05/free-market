@@ -18,14 +18,13 @@ class itemsTableSeeder extends Seeder
     {
 
         Item::create([
-            
             'product_name' => '腕時計',
             'brand' => 'Rolax',
             'description' => 'スタイリッシュなデザインのメンズ腕時計',
             'price' => 15000,
             'condition' => 1,
             'image_path' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Armani+Mens+Clock.jpg',
-            'is_sold' => true,
+            'is_sold' => false,
             'user_id' => 1,
         ]);
         Item::create([
@@ -35,7 +34,7 @@ class itemsTableSeeder extends Seeder
             'price' => 5000,
             'condition' => 2,
             'image_path' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/HDD+Hard+Disk.jpg',
-            'is_sold' => true,
+            'is_sold' => false,
             'user_id' => 2,
         ]);
         Item::create([

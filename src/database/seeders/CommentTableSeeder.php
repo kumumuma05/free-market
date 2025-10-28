@@ -14,9 +14,6 @@ class CommentTableSeeder extends Seeder
      */
     public function run()
     {
-        Comment::updateOrCreate(
-            ['id' =>1],
-            ['item_id' => 1, 'user_id' => 1, 'body' => 'コメントです']
-        );
+        
     }
 }

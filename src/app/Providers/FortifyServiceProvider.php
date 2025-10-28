@@ -62,21 +62,5 @@ class FortifyServiceProvider extends ServiceProvider
 
             return Limit::perMinute(10)->by($email . $request->ip());
         });
-
-        // 認証処理,バリデーションは独自のLoginRequestを使用,認証失敗時のエラーメッセージを日本語に変更
-        // Fortify::authenticateUsing(function (Request $request){
-        //     $form = app(LoginRequest::class);
-        //     $form->setContainer(app())->setRedirector(app('redirect'));
-        //     $form->merge($request->all());
-        //     $form->validateResolved();
-
-        //     $user = User::where('email', $request->email)->first();
-        //     if($user && Hash::check($request->password, $user->password)) {
-        //         return $user;
-        //     }
-
-            // throw ValidationException::withMessages([
-            //     'email' => ['ログイン情報が登録されていません'],
-            // ]);
     }
 }

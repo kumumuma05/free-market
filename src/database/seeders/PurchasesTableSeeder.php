@@ -14,37 +14,6 @@ class PurchasesTableSeeder extends Seeder
      */
     public function run()
     {
-        Purchase::create([
-            'item_id' => 1,
-            'buyer_id' => 2,
-        ]);
-        Purchase::create([
-            'item_id' => 2,
-            'buyer_id' => 1,
-        ]);
-        Purchase::create([
-            'item_id' => 3,
-            'buyer_id' => 1,
-        ]);
-        Purchase::create([
-            'item_id' => 4,
-            'buyer_id' => 2,
-        ]);
-        Purchase::create([
-            'item_id' => 5,
-            'buyer_id' => 3,
-        ]);
-        Purchase::create([
-            'item_id' => 6,
-            'buyer_id' => 2,
-        ]);
-        Purchase::create([
-            'item_id' => 7,
-            'buyer_id' => 2,
-        ]);
-        Purchase::create([
-            'item_id' => 8,
-            'buyer_id' => 3,
-        ]);
+
     }
 }

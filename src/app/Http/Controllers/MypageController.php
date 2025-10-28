@@ -10,7 +10,7 @@ class MypageController extends Controller
     /**
      * マイページ表示
      */
-    public function mypage(Request $request)
+    public function show(Request $request)
     {
         $user = auth()->user();
         $page = $request->query('page', 'sell');
