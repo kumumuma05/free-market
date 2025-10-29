@@ -7,6 +7,7 @@ use App\Http\Controllers\ItemDetailController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\SellController;
+use App\Http\Controllers\EmailVerificationController;
 
 // 商品一覧（ホーム）画面表示
 Route::get('/', [ItemController::class, 'index']);
@@ -53,7 +54,13 @@ Route::middleware('auth')->group(function(){
 });
 
 
+Route::get('/email/verify', [EmailVerificationController::class, 'showNotice'])->middleware('auth');
 
+Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])->middleware(['auth', 'throttle:6,1']);
+
+// Route::get('/email/verification-guide', [EmailVerificationController::class, 'showGuide'])->middleware('auth');
+
+Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware(['auth', 'signed'])->name('verification.verify');
 
 
 

@@ -25,10 +25,12 @@ class CreateNewUser implements CreatesNewUsers
             (new RegisterRequest)->rules(),
             (new RegisterRequest)->messages())->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+
+        return $user;
     }
 }

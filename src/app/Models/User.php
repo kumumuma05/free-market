@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -22,12 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'tel',
         'profile_image',
         'postal',
         'address',
         'building',
-        'profile_completed',
     ];
 
     /**
@@ -51,13 +49,16 @@ class User extends Authenticatable
     ];
 
     /**
-     * リレーション
+     * itemsテーブルとのリレーション
      */
     public function items()
     {
         return $this->hasMany(Item::class);
     }
 
+    /**
+     * commentsテーブルとのリレーション
+     */
     public function comments()
     {
         return $this->hasMany(Comment::class);

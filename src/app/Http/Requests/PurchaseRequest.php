@@ -25,7 +25,7 @@ class PurchaseRequest extends FormRequest
     {
         return [
             'payment_method' => 'required',
-            'shipping_postal' => 'required',
+            'shipping_postal' => 'required|regex:/^\d{3}-\d{4}$/',
             'shipping_address' => 'required',
             'shipping_building' => 'nullable',
         ];
@@ -46,6 +46,7 @@ class PurchaseRequest extends FormRequest
         return [
             'payment_method.required' => '支払方法を選択してください',
             'shipping_postal.required' => '配送先の郵便番号を入力してください',
+            'shipping_postal.regex' => '郵便番号はハイフンをつけてください',
             'shipping_address.required' => '配送先の住所を入力してください',
         ];
     }

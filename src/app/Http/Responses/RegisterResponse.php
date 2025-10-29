@@ -8,7 +8,11 @@ class RegisterResponse implements RegisterResponseContract
 {
     public function toResponse($request)
     {
-        // 新規登録後はプロフィール画面へ
+        // メール認証していない場合は認証へ
+        if (! $request->user()->hasVerifiedEmail()) {
+            return redirect('/email/verify');
+        }
+        // メール認証後はプロフィール設定へ
     return redirect('mypage/profile');
     }
 }

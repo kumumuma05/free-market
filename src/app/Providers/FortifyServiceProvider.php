@@ -22,6 +22,9 @@ use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 use App\Http\Responses\RegisterResponse as AppRegisterResponse;
 use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
 use App\Http\Requests\LoginRequest as AppLoginRequest;
+use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
+use App\Http\Responses\LoginResponse;
+
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -33,6 +36,10 @@ class FortifyServiceProvider extends ServiceProvider
     {
         // 新規登録時のレスポンス変更
         $this->app->singleton(RegisterResponseContract::class, AppRegisterResponse::class);
+
+        // ログイン時のレスポンス変更
+        $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
+
 
         // ログイン画面でformrequestを使用
         $this->app->bind(FortifyLoginRequest::class, AppLoginRequest::class);
@@ -62,5 +69,6 @@ class FortifyServiceProvider extends ServiceProvider
 
             return Limit::perMinute(10)->by($email . $request->ip());
         });
+
     }
 }
