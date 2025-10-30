@@ -25,7 +25,7 @@
         <!-- サーチウィンドウ -->
         <form class="header__search" action="/item/search" method="get">
             <input class="header__search-input" type="text" name="keyword" value="{{ request('keyword', '') }}"  placeholder="なにをお探しですか？" />
-            <input type="hidden" name="tab" value="{{ $activeTab ?? '' }}">
+            <input type="hidden" name="tab" value="{{ $activeTab ?? 'recommend' }}">
         </form>
 
         <!-- ナビボタン -->

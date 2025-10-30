@@ -51,16 +51,18 @@ Route::middleware('auth')->group(function(){
     Route::post('sell/session', [SellController::class, 'imagePostSession']);
     // 商品出品登録
     Route::post('/sell', [SellController::class, 'store']);
+
+    // メール認証誘導画面表示
+    Route::get('/email/verify', [EmailVerificationController::class, 'showNotice']);
+    // 認証メール再送
+    Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])->middleware('throttle:6,1');
+    // メール認証実行
+    Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
 });
-
-
-Route::get('/email/verify', [EmailVerificationController::class, 'showNotice'])->middleware('auth');
-
-Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])->middleware(['auth', 'throttle:6,1']);
 
 // Route::get('/email/verification-guide', [EmailVerificationController::class, 'showGuide'])->middleware('auth');
 
-Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware(['auth', 'signed'])->name('verification.verify');
+
 
 
 
