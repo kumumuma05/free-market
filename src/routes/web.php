@@ -60,6 +60,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
 });
 
+Route::get('/purchase/{item}/success', [PurchaseController::class, 'success']);
+ROute::get('purchase/(item}/cancel', [PurchaseController::class, 'cancel']);
+
 // Route::get('/email/verification-guide', [EmailVerificationController::class, 'showGuide'])->middleware('auth');
 
 

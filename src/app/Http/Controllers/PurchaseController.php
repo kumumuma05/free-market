@@ -8,6 +8,7 @@ use App\Http\Requests\PurchaseRequest;
 use App\Http\Requests\AddressRequest;
 use App\Models\Item;
 use App\Models\Purchase;
+use Stripe\StripeClient;
 
 
 
@@ -33,8 +34,7 @@ class PurchaseController extends Controller
             $request->session()->put("payment_method.$item_id", $request->query('payment_method'));
         }
 
-        $payment = $request->session()->get("payment_method.$item_id");
-        // dd(session()->all());
+        $payment = (int)$request->session()->get("payment_method.$item_id", 0);
 
         return view('purchase', compact('item','user', 'shipping', 'payment'));
     }
@@ -67,10 +67,11 @@ class PurchaseController extends Controller
     }
 
     /**
-     * 購入情報登録
+     * 購入情報登録（コンビニ払い選択時）
      */
     public function store(PurchaseRequest $request, $item_id)
     {
+
         $item = Item::findOrFail($item_id);
         if (!Auth::check()){
             return back();
@@ -81,12 +82,29 @@ class PurchaseController extends Controller
         $address = $sesAddress['shipping_address'] ?? $request->input('shipping_address');
         $building = $sesAddress['shipping_building'] ?? $request->input('shipping_building', '');
 
-        $payment = $request->session()->get("payment_method.$item_id", $request->input('payment_method', ''));
+        $payment = (int)($request->session()->get("payment_method.$item_id"));
+
+        if ($item->user_id === Auth::id()) {
+            return back();
+        }
+
+        if (Purchase::where('item_id', $item->id)->exists()) {
+            return back();
+        }
+
+        if ($payment === 2) {
+
+            return $this->startStripeCheckout($item, [
+                'shipping_postal' => $postal,
+                'shipping_address' => $address,
+                'shipping_building'=> $building,
+            ]);
+        }
 
         Purchase::create([
             'item_id' =>$item->id,
             'buyer_id' =>Auth::id(),
-            'payment_method' => $payment,
+            'payment_method' => 1,
             'shipping_postal' => $postal,
             'shipping_address' => $address,
             'shipping_building' => $building,
@@ -98,5 +116,92 @@ class PurchaseController extends Controller
         return redirect('/');
     }
 
+    /**
+     * カード支払い選択時のstripe使用機能設定
+     */
+    private function startStripeCheckout(Item  $item, array $shipping)
+    {
 
+        $stripe = new StripeClient(config('services.stripe.secret'));
+
+        // Checkoutセッション新規作成
+        $session = $stripe->checkout->sessions->create([
+            'mode' => 'payment',
+            'payment_method_types' => ['card'],
+            'customer_email' => Auth::user()->email,
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'jpy',
+                    'product_data' => [
+                        'name' => $item->product_name,
+                    ],
+                    'unit_amount' => (int)$item->price
+                ],
+                'quantity' => 1,
+            ]],
+            'metadata' => [
+                'item_id' => (string)$item->id,
+                'buyer_id' => (string)Auth::id(),
+                'shipping_postal' => $shipping['shipping_postal'] ?? '',
+                'shipping_address'  => $shipping['shipping_address'] ?? '',
+                'shipping_building' => $shipping['shipping_building'] ?? '',
+            ],
+            'success_url' => url("/purchase/{$item->id}/success?session_id={CHECKOUT_SESSION_ID}"),
+            'cancel_url'  => url("/purchase/{$item->id}/cancel"),
+        ]);
+
+        return redirect()->away($session->url);
+    }
+
+    /**
+     * 購入情報登録（カード支払い選択・成功時）
+     */
+    public function success(Request $request, $item_id)
+    {
+        $item = Item::findOrFail($item_id);
+
+        if (! Auth::check()) {
+        return redirect("/login");
+        }
+
+        $sessionId = $request->query('session_id');
+        if (! $sessionId) {
+            return redirect("/purchase/{$item->id}");
+        }
+
+        // 決済情報の取得
+        $stripe  = new StripeClient(config('services.stripe.secret'));
+        $session = $stripe->checkout->sessions->retrieve($sessionId, ['expand' => ['payment_intent']]);
+
+        // 支払が成功しているか確認（失敗しているときは購入画面へリダイレクト）
+        $sessionPaid = $session->payment_status === 'paid';
+        $intentSucceeded = $session->payment_intent->status === 'succeeded';
+
+        $paid = $session && $sessionPaid && $intentSucceeded;
+
+        if (!$paid) {
+            return redirect("/purchase/{$item->id}");
+        }
+
+        // 二重購入防止
+        if (Purchase::where('item_id', $item->id)->exists()) {
+            return redirect("/item/{$item->id}");
+        }
+
+        // purchasesテーブルへ登録
+        Purchase::create([
+            'item_id'           => $item->id,
+            'buyer_id'          => (int)$m->buyer_id,
+            'payment_method'    => 2,
+            'shipping_postal'   => (string)$m->shipping_postal,
+            'shipping_address'  => (string)$m->shipping_address,
+            'shipping_building' => (string)$m->shipping_building,
+        ]);
+
+        // セッション情報リセット
+        $request->session()->forget("changed_address.$item_id");
+        $request->session()->forget("payment_method.$item_id");
+
+        return redirect("/item/{$item->id}");
+    }
 }

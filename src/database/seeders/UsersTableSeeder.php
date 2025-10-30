@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
     {
 
         User::updateOrCreate(
-            ['email' => '123@456'],
+            ['email' => 'user1@test.com'],
             [
                 'name' => '北海　太郎',
                 'password' => Hash::make('password'),
@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
             ]
         );
         User::updateOrCreate(
-            ['email' => '456@789'],
+            ['email' => 'user2@test.com'],
             [
                 'name' => '札幌　花子',
                 'password' => Hash::make('password'),
@@ -39,9 +39,9 @@ class UsersTableSeeder extends Seeder
             ]
         );
         User::updateOrCreate(
-            ['email' => '789@123'],
+            ['email' => 'user3@test.com'],
             [
-                'name' => 'hokkido',
+                'name' => 'hokki taro',
                 'password' => Hash::make('password'),
                 'profile_image' => 'profile_image/03.png',
                 'postal' => '555-5555',

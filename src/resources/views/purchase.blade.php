@@ -27,8 +27,8 @@
                 <div class="payment-select__wrap">
                     <select class="payment-select__select" name="payment_method" id="payment-select" onchange="this.form.submit()">
                         <option value="" disabled {{ request('payment_method') ? '' : 'selected' }}>選択してください</option>
-                        <option value="1" {{ request('payment_method') == 1 ? 'selected' : '' }}>コンビニ払い</option>
-                        <option value="2" {{ request('payment_method') == 2 ? 'selected' : '' }}>カード支払い</option>
+                        <option value="1" {{ $payment === 1 ? 'selected' : '' }}>コンビニ払い</option>
+                        <option value="2" {{ $payment === 2 ? 'selected' : '' }}>カード支払い</option>
                     </select>
                 </div>
                 <div class="purchase__error">
@@ -61,6 +61,9 @@
         <aside class="purchase-conf">
             <form class="purchase-conf__form" action="/purchase/{{$item->id}}" method="post">
                 @csrf
+
+                <input type="hidden" name="payment_method" value="{{ $payment ?: '' }}">
+
                 <div class="purchase-confirm__definition-inner">
                     <dl class="purchase-confirm__definition">
                         <div class="purchase-confirm__definition-set">
