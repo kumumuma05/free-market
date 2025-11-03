@@ -10,7 +10,7 @@
         <!-- アバター・ユーザ名・編集ボタン -->
         <div class="profile-info">
             <div class="profile-info__avatar">
-                <img class="profile-info__avatar-img" src="{{ $user->profile_image ? asset('storage/'.$user->profile_image) : asset('images/green.png') }}" alt="プロフィール画像">
+                <img class="profile-info__avatar-img" src="{{ $user->profile_image_url }}" alt="プロフィール画像">
             </div>
 
             <div class="profile-info__user-name">

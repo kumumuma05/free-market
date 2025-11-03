@@ -82,8 +82,9 @@
                 <h3 class="item-detail__comment-title">コメント( {{ $item->comments->count() }} ) </h3>
                 @foreach($item->comments as $comment)
                     <div class="item-detail__comment-user">
-                        <img class="comment__avatar" src="{{ asset('storage/' . $comment->user->profile_image) }}" alt="">
-                        <p class="comment__user-name">{{ $comment->user->name }}</p>
+                        <img class="comment__avatar" src="{{ $comment->user->profile_image_url }}" alt="">
+                        <p class="comment__user-na
+                        me">{{ $comment->user->name }}</p>
                     </div>
                     <p class="comment__body">{!! nl2br(e( $comment->body)) !!}</p>
                 @endforeach

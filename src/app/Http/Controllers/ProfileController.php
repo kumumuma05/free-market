@@ -65,34 +65,27 @@ class ProfileController extends Controller
      */
     public function update(ProfileRequest $request)
     {
-
-        $tempPath = $request->session()->get('temp_image');
-
-        if (!$tempPath || !Storage::disk('public')->exists('profile_image')) {
-            return back()->withInput();
-        }
-
-        // プロフィール画像のディレクトリへの本登録
-        $extension = pathinfo($tempPath, PATHINFO_EXTENSION) ?: 'jpg';
-        $destDir = 'profile_image/' . auth()->id();
-        $dest = $destDir . '/' . Str::uuid() . '.' . $extension;
-
-        Storage::disk('public')->makeDirectory($destDir);
-        Storage::disk('public')->move($tempPath, $dest);
-
         $user = auth()->user();
         $data = $request->validated();
+        $tempPath = $request->session()->get('temp_image');
 
+        if ($tempPath && Storage::disk('public')->exists($tempPath)) {
 
-        if ($sesImage) {
+            // プロフィール画像のディレクトリへの本登録
+            $extension = pathinfo($tempPath, PATHINFO_EXTENSION) ?: 'jpg';
+            $destDir = 'profile_image/' . auth()->id();
+            $dest = $destDir . '/' . Str::uuid() . '.' . $extension;
 
-            if (!empty($user->profile_image) && $user->profile_image !== $sesImage) {
+            Storage::disk('public')->makeDirectory($destDir);
+            Storage::disk('public')->move($tempPath, $dest);
+
+            if (!empty($user->profile_image)) {
                 Storage::disk('public')->delete($user->profile_image);
             }
 
-            $data['profile_image'] = $sesImage;
+            $data['profile_image'] = $dest;
 
-            $request->session()->forget('temp_image');
+            session()->forget('temp_image');
         } else {
             unset($data['profile_image']);
         }
