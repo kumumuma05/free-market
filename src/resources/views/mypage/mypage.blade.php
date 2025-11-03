@@ -7,6 +7,13 @@
 @section('content')
     <div class="mypage">
 
+        <!-- セッションメッセージ表示 -->
+        @if(session('status'))
+            <div class="mypage__alert" >
+                {{ session('status') }}
+            </div>
+        @endif
+
         <!-- アバター・ユーザ名・編集ボタン -->
         <div class="profile-info">
             <div class="profile-info__avatar">

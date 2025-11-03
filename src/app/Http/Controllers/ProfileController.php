@@ -80,7 +80,13 @@ class ProfileController extends Controller
 
         $user->update($data);
 
-        return redirect('/');
+        // 初回登録終了後はホーム画面へそれ以外はマイページへ遷移
+        if (!$user->profile_completed) {
+            $user->update(['profile_completed' => true]);
+            return redirect('/');
+        }
+
+        return redirect('/mypage')->with('status', 'プロフィールを更新しました');
     }
 
 }
