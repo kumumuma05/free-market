@@ -189,13 +189,15 @@ class PurchaseController extends Controller
         }
 
         // purchasesテーブルへ登録
+        $metadata = $session->metadata;
+
         Purchase::create([
             'item_id'           => $item->id,
-            'buyer_id'          => (int)$m->buyer_id,
+            'buyer_id'          => (int)$metadata->buyer_id,
             'payment_method'    => 2,
-            'shipping_postal'   => (string)$m->shipping_postal,
-            'shipping_address'  => (string)$m->shipping_address,
-            'shipping_building' => (string)$m->shipping_building,
+            'shipping_postal'   => (string)$metadata->shipping_postal,
+            'shipping_address'  => (string)$metadata->shipping_address,
+            'shipping_building' => (string)$metadata->shipping_building,
         ]);
 
         // セッション情報リセット

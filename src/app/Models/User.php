@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 
@@ -47,6 +48,22 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'profile_completed' => 'bool',
     ];
+
+    /**
+     * プロフィールのデフォルト画像呼び出しアクセサ
+     */
+    public function getProfileImageUrlAttribute()
+    {
+        if (session()->has('temp_image')) {
+            return Storage::url(session('temp_image'));
+        }
+
+        if ($this->profile_image) {
+            return Storage::url($this->profile_image);
+        }
+
+        return asset('images/default.png');
+    }
 
     /**
      * itemsテーブルとのリレーション

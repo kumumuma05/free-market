@@ -50,7 +50,6 @@ class Item extends Model
         return Storage::url($this->image_path);
     }
 
-
     public function comments()
     {
         return $this->hasMany(Comment::class);

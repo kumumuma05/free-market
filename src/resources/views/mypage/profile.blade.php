@@ -17,7 +17,7 @@
         <form class="profile-image__form" method="get" action="/mypage/profile">
 
             <!-- 画像選択 -->
-            <img class="profile__image" src="{{ session('temp_image') ? Storage::url(session('temp_image')) : Storage::url($user->profile_image) }}" alt="">
+            <img class="profile__image" src="{{ $user->profile_image_url }}" alt="">
             <label class="profile-form__avatar-choice" for="profile-image">画像を選択する</label>
         </form>
         <div class="profile__error">

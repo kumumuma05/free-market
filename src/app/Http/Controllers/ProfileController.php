@@ -27,25 +27,38 @@ class ProfileController extends Controller
      */
     public function imagePostSession(Request $request)
     {
-        $path = $request->file('profile_image')->store('profile_image', 'public');
+        // バリデーションチェック（仕様に準じる）
+        $request->validate([
+            'profile_image' => 'image|mimes:jpeg,png'
+        ]);
+
+        // ユーザー専用のセッションファイル保存用ディレクトリを作成
+        $userDir = 'temp/profile_image' . auth()->id();
+        Storage::disk('public')->deleteDirectory($userDir);
+        Storage::disk('public')->makeDirectory($userDir);
+
+        // セッションファイル保存
+        $extension = $request->file('profile_image')->extension();
+        $name = 'current.' . $extension;
+        $path = $request->file('profile_image')->storeAs($userDir, $name, 'public');
 
         $request->session()->put('temp_image', $path);
 
-        return redirect('/mypage/profile');
+        return redirect();
     }
 
     /**
      * プロフィール初回登録
      */
-    public function store(ProfileRequest $request)
-    {
-        $user = auth()->user();
-        $user->fill($request->validated());
-        $user->profile_completed = true;
-        $user->save();
+    // public function store(ProfileRequest $request)
+    // {
+    //     $user = auth()->user();
+    //     $user->fill($request->validated());
+    //     $user->profile_completed = true;
+    //     $user->save();
 
-        return redirect('/item.index');
-    }
+    //     return redirect('/');
+    // }
 
     /**
      * プロフィール更新
@@ -53,9 +66,23 @@ class ProfileController extends Controller
     public function update(ProfileRequest $request)
     {
 
+        $tempPath = $request->session()->get('temp_image');
+
+        if (!$tempPath || !Storage::disk('public')->exists('profile_image')) {
+            return back()->withInput();
+        }
+
+        // プロフィール画像のディレクトリへの本登録
+        $extension = pathinfo($tempPath, PATHINFO_EXTENSION) ?: 'jpg';
+        $destDir = 'profile_image/' . auth()->id();
+        $dest = $destDir . '/' . Str::uuid() . '.' . $extension;
+
+        Storage::disk('public')->makeDirectory($destDir);
+        Storage::disk('public')->move($tempPath, $dest);
+
         $user = auth()->user();
         $data = $request->validated();
-        $sesImage = $request->session()->get('temp_image');
+
 
         if ($sesImage) {
 
