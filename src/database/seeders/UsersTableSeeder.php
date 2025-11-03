@@ -24,7 +24,8 @@ class UsersTableSeeder extends Seeder
                 'profile_image' => 'profile_image/01.png',
                 'postal' => '011-2222',
                 'address' => '北海道札幌市大通１丁目１－１',
-                'building' => ''
+                'building' => '',
+                'profile_completed' => true,
             ]
         );
         User::updateOrCreate(
@@ -35,7 +36,8 @@ class UsersTableSeeder extends Seeder
                 'profile_image' => 'profile_image/02.png',
                 'postal' => '022-3333',
                 'address' => '北海道函館市五稜郭町１丁目２ー３',
-                'building' => '五稜郭MS101'
+                'building' => '五稜郭MS101',
+                'profile_completed' => true,
             ]
         );
         User::updateOrCreate(
@@ -46,7 +48,8 @@ class UsersTableSeeder extends Seeder
                 'profile_image' => 'profile_image/03.png',
                 'postal' => '555-5555',
                 'address' => '北海道虻田郡ニセコ町',
-                'building' => 'アンヌプリMS202'
+                'building' => 'アンヌプリMS202',
+                'profile_completed' => true,
             ]
         );
     }

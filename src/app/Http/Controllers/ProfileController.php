@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use App\Models\User;
 use App\Http\Requests\ProfileRequest;
 
@@ -33,7 +34,7 @@ class ProfileController extends Controller
         ]);
 
         // ユーザー専用のセッションファイル保存用ディレクトリを作成
-        $userDir = 'temp/profile_image' . auth()->id();
+        $userDir = 'tmp/profile_image' . auth()->id();
         Storage::disk('public')->deleteDirectory($userDir);
         Storage::disk('public')->makeDirectory($userDir);
 
@@ -44,21 +45,8 @@ class ProfileController extends Controller
 
         $request->session()->put('temp_image', $path);
 
-        return redirect();
+        return redirect('/mypage/profile');
     }
-
-    /**
-     * プロフィール初回登録
-     */
-    // public function store(ProfileRequest $request)
-    // {
-    //     $user = auth()->user();
-    //     $user->fill($request->validated());
-    //     $user->profile_completed = true;
-    //     $user->save();
-
-    //     return redirect('/');
-    // }
 
     /**
      * プロフィール更新
