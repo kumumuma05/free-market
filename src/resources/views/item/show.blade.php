@@ -52,7 +52,11 @@
             </div>
 
             <!-- 購入手続きリンク -->
-            <a class="item-purchase__link-button" href="/purchase/{{ $item->id }}">購入手続きへ</a>
+            @if($item->is_sold)
+                <button disabled class="item-purchase__link-button is-disabled">売り切れ</button>
+            @else
+                <a class="item-purchase__link-button" href="/purchase/{{ $item->id }}">購入手続きへ</a>
+            @endif
 
             <!-- 商品説明 -->
             <div class="item-detail__description">

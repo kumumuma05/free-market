@@ -101,7 +101,14 @@
     color: #FFF;
     text-decoration: none;
     background: #F55;
+    border: none;
     border-radius: 4px;
+}
+
+.item-purchase__link-button.is-disabled {
+    background: #AAA;
+    cursor: not-allowed;
+    opacity: .7;
 }
 
 /* 商品説明 */
@@ -138,12 +145,15 @@
 
 .item-detail__item-info dd {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     gap: 25px;
     font-size: 20px;
 }
 
 .item-info__category {
+    display: inline-flex;
+    align-items: center;
     background: #D9D9D9;
     border-radius: 15pc;
     padding: 0 25px;

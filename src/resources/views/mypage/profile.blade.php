@@ -39,7 +39,7 @@
         </form>
 
         <!-- ユーザー情報入力フォーム -->
-        <form class="profile-form" action="/mypage/profile/update" method="post" enctype="multipart/form-data">
+        <form class="profile-form" action="/mypage/profile" method="post" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
 

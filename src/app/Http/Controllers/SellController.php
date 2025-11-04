@@ -24,7 +24,7 @@ class SellController extends Controller
 
         $image = $request->session()->get('temp_image');
 
-        return view('sell', compact('categories', 'items', 'labels', 'image'));
+        return view('/sell/create', compact('categories', 'items', 'labels', 'image'));
     }
 
     /**

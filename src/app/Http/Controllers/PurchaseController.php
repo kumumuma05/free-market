@@ -36,7 +36,7 @@ class PurchaseController extends Controller
 
         $payment = (int)$request->session()->get("payment_method.$item_id", 0);
 
-        return view('purchase', compact('item','user', 'shipping', 'payment'));
+        return view('/purchase/checkout', compact('item','user', 'shipping', 'payment'));
     }
 
     /**
@@ -47,7 +47,7 @@ class PurchaseController extends Controller
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
-        return view('address', compact('item','user'));
+        return view('/purchase/address', compact('item','user'));
     }
 
     /**

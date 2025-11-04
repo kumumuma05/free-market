@@ -14,6 +14,7 @@ class ItemDetailController extends Controller
      * 商品詳細画面表示
      */
     public function show($item_id) {
+
         $item = Item::findOrFail($item_id);
         $likeCount = $item->likedUsers()->count();
         $commentCount = $item->comments()->count();

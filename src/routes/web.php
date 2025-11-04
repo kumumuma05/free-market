@@ -75,7 +75,7 @@ Route::middleware(['auth','verified','profile.completed'])->group(function () {
     // プロフィール画像のセッションアップロード
     Route::post('mypage/profile/session', [ProfileController::class, 'imagePostSession']);
     // プロフィール更新
-    Route::patch('mypage/profile/update', [ProfileController::class, 'update']);
+    Route::patch('mypage/profile', [ProfileController::class, 'update']);
 
     // 商品出品画面表示
     Route::get('/sell', [SellController::class, 'create']);
