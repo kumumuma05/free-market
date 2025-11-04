@@ -1,11 +1,7 @@
-.auth {
-    max-width: 1540px;
-    margin: 0 auto;
-}
-
 .header {
     display: flex;
-    width: 100%;
+    max-width: 1540px;
+    margin: 0 auto;
     height: 82px;
     align-items: center;
     background: #000;
@@ -17,8 +13,12 @@
     margin-left: 35px;
 }
 
+/* レスポンシブデザイン */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
-
+    .auth {
+        max-width: 1540px;
+        margin: 0 auto;
+    }
 }
 
 @media screen and (min-width: 768px) and (max-width: 850px) {

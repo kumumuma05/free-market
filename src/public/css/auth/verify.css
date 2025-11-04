@@ -53,3 +53,26 @@
     color: #0073CC;
     font-size: 20px;
 }
+
+/* レスポンシブデザイン */
+@media screen and (min-width: 1400) and (max-width: 1540px) {
+    .content {
+        max-width: 1540px;
+        margin: 0 auto;
+    }
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .verify-email {
+        width: 600px;
+        margin: 250px auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .verify-email {
+        width: 600px;
+        margin: 250px auto;
+    }
+}

@@ -1,8 +1,3 @@
-.content {
-    max-width: 1540px;
-    margin: 0 auto;
-}
-
 .purchase {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 440px;
@@ -185,6 +180,13 @@
 }
 
 /* レスポンシブデザイン */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .content {
+        max-width: 1540px;
+        margin: 0 auto;
+    }
+}
+
 @media screen and (min-width: 768px) and (max-width: 850px) {
     .purchase {
         display: flex;
