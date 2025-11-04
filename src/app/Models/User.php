@@ -27,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'postal',
         'address',
         'building',
+        'profile_completed'
     ];
 
     /**
@@ -66,7 +67,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * itemsテーブルとのリレーション
+     * itemsテーブルとのリレーション(1対N（0～多)）
      */
     public function items()
     {
@@ -74,28 +75,35 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * commentsテーブルとのリレーション
+     * commentsテーブルとのリレーション(1対N（0～多)）
      */
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
 
+    /**
+     * itemsテーブルとのリレーション(n対n:0～多)）
+     * 中間テーブル:likes
+     */
+    public function likedItems()
+    {
+        return $this->belongsToMany(Item::class, 'likes')->withTimestamps();
+    }
+
+    /**
+     * purchasesテーブルとのリレーション(1対N（0～多)）
+     */
     public function purchases()
     {
         return $this->hasMany(Purchase::class, 'buyer_id');
     }
 
+    /**
+     * 購入した商品一覧を取得（purchases中間テーブル経由）
+     */
     public function purchasedItems()
     {
         return $this->belongsToMany(Item::class, 'purchases', 'buyer_id', 'item_id')->withTimestamps();
-    }
-
-    /**
-     * likesテーブルとのリレーション
-     */
-    public function likedItems()
-    {
-        return $this->belongsToMany(Item::class, 'likes')->withTimestamps();
     }
 }

@@ -113,7 +113,7 @@ class PurchaseController extends Controller
         $request->session()->forget("changed_address.$item_id");
         $request->session()->forget("payment_method.$item_id");
 
-        return redirect('/');
+        return redirect('/mypage?page=buy')->with('status', '商品の購入が完了しました。');
     }
 
     /**
@@ -204,6 +204,6 @@ class PurchaseController extends Controller
         $request->session()->forget("changed_address.$item_id");
         $request->session()->forget("payment_method.$item_id");
 
-        return redirect("/item/{$item->id}");
+        return redirect('/mypage?page=buy')->with('status', '商品の購入が完了しました。');
     }
 }

@@ -8,6 +8,16 @@
     margin: 0 auto;
 }
 
+/* セッションメッセージ */
+.profile__alert {
+    background: #def7e7;
+    color: #0b6b39;
+    padding: 12px 30px;
+    border-radius: 6px;
+    font-size: 26px;
+    font-weight: 700;
+}
+
 /* タイトル */
 .profile-title {
     margin-top: 50px;

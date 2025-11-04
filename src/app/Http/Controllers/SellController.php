@@ -88,6 +88,6 @@ class SellController extends Controller
         $request->session()->forget('temp_image');
         Storage::disk('public')->deleteDirectory('tmp/item_image/' . auth()->id());
 
-        return redirect('/sell');
+        return redirect('/mypage')->with('status', '商品を出品しました');
     }
 }

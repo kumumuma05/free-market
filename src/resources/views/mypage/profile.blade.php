@@ -6,6 +6,13 @@
 @endsection
 
 @section('content')
+    <!-- セッションメッセージ表示 -->
+    @if(session('status'))
+        <div class="profile__alert" >
+            {{ session('status') }}
+        </div>
+    @endif
+
     <div class="profile">
 
         <!-- タイトル -->

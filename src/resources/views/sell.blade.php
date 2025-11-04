@@ -6,6 +6,8 @@
 
 @section('content')
     <div class="sell">
+
+        <!-- タイトル -->
         <h2 class="sell__title">商品の出品</h2>
 
         <!-- 画像 -->
