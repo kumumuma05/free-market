@@ -7,6 +7,13 @@
 @section('content')
     <div class="item-index">
 
+        <!-- セッションメッセージ表示 -->
+        @if(session('status'))
+            <div class="item-index__alert" >
+                {{ session('status') }}
+            </div>
+        @endif
+
         <!-- タブ -->
         <div class="tab-menu">
             <a class="tab-menu__link {{ $activeTab === 'recommend' ? 'tab-menu__link--active' : '' }}" href="/">おすすめ</a>

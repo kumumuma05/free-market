@@ -19,26 +19,32 @@ class ItemController extends Controller
         $activeTab = $request->query('tab') ?: 'recommend';
         $keyword = $request->query('keyword', '');
 
-        // ログインユーザのみ限定、いいねした商品リスト（マイリスト）を表示する
-        if($tab === 'mylist' && Auth::check())
-        {
-            $query = Auth::user()->likedItems()->latest();
-            $activeTab = 'mylist';
+        if($tab === 'mylist') {
+            if(Auth::check()) {
+                // ログインユーザーはいいね済みだけ表示
+                $query = Auth::user()->likedItems()->latest();
+                if($keyword !== '') {
+                    $query = $query->keywordSearch($keyword);
+                }
+                $items = $query->get();
+            } else {
+                // ビジターは空リストを返す
+                $items = collect();
+            }
         } else {
-            $query = Item::query()->latest();
-            $activeTab = 'recommend';
 
-            // ログインユーザは自分の出品商品以外の商品のみを表示
-            if (Auth::check()) {
+            $query = Item::query()->latest();
+
+            if(Auth::check()) {
                 $query->where('user_id', '!=', Auth::id());
             }
-        }
 
-        // 商品検索をマイリストにも保持
-        if ($keyword !== '') {
-            $query->keywordSearch($keyword);
+            if($keyword !== '') {
+                $query = $query->keywordSearch($keyword);
+            }
+
+            $items = $query->get();
         }
-        $items = $query->get();
 
         return view('item.index', compact('items', 'activeTab', 'keyword'));
     }

@@ -230,6 +230,12 @@
     font-weight: 700;
 }
 
+.form__error {
+    color: #F00;
+    font-size: 20px;
+    font-weight: 700;
+}
+
 /* レスポンシブデザイン */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
     .content {

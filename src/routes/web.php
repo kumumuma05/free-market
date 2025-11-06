@@ -22,7 +22,7 @@ Route::get('/item/{item_id}', [ItemDetailController::class, 'show']);
 
 // 決済リダイレクト
 Route::get('/purchase/{item}/success', [PurchaseController::class, 'success']);
-Route::get('purchase/(item}/cancel', [PurchaseController::class, 'cancel']);
+Route::get('/purchase/(item}/cancel', [PurchaseController::class, 'cancel']);
 
 /**
  * fortify認証済み（メール未承認やプロフィール未完了はとおす）
@@ -36,20 +36,18 @@ Route::middleware('auth')->group(function() {
     // メール認証実行
     Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
 
-    Route::middleware('verified')->group(function () {
-        // プロフィール編集画面表示
-        Route::get('mypage/profile', [ProfileController::class, 'edit']);
-        // プロフィール画像のセッションアップロード
-        Route::post('mypage/profile/session', [ProfileController::class, 'imagePostSession']);
-        // プロフィール更新
-        Route::patch('mypage/profile/update', [ProfileController::class, 'update']);
-    });
+    // プロフィール編集画面表示
+    Route::get('mypage/profile', [ProfileController::class, 'edit']);
+    // プロフィール画像のセッションアップロード
+    Route::post('mypage/profile/session', [ProfileController::class, 'imagePostSession']);
+    // プロフィール更新
+    Route::patch('mypage/profile/update', [ProfileController::class, 'update']);
 });
 
 /**
  * アプリ本体（ログイン+メール承認済み+プロフィール完了）
  */
-Route::middleware(['auth','verified','profile.completed'])->group(function () {
+Route::middleware(['auth','profile.completed'])->group(function () {
 
     // マイページ表示
     Route::get('/mypage', [MypageController::class, 'show']);
@@ -68,8 +66,6 @@ Route::middleware(['auth','verified','profile.completed'])->group(function () {
     // 配送先変更のセッション登録
     Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'shippingUpdate']);
 
-    // マイページ表示
-    Route::get('/mypage', [MypageController::class, 'show']);
     // プロフィール編集画面表示
     Route::get('mypage/profile', [ProfileController::class, 'edit']);
     // プロフィール画像のセッションアップロード
@@ -83,7 +79,6 @@ Route::middleware(['auth','verified','profile.completed'])->group(function () {
     Route::post('sell/session', [SellController::class, 'imagePostSession']);
     // 商品出品登録
     Route::post('/sell', [SellController::class, 'store']);
-
 });
 
 

@@ -21,13 +21,17 @@ class RegisterRequest extends FormRequest
      *
      * @return array
      */
+
+    /**
+     * バリデーションルール
+     */
     public function rules()
     {
         return [
             'name' => 'required|max:20',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|confirmed',
-
+            'password' => 'required|min:8',
+            'password_confirmation' => 'required|min:8|same:password',
         ];
     }
 
@@ -44,7 +48,9 @@ class RegisterRequest extends FormRequest
         'email.unique' => 'このメールアドレスは既に登録されています',
         'password.required' => 'パスワードを入力してください',
         'password.min' => 'パスワードは8文字以上で入力してください',
-        'password.confirmed' => 'パスワードと一致しません',
+        'password_confirmation.required' => '確認用パスワードを入力してください',
+        'password_confirmation.min' => '確認用パスワードは8文字以上で入力してください',
+        'password_confirmation.same' => 'パスワードと一致しません',
         ];
     }
 }

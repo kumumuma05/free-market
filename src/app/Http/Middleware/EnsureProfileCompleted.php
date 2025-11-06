@@ -17,6 +17,7 @@ class EnsureProfileCompleted
 
     public function handle(Request $request, Closure $next)
     {
+
         $user = $request->user();
 
         // 未ログインユーザは対象外（authで制御）
@@ -24,16 +25,25 @@ class EnsureProfileCompleted
             return $next($request);
         }
 
-        // メール未承認ユーザーは対象外（verifiedで制御）
+        // メール未承認ユーザーはメール誘導画面へ
         if (!$user->hasVerifiedEmail()) {
-            return $next($request);
+            if(
+                !$request->is('email/verify') &&
+                !$request->is('email/verify/*') &&
+                !$request->is('email/verification-notification') &&
+                !$request->is('logout')
+            ) {
+                return redirect('/email/verify');
+            }
         }
 
+        // プロフィール未完了はプロフィール設定画面へ
         if (!$user->profile_completed && !$this->isWhitelisted($request)) {
             return redirect('/mypage/profile')->with('status', 'プロフィール登録を完了してください');
         }
         return $next($request);
     }
+
 
     private function isWhitelisted(Request $request) {
         return $request->is('mypage/profile')
