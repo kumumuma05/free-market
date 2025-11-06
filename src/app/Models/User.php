@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 
@@ -59,11 +60,14 @@ class User extends Authenticatable implements MustVerifyEmail
             return Storage::url(session('temp_image'));
         }
 
-        if ($this->profile_image) {
+        if (!empty($this->profile_image)) {
+            if (Str::startsWith($this->profile_image, 'images/')) {
+                return asset($this->profile_image);
+            }
             return Storage::url($this->profile_image);
         }
 
-        return asset('images/default.png');
+        return asset('images/profile_image/default.png');
     }
 
     /**
