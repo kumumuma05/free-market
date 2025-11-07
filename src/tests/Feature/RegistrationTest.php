@@ -8,8 +8,8 @@ use Tests\TestCase;
 
 class RegistrationTest extends TestCase
 {
-    use RefreshDatabase;
-
+    
+use RefreshDatabase;
     /**
      * 名前入力必須
      */
