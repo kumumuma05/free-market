@@ -12,21 +12,36 @@ use App\Models\Item;
 class LikeFunctionTest extends TestCase
 {
     use RefreshDatabase;
+
+    /**
+     * 認証済みユーザー作成
+     */
+    private function createUser()
+    {
+        return User::factory()->create([
+            'email_verified_at' => now(),
+        ]);
+    }
+
+    /**
+     * 出品者に紐づいた商品作成
+     */
+    private function createItem(User $seller): Item
+    {
+        return Item::factory()->create([
+            'user_id' => $seller->id,
+        ]);
+    }
+
     /**
      * いいねを登録、合計数が増加する
      */
     public function test_like_registration_and_total_number_increase(){
 
-        // 認証済みユーザー作成
-        $this->seed();
-        $user = User::firstOrFail();
-        $user->forceFill(['email_verified_at' => now()])->save();
-
-        // 出品者・商品作成
-        $seller = User::factory()->create();
-        $item = Item::factory()->create([
-            'user_id' => $seller->id,
-        ]);
+        // 準備
+        $user = $this->createUser();
+        $seller = $this->createUser();
+        $item = $this->createItem($seller);
 
         // ログイン
         $this->actingAs($user);
@@ -55,16 +70,10 @@ class LikeFunctionTest extends TestCase
      */
     public function test_the_color_of_the_like_icon_changes(){
 
-        // ユーザー作成
-        $user = User::factory()->create([
-            'email_verified_at' => now(),
-        ]);
-
-        // 出品者・アイテム作成
-        $seller = User::factory()->create();
-        $item = Item::factory()->create([
-            'user_id' => $seller->id,
-        ]);
+        // 準備
+        $user = $this->createUser();
+        $seller = $this->createUser();
+        $item = $this->createItem($seller);
 
         // ログイン
         $this->actingAs($user);
@@ -92,16 +101,11 @@ class LikeFunctionTest extends TestCase
      */
     public function test_unlike_removes_like_and_decreases_total_count()
     {
-        // ユーザ作成
-        $user = User::factory()->create([
-            'email_verified_at' => now(),
-        ]);
 
-        // 出品者・商品作成
-        $seller = User::factory()->create();
-        $item = Item::factory()->create([
-            'user_id' => $seller->id,
-        ]);
+        // 準備
+        $user = $this->createUser();
+        $seller = $this->createUser();
+        $item = $this->createItem($seller);
 
         // ログイン
         $this->actingAs($user);

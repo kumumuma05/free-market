@@ -86,15 +86,17 @@ class MyListPageTest extends TestCase
     }
 
     /**
-     * 未ログインの場合はマイリストリンクしない
+     * 未ログインの場合は商品が表示されない
      */
-    public function test_guest_clicked_mylist_changes_nothing()
+    public function test_guest_mylist_shows_no_items()
     {
         $home = $this->get('/')->assertOk();
         $home->assertSeeText('マイリスト');
 
-        $mylist = $this->get('/?tab=mylist')->assertOk();
+        $response = $this->get('/?tab=mylist')->assertOk();
 
-        $this->assertSame($home->getContent(), $mylist->getContent());
+        $response->assertSeeText('マイリスト');
+
+        $response->assertDontSee('item-list__card');
     }
 }
