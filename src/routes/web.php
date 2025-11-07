@@ -30,7 +30,7 @@ Route::get('/purchase/(item}/cancel', [PurchaseController::class, 'cancel']);
 Route::middleware('auth')->group(function() {
 
     // メール認証誘導画面表示
-    Route::get('/email/verify', [EmailVerificationController::class, 'showNotice']);
+    Route::get('/email/verify', [EmailVerificationController::class, 'notice']);
     // 認証メール再送
     Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])->middleware('throttle:6,1');
     // メール認証実行

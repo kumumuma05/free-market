@@ -25,6 +25,7 @@ class UserFactory extends Factory
             'postal' => $this->faker->postCode(),
             'address' => $this->faker->address(),
             'building' => $this->faker->boolean(30) ? $this->faker->secondaryAddress() : null,
+            'profile_completed' => true,
         ];
     }
 

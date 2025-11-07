@@ -52,6 +52,16 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * プロフィール作成完了チェック
+     */
+    public function profileCompleted()
+{
+    return filled($this->name)
+        && filled($this->postal)
+        && filled($this->address);
+}
+
+    /**
      * プロフィールのデフォルト画像呼び出しアクセサ
      */
     public function getProfileImageUrlAttribute()
