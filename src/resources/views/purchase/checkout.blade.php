@@ -61,9 +61,6 @@
         <aside class="purchase-conf">
             <form class="purchase-conf__form" action="/purchase/{{$item->id}}" method="post">
                 @csrf
-
-                <input type="hidden" name="payment_method" value="{{ $payment ?: '' }}">
-
                 <div class="purchase-confirm__definition-inner">
                     <dl class="purchase-confirm__definition">
                         <div class="purchase-confirm__definition-set">
