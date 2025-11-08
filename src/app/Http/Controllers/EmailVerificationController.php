@@ -24,7 +24,7 @@ class EmailVerificationController extends Controller
 
         $user = $request->user();
 
-        return $user->profileCompleted()
+        return $user->profile_completed
             ? redirect('/')
             : redirect('/mypage/profile');
     }
