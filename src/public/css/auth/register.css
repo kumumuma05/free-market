@@ -70,7 +70,7 @@
     .content {
         max-width: 1540px;
         margin: 0 auto;
-        }
+    }
 }
 
 @media screen and (min-width: 768px) and (max-width: 850px) {
@@ -80,8 +80,10 @@
     }
 
     .register {
-        width: 500px;
+        width: 90%;
+        max-width: 500px;
         margin: 0 auto;
+        height: auto;
     }
 }
 
@@ -92,7 +94,9 @@
     }
 
     .register {
-        width: 500px;
+        width: 90%;
+        max-width: 500px;
+        margin: 0 auto;
         height: auto;
     }
 }

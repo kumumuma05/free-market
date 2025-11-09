@@ -4,7 +4,7 @@
 }
 
 /* セッションメッセージ */
-.verify__alert {
+.verify-email__alert {
     background: #def7e7;
     color: #0b6b39;
     padding: 12px 30px;
@@ -49,13 +49,13 @@
     font-weight: 700;
 }
 
-.verify-form {
+.verify-email__form {
     display: flex;
     justify-content: center;
     margin-top: 50px;
 }
 
-.form__button {
+.verify-email__form-button {
     appearance: none;
     background: none;
     border: none;
@@ -65,7 +65,7 @@
 }
 
 /* レスポンシブデザイン */
-@media screen and (min-width: 1400) and (max-width: 1540px) {
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
     .content {
         max-width: 1540px;
         margin: 0 auto;
@@ -82,7 +82,9 @@
 
 @media screen and (max-width: 768px) {
     .verify-email {
-        width: 600px;
-        margin: 250px auto;
+        width: 100%;
+        max-width: 600px;
+        margin: 200px auto;
+        padding: 0 16px;
     }
 }
