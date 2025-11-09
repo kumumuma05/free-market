@@ -14,7 +14,7 @@
 }
 
 /* タブ */
-.tab-menu {
+.item-index__tab-menu {
     display: flex;
     gap: 80px;
     margin-top: 50px;
@@ -23,19 +23,19 @@
     border-bottom: 2px solid #5F5F5F;
 }
 
-.tab-menu__link {
+.item-index__tab-menu-link {
     text-decoration: none;
     color: #5F5F5F;
     font-weight: bold;
     font-size: 24px;
 }
 
-.tab-menu__link--active {
+.item-index__tab-menu-link--active {
     color: #F00;
 }
 
 /* 一覧 */
-.item-list {
+.item-index__list {
     list-style: none;
     display: grid;
     grid-template-columns: repeat(4, minmax(290px, 1fr));
@@ -44,17 +44,17 @@
     padding: 0;
 }
 
-.item-list__item {
+.item-index__list-item {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.item-list__card {
+.item-index__list-card {
     text-decoration: none;
 }
 
-.item-list__card-image {
+.item-index__list-card-image {
     position: relative;
     width: 290px;
     height: 290px;
@@ -63,13 +63,13 @@
     overflow: hidden;
 }
 
-.item-list__card-image img{
+.item-index__list-card-image img{
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.item-list__card-sold {
+.item-index__list-card-sold {
     position: absolute;
     top: 0;
     left: 0;
@@ -82,7 +82,7 @@
 
 }
 
-.item-list__card-title {
+.item-index__list-card-title {
     margin: 10px;
     text-decoration: none;
     font-size: 25px;
@@ -91,7 +91,7 @@
 }
 
 /* レスポンシブデザイン */
-@media screen and (min-width: 1400) and (max-width: 1540px) {
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
     .item-index {
         max-width: 1540px;
         margin: 0 auto;
