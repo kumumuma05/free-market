@@ -81,6 +81,21 @@ body {
 }
 
 /* レスポンシブデザイン */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .header__logo {
+        width: 350px;
+        margin-left: 30px;
+        }
+
+    .header__search-input {
+        width: 480px;
+    }
+
+    .header__nav-list {
+        gap: 20px;
+    }
+}
+
 @media screen and (min-width: 768px) and (max-width: 850px) {
     .header {
         display: grid;

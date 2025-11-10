@@ -1,45 +1,45 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/item/show.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/item/show.css') }}">
 @endsection
 
 @section('content')
     <div class="item-show">
 
         <!-- 商品画像 -->
-        <div class="item-image">
+        <div class="item-show__image">
                 <img src="{{ $item->image_url }}" alt="商品画像">
         </div>
 
         <!-- 商品詳細 -->
-        <div class="item-detail">
+        <div class="item-show__detail">
 
             <!-- 商品名・ブランド・価格 -->
-            <h2 class="item-detail__title">
+            <h2 class="item-show__detail-title">
                 {{ $item->product_name }}
             </h2>
-            <div class="item-detail__brand">
+            <div class="item-show__detail-brand">
                 {{ $item->brand }}
             </div>
-            <div class="item-detail__price">
+            <div class="item-show__detail-price">
                 ¥<span>{{ number_format($item->price) }} </span>(税込)
             </div>
 
             <!-- いいね・コメントカウント -->
-            <div class="item-detail__count">
+            <div class="item-show__detail-count">
 
                 <!-- いいね -->
                 <div class="like-count__inner">
                     <form class="like-count__form" action="/item/{{ $item->id }}/like" method="post">
-                    @csrf
-                        <button class="like-count__button {{ $isLiked ? 'is-active' : '' }}" type="submit">
-                            <svg data-testid="like-icon" viewBox="0 0 22 22" width ="40" hight="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+                        @csrf
+                        <button class="like-count__form-button {{ $isLiked ? 'is-active' : '' }}" type="submit">
+                            <svg data-testid="like-icon" viewBox="0 0 22 22" width ="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
                                 <path d="M12 17.27L18.18 21 16.54 13.97 22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                             </svg>
                         </button>
                     </form>
-                    <span class="">{{ $likeCount ?? 0 }}</span>
+                    <span>{{ $likeCount ?? 0 }}</span>
                 </div>
 
                 <!-- コメント数 -->
@@ -53,27 +53,27 @@
 
             <!-- 購入手続きリンク -->
             @if($item->is_sold)
-                <button disabled class="item-purchase__link-button is-disabled">売り切れ</button>
+                <button disabled class="item-show__purchase-link is-disabled">売り切れ</button>
             @else
-                <a class="item-purchase__link-button" href="/purchase/{{ $item->id }}">購入手続きへ</a>
+                <a class="item-show__purchase-link" href="/purchase/{{ $item->id }}">購入手続きへ</a>
             @endif
 
             <!-- 商品説明 -->
             <div class="item-detail__description">
-                <h3 class="description__title">商品説明</h3>
-                <div class="description__body">
+                <h3 class="item-detail__description-title">商品説明</h3>
+                <div class="item-detail__description-body">
                     {!! nl2br(e($item->description)) !!}
                 </div>
             </div>
 
             <!-- 商品の情報 -->
             <div class="item-detail__information">
-                <h3 class="information__title">商品の情報</h3>
+                <h3 class="item-detail__information-title">商品の情報</h3>
                 <dl class="item-detail__item-info">
                     <dt>カテゴリー</dt>
                     <dd>
                         @foreach($item->categories as $category)
-                            <span class="item-info__category">{{ $category->name }}</span>
+                            <span class="item-info__category-label">{{ $category->name }}</span>
                         @endforeach
                     </dd>
                     <dt>商品の状態</dt>
@@ -86,26 +86,27 @@
                 <h3 class="item-detail__comment-title">コメント( {{ $item->comments->count() }} ) </h3>
                 @foreach($item->comments as $comment)
                     <div class="item-detail__comment-user">
-                        <img class="comment__avatar" src="{{ $comment->user->profile_image_url }}" alt="">
-                        <p class="comment__user-na
-                        me">{{ $comment->user->name }}</p>
+                        <img class="item-detail__comment-user-avatar" src="{{ $comment->user->profile_image_url }}" alt="">
+                        <p class="item-detail__comment-user-name">{{ $comment->user->name }}</p>
                     </div>
-                    <p class="comment__body">{!! nl2br(e( $comment->body)) !!}</p>
+                    <p class="item-detail__comment-body">{!! nl2br(e( $comment->body)) !!}</p>
                 @endforeach
             </div>
 
             <!-- コメント作成 -->
-            <form class="comment-create__form" action="/item/{{ $item->id }}/comments" method="post">
+            <form class="item-detail__comment-form" action="/item/{{ $item->id }}/comments" method="post">
                 @csrf
-                <label class="comment-create__form-label" for="comment">商品へのコメント</label>
-                <textarea class="comment-create__form-body" name="body" id="comment">{{ old('body') }}</textarea>
+                <label class="item-detail__comment-form-label" for="comment">商品へのコメント</label>
+                <textarea class="item-detail__comment-form-body" name="body" id="comment">{{ old('body') }}</textarea>
                 @error('body')
                     <div class="form__error">
                         {{ $message }}
                     </div>
                 @enderror
-                <button class="comment-create__form-button" type="submit">コメントを送信する</button>
+                <button class="item-detail__comment-form-button" type="submit">コメントを送信する</button>
             </form>
+
         </div>
+
     </div>
 @endsection

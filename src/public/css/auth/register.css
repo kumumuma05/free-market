@@ -1,3 +1,8 @@
+.content {
+    max-width: 1540px;
+    margin: 0 auto;
+}
+
 .register {
     max-width: 680px;
     margin: 0 auto;
@@ -68,8 +73,7 @@
 /* レスポンシブデザイン */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
     .content {
-        max-width: 1540px;
-        margin: 0 auto;
+        max-width: 1400px;
     }
 }
 

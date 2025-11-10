@@ -92,9 +92,8 @@
 
 /* レスポンシブデザイン */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
-    .item-index {
-        max-width: 1540px;
-        margin: 0 auto;
+    .item-index__list {
+        gap: 30px;
     }
 
 }
