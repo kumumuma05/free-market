@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
+use App\models\User;
 
 
 class ItemController extends Controller
@@ -19,27 +20,31 @@ class ItemController extends Controller
         $activeTab = $request->query('tab') ?: 'recommend';
         $keyword = $request->query('keyword', '');
 
-        if($tab === 'mylist') {
-            if(Auth::check()) {
-                // ログインユーザーはいいね済みだけ表示
-                $query = Auth::user()->likedItems()->latest();
-                if($keyword !== '') {
+        // マイリストタブ選択時
+        if ($tab === 'mylist') {
+            if (Auth::check()) {
+                // ログインユーザーはいいね済みだけ表示(キーワード検索もマイリストに持ち越し)
+                $user = Auth::user();
+                $query = $user->likedItems()->where('items.user_id', '!=', $user->id)->latest();
+
+                if ($keyword !== '') {
                     $query = $query->keywordSearch($keyword);
                 }
+
                 $items = $query->get();
             } else {
                 // ビジターは空リストを返す
                 $items = collect();
             }
         } else {
-
+            // おすすめタブ選択時
             $query = Item::query()->latest();
 
-            if(Auth::check()) {
+            if (Auth::check()) {
                 $query->where('user_id', '!=', Auth::id());
             }
 
-            if($keyword !== '') {
+            if ($keyword !== '') {
                 $query = $query->keywordSearch($keyword);
             }
 
@@ -58,15 +63,23 @@ class ItemController extends Controller
         $keyword = $request->query('keyword', '');
         $tab = $request->query('tab', 'recommend');
 
+        // マイリスト選択時（ログイン中）
         if($user && $tab === 'mylist') {
-            $query = $user->likedItems()->latest();
+            // いいね済み商品から検索（自分が出品した商品以外）
+            $query = $user->likedItems()->where('items.user_id', '!=', $user->id)->latest();
+
+        // おすすめ選択時（ログイン中）
         } elseif ($user) {
+            // 全体から検索（自分が出品した商品以外）
             $query = Item::query()->latest()->where('user_id', '!=', $user->id);
+
+        // 未ログイン者の場合
         } else {
             $query = Item::query()->latest();
             $tab = 'recommend';
         }
 
+        // キーワード検索
         if ($keyword !== '') {
             $query->keywordSearch($keyword);
         }

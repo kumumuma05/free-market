@@ -65,15 +65,15 @@
     color: #555;
 }
 
-.like-count__button.is-active {
+.like-count__form-button.is-active {
     color: #555;
 }
 
-.like-count__button svg path {
+.like-count__form-button svg path {
     fill: none;
 }
 
-.like-count__button.is-active svg path {
+.like-count__form-button.is-active svg path {
     fill: currentColor;
 }
 

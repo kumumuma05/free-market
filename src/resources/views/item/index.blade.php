@@ -12,12 +12,12 @@
             <div class="item-index__alert">
                 {{ session('status') }}
             </div>
-       @endif
+        @endif
 
         <!-- タブ -->
         <div class="item-index__tab-menu">
-            <a class="item-index__tab-menu-link {{ $activeTab === 'recommend' ? 'tab-menu__link--active' : '' }}" href="/">おすすめ</a>
-            <a class="item-index__tab-menu-link {{ $activeTab === 'mylist' ? 'tab-menu__link--active' : '' }}" href="/?tab=mylist&keyword={{ urlencode($keyword ?? request('keyword', '' )) }}">マイリスト</a>
+            <a class="item-index__tab-menu-link {{ $activeTab === 'recommend' ? 'item-index__tab-menu-link--active' : '' }}" href="/">おすすめ</a>
+            <a class="item-index__tab-menu-link {{ $activeTab === 'mylist' ? 'item-index__tab-menu-link--active' : '' }}" href="/?tab=mylist&keyword={{ urlencode($keyword ?? request('keyword', '' )) }}">マイリスト</a>
         </div>
 
         <!-- 一覧 -->
