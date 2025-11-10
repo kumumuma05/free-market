@@ -1,19 +1,18 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/mypage/profile.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/mypage/profile.css') }}">
 @endsection
 
 @section('content')
-    <!-- セッションメッセージ表示 -->
-    @if(session('status'))
-        <div class="profile__alert">
-            {{ session('status') }}
-        </div>
-    @endif
-
     <div class="profile">
+
+        <!-- セッションメッセージ表示 -->
+        @if(session('status'))
+            <div class="profile__alert">
+                {{ session('status') }}
+            </div>
+        @endif
 
         <!-- タイトル -->
         <div class="profile__title">

@@ -1,19 +1,19 @@
 @extends('layouts.auth')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/auth/verify.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/auth/verify.css') }}">
 @endsection
 
 @section('content')
-
-    <!-- セッションメッセージ -->
-    @if(session('status'))
-        <div class="verify-email__alert">
-            {{ session('status') }}
-        </div>
-    @endif
-
     <div class="verify-email">
+
+        <!-- セッションメッセージ -->
+        @if(session('status'))
+            <div class="verify-email__alert">
+                {{ session('status') }}
+            </div>
+        @endif
+
         <p class="verify-email__text">登録していただいたメールアドレスに承認メールを送付しました。</p>
         <p class="verify-email__text">メール認証を完了してください。</p>
 

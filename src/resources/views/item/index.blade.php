@@ -12,7 +12,7 @@
             <div class="item-index__alert">
                 {{ session('status') }}
             </div>
-        @endif
+       @endif
 
         <!-- タブ -->
         <div class="item-index__tab-menu">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/purchase/checkout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/purchase/checkout.css') }}">
 @endsection
 
 @section('content')
@@ -58,8 +58,8 @@
         </section>
 
         <!-- 確認表示 -->
-        <aside class="purchase-conf">
-            <form class="purchase-conf__form" action="/purchase/{{$item->id}}" method="post">
+        <aside class="purchase-confirm">
+            <form class="purchase-confirm__form" action="/purchase/{{$item->id}}" method="post">
                 @csrf
                 <div class="purchase-confirm__definition-inner">
                     <dl class="purchase-confirm__definition">
@@ -81,7 +81,9 @@
                 <div class="purchase-form__button">
                     <button type="submit">購入する</button>
                 </div>
+
             </form>
         </aside>
+
     </div>
 @endsection
