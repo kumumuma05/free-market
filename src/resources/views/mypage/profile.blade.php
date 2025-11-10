@@ -5,14 +5,15 @@
 @endsection
 
 @section('content')
-    <div class="profile">
 
-        <!-- セッションメッセージ表示 -->
-        @if(session('status'))
-            <div class="profile__alert">
-                {{ session('status') }}
-            </div>
-        @endif
+    <!-- セッションメッセージ表示 -->
+    @if(session('status'))
+        <div class="session-alert">
+            {{ session('status') }}
+        </div>
+    @endif
+
+    <div class="profile">
 
         <!-- タイトル -->
         <div class="profile__title">

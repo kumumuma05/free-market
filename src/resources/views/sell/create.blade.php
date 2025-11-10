@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/sell/create.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sell/create.css') }}">
 @endsection
 
 @section('content')
@@ -13,32 +13,33 @@
         <!-- 画像 -->
         <section class="sell__section">
             <div class="sell__group">
-                <form method="get" action="/sell">
-                    <label class="sell__group-label">商品画像</label>
-                    <div class="sell__image {{ session('temp_image') ? 'sell__image--has-image' : '' }}">
-                        <label class="sell__image-button" for="image_path">画像を選択する</label>
-                        @if(session('temp_image'))
-                            <img src="{{ Storage::url(session('temp_image')) }}" alt="プレビュー">
-                        @endif
-                    </div>
-                </form>
+                <label class="sell__group-label">商品画像</label>
+                <div class="sell__image {{ session('temp_image') ? 'sell__image--has-image' : '' }}">
+                    <label class="sell__image-button" for="image_path">画像を選択する</label>
+                    @if(session('temp_image'))
+                        <img src="{{ Storage::url(session('temp_image')) }}" alt="プレビュー">
+                    @endif
+                </div>
 
                 <form class="sell-form" action="/sell/session" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="file" id="image_path"  name="image_path" accept="image/*" hidden  onchange="this.form.submit()" />
                 </form>
+
                 @error('image_path')
                     <p class="sell__error">{{ $message }}</p>
                 @enderror
             </div>
         </section>
 
-        <!-- 商品の詳細 -->
-        <section class="sell__section">
-            <h3 class="sell__section-title">商品の詳細</h3>
-
-            <form class="sell-form" action="/sell" method="post" enctype="multipart/form-data">
+        <!-- 出品フォーム -->
+        <form class="sell__form" action="/sell" method="post" enctype="multipart/form-data">
             @csrf
+
+            <!-- 商品の詳細 -->
+            <section class="sell__section">
+                <h3 class="sell__section-title">商品の詳細</h3>
+
                 <!-- カテゴリ選択 -->
                 <div class="sell__group">
                     <label class="sell__group-label" for="category">カテゴリー</label>
@@ -56,7 +57,7 @@
                     <label class="sell__group-label" for="condition">商品の状態</label>
                     <div class="sell__group-select-wrap">
                         <select class="sell__group-condition-select" name="condition" id="condition">
-                            <option value="" disabled selected hidden>選択してください</option>
+                            <option value="" disabled {{ old('condition') ? '' : 'selected' }} hidden>選択してください</option>
                             <option value="1" {{ old('condition') == 1 ? 'selected' : '' }}>良好</option>
                             <option value="2" {{ old('condition') == 2 ? 'selected' : '' }}>目立った傷や汚れなし</option>
                             <option value="3" {{ old('condition') == 3 ? 'selected' : '' }}>やや傷や汚れあり</option>
@@ -111,7 +112,9 @@
                 </div>
             </section>
 
+            <!-- 送信ボタン -->
             <button class="sell__form-button" type="submit">出品する</button>
+
         </form>
     </div>
 @endsection

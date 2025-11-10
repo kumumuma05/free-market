@@ -4,7 +4,7 @@
 }
 
 /* セッションメッセージ */
-.profile__alert {
+.session-alert {
     max-width: 1540px;
     background: #def7e7;
     color: #0b6b39;

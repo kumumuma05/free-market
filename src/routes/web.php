@@ -22,10 +22,10 @@ Route::get('/item/{item_id}', [ItemDetailController::class, 'show']);
 
 // 決済リダイレクト
 Route::get('/purchase/{item}/success', [PurchaseController::class, 'success']);
-Route::get('/purchase/(item}/cancel', [PurchaseController::class, 'cancel']);
+Route::get('/purchase/{item}/cancel', [PurchaseController::class, 'cancel']);
 
 /**
- * fortify認証済み（メール未承認やプロフィール未完了はとおす）
+ * fortify認証済み（メール未承認はとおす）
  */
 Route::middleware('auth')->group(function() {
 
@@ -35,13 +35,6 @@ Route::middleware('auth')->group(function() {
     Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])->middleware('throttle:6,1');
     // メール認証実行
     Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
-
-    // プロフィール編集画面表示
-    Route::get('mypage/profile', [ProfileController::class, 'edit']);
-    // プロフィール画像のセッションアップロード
-    Route::post('mypage/profile/session', [ProfileController::class, 'imagePostSession']);
-    // プロフィール更新
-    Route::patch('mypage/profile/update', [ProfileController::class, 'update']);
 });
 
 /**

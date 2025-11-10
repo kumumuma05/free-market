@@ -164,6 +164,7 @@
     padding-left: 40px;
 }
 
+/* 送信ボタン */
 .sell__form-button {
     width: 100%;
     height: 60px;
@@ -185,13 +186,6 @@
 }
 
 /* レスポンシブデザイン */
-@media screen and (min-width: 1400px) and (max-width: 1540px) {
-    .content {
-        max-width: 1540px;
-        margin: 0 auto;
-    }
-}
-
 @media screen and (min-width: 768px) and (max-width: 850px) {
     .sell {
         max-width: 600px;
@@ -201,6 +195,7 @@
 @media screen and (max-width: 768px) {
     .sell {
         max-width: 600px;
+        width: 100%;
     }
 }
 
