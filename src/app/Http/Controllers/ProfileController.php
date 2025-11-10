@@ -20,7 +20,6 @@ class ProfileController extends Controller
         $image = $request->session()->get('temp_image');
 
         return view('mypage.profile', compact('user', 'image'));
-
     }
 
     /**

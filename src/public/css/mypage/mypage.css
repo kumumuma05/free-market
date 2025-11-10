@@ -1,8 +1,3 @@
-.content {
-    max-width: 1540px;
-    margin: 0 auto;
-}
-
 /* セッションメッセージ */
 .mypage__alert {
     background: #def7e7;
@@ -93,6 +88,7 @@
 }
 
 .item-list__card {
+    display: block;
     text-decoration: none;
 }
 
@@ -132,9 +128,8 @@
 
 /* レスポンシブデザイン */
 @media screen and (min-width: 1400px) and (max-width: 1540px) {
-    .mypage {
-        max-width: 1540px;
-        margin: 0 auto;
+    .item-list {
+        gap: 30px;
     }
 }
 
@@ -159,10 +154,8 @@
         font-size: 20px;
     }
 
-    .tab-menu {
-        gap: 50px;
-        margin-top: 50px;
-        padding-left: 50px;
+    .mypage-tab__link:first-child {
+        padding-left: 90px;
     }
 
     .item-list {
@@ -191,10 +184,8 @@
         font-size: 20px;
     }
 
-    .tab-menu {
-        gap: 50px;
-        margin-top: 50px;
-        padding-left: 50px;
+    .mypage-tab__link:first-child {
+        padding-left: 90px;
     }
 
     .item-list {

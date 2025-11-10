@@ -9,7 +9,7 @@
 
         <!-- セッションメッセージ表示 -->
         @if(session('status'))
-            <div class="mypage__alert" >
+            <div class="mypage__alert">
                 {{ session('status') }}
             </div>
         @endif
@@ -53,5 +53,6 @@
                 </li>
             @endforeach
         </ul>
+
     </div>
 @endsection

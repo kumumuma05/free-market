@@ -55,14 +55,10 @@ body {
     color: #FFF;
     font-size: 24px;
     line-height: 1;
-}
-
-.header__nav-form button {
     background: transparent;
     display: inline-flex;
     border: none;
     cursor: pointer;
-    line-height: 1;
 }
 
 .header__nav-item--listing {
@@ -78,6 +74,11 @@ body {
 .header__nav-item--listing a {
     color: #000;
     text-decoration: none;
+}
+
+.content {
+    max-width: 1540px;
+    margin: 0 auto;
 }
 
 /* レスポンシブデザイン */

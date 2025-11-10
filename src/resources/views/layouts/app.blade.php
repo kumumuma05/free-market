@@ -34,7 +34,7 @@
                 <li class="header__nav-item">
                     <form class="header__nav-form" action="/logout" method="post">
                         @csrf
-                        <button class="nav__pill nav__pill--button" type="submit">ログアウト</button>
+                        <button class="nav__pill" type="submit">ログアウト</button>
                     </form>
                 </li>
                 @else
