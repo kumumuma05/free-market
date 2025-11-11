@@ -20,6 +20,8 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<int, string>
      */
+
+    // 一括代入可能カラム
     protected $fillable = [
         'name',
         'email',
@@ -52,7 +54,13 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * プロフィールのデフォルト画像呼び出しアクセサ
+     * プロフィール画像のURLを取得するアクセサ
+     *
+     * 優先順位
+     * 1. セッションに一時保存された画像
+     * 2. profile_imageに登録された画像
+     *  - 'images/'で始まるパスが優先
+     * 3. 上記以外はデフォルト画像
      */
     public function getProfileImageUrlAttribute()
     {
@@ -71,7 +79,8 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * itemsテーブルとのリレーション(1対N（0～多)）
+     * このユーザーが出品した商品の一覧を取得
+     * - users.id -> items.user_id
      */
     public function items()
     {
@@ -79,7 +88,8 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * commentsテーブルとのリレーション(1対N（0～多)）
+     * このユーザーが投稿したコメント一覧を取得
+     * - users.id -> comments.user_id
      */
     public function comments()
     {
@@ -87,8 +97,8 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * itemsテーブルとのリレーション(n対n:0～多)）
-     * 中間テーブル:likes
+     * このユーザーが「いいね」した商品一覧を取得
+     * - 中間テーブルlikes（user_id, item_id）を介してitemsに接続
      */
     public function likedItems()
     {
@@ -96,7 +106,8 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * purchasesテーブルとのリレーション(1対N（0～多)）
+     * このユーザーが購入した取引一覧を取得
+     * - user.id -> purchases.buyer_id
      */
     public function purchases()
     {
@@ -104,7 +115,8 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * 購入した商品一覧を取得（purchases中間テーブル経由）
+     * このユーザーが購入した商品の一覧を取得
+     * - 中間テーブルpurchases（buyer_id, item_id）を介してitemsに接続
      */
     public function purchasedItems()
     {

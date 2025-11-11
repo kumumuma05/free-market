@@ -21,6 +21,7 @@ class AddressRequest extends FormRequest
      *
      * @return array
      */
+
     public function rules()
     {
         return [
