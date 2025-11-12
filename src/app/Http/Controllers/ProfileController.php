@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use App\Models\User;
 use App\Http\Requests\ProfileRequest;
 
 class ProfileController extends Controller
@@ -33,7 +31,7 @@ class ProfileController extends Controller
         ]);
 
         // ユーザー専用のセッションファイル保存用ディレクトリを作成
-        $userDir = 'tmp/profile_image' . auth()->id();
+        $userDir = 'tmp/profile_image/' . auth()->id();
         Storage::disk('public')->deleteDirectory($userDir);
         Storage::disk('public')->makeDirectory($userDir);
 
@@ -66,14 +64,18 @@ class ProfileController extends Controller
             Storage::disk('public')->makeDirectory($destDir);
             Storage::disk('public')->move($tempPath, $dest);
 
+            // 旧画像があれば削除
             if (!empty($user->profile_image)) {
                 Storage::disk('public')->delete($user->profile_image);
             }
 
             $data['profile_image'] = $dest;
 
+            // セッション＆一時ディレクトリ削除
             session()->forget('temp_image');
+            Storage::disk('public')->deleteDirectory('temp/profile_image/' . $user->id);
         } else {
+            // 画像見変更の場合はprofile_imageキーを送らない
             unset($data['profile_image']);
         }
 
