@@ -13,6 +13,7 @@ class LoginResponse implements LoginResponseContract
         // メール未認証なら認証誘導画面へ
         if (! $user->hasVerifiedEmail()) {
             $request->user()->sendEmailVerificationNotification();
+
             return redirect('/email/verify');
         }
 

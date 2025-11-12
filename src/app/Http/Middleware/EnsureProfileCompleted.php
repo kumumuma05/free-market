@@ -27,20 +27,24 @@ class EnsureProfileCompleted
 
         // メール未承認ユーザーはメール誘導画面へ
         if (!$user->hasVerifiedEmail()) {
+
             if(
                 !$request->is('email/verify') &&
                 !$request->is('email/verify/*') &&
                 !$request->is('email/verification-notification') &&
                 !$request->is('logout')
             ) {
+
                 return redirect('/email/verify')->with('status', 'メール認証を完了してください');
             }
         }
 
         // プロフィール未完了はプロフィール設定画面へ
         if (!$user->profile_completed && !$this->isWhitelisted($request)) {
+
             return redirect('/mypage/profile')->with('status', 'プロフィール登録を完了してください');
         }
+
         return $next($request);
     }
 

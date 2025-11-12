@@ -20,11 +20,9 @@ class SellController extends Controller
 
         $categories = Category::all();
         $labels = Item::CONDITION;
-        $items = Item::all();
-
         $image = $request->session()->get('temp_image');
 
-        return view('/sell/create', compact('categories', 'items', 'labels', 'image'));
+        return view('sell.create', compact('categories', 'labels', 'image'));
     }
 
     /**
@@ -73,6 +71,7 @@ class SellController extends Controller
         Storage::disk('public')->makeDirectory($destDir);
         Storage::disk('public')->move($tempImage, $dest);
 
+        // 商品登録
         $item = Item::create([
             'user_id' => auth()->id(),
             'product_name' => $request->product_name,
@@ -83,8 +82,10 @@ class SellController extends Controller
             'image_path' => $dest,
         ]);
 
+        // カテゴリ同期
         $item->categories()->sync($request->category_ids);
 
+        // セッション＆一時フォルダ削除
         $request->session()->forget('temp_image');
         Storage::disk('public')->deleteDirectory('tmp/item_image/' . auth()->id());
 
