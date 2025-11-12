@@ -31,9 +31,9 @@
 
         <!-- タブ -->
         <nav class="mypage-tab">
-            <a class="mypage-tab__link {{ $page === 'sell' ? 'mypage-tab__link--active' : '' }}" href="/mypage?page=sell">出品した商品
+            <a class="mypage-tab__link {{ $tab === 'sell' ? 'mypage-tab__link--active' : '' }}" href="/mypage?page=sell">出品した商品
             </a>
-            <a class="mypage-tab__link {{ $page === 'buy' ? 'mypage-tab__link--active' : '' }}" href="/mypage?page=buy">購入した商品
+            <a class="mypage-tab__link {{ $tab === 'buy' ? 'mypage-tab__link--active' : '' }}" href="/mypage?page=buy">購入した商品
             </a>
         </nav>
 

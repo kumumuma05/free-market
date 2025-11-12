@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
-use App\models\User;
 
 
 class ItemController extends Controller
@@ -17,7 +16,7 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         $tab = $request->query('tab', 'recommend');
-        $activeTab = $request->query('tab') ?: 'recommend';
+        $activeTab = $tab;
         $keyword = $request->query('keyword', '');
 
         // マイリストタブ選択時
@@ -81,7 +80,7 @@ class ItemController extends Controller
 
         // キーワード検索
         if ($keyword !== '') {
-            $query->keywordSearch($keyword);
+            $query = $query->keywordSearch($keyword);
         }
 
         $items = $query->get();

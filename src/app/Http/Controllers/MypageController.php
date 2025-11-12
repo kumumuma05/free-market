@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Item;
 
 class MypageController extends Controller
 {
@@ -13,12 +12,14 @@ class MypageController extends Controller
     public function show(Request $request)
     {
         $user = auth()->user();
-        $page = $request->query('page', 'sell');
-        if ($page === 'buy') {
+        $tab = $request->query('page', 'sell');
+
+        if ($tab === 'buy') {
             $items = $user->purchasedItems()->latest()->get();
         } else {
             $items = $user->items()->latest()->get();
         }
-        return view('mypage.mypage', compact('items', 'user', 'page'));
+
+        return view('mypage.mypage', compact('items', 'user', 'tab'));
     }
 }

@@ -16,8 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // fortifyがユーザー登録後に呼び出すレスポンスクラスをデフォルトからRegisterResponseに差し替える
-        $this->app->singleton(RegisterResponseContract::class, AppRegisterResponse::class);
+        //
     }
 
     /**

@@ -3,20 +3,20 @@
 namespace App\Providers;
 
 use App\Actions\Fortify\CreateNewUser;
-use App\Actions\Fortify\ResetUserPassword;
-use App\Actions\Fortify\UpdateUserPassword;
-use App\Actions\Fortify\UpdateUserProfileInformation;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
-use App\Models\User;
+// use App\Actions\Fortify\ResetUserPassword;
+// use App\Actions\Fortify\UpdateUserPassword;
+// use App\Actions\Fortify\UpdateUserProfileInformation;
+// use App\Http\Requests\LoginRequest;
+// use App\Http\Requests\RegisterRequest;
+// use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+// use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
+// use Illuminate\Support\Str;
+// use Illuminate\Support\Facades\Validator;
+// use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 use App\Http\Responses\RegisterResponse as AppRegisterResponse;
@@ -41,7 +41,7 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
 
 
-        // ログイン画面でformrequestを使用
+        // ログイン画面でFormRequestを使用
         $this->app->bind(FortifyLoginRequest::class, AppLoginRequest::class);
     }
 
@@ -50,7 +50,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // ログインユーザーの新規登録
+        // ユーザーの新規登録
         Fortify::createUsersUsing(CreateNewUser::class);
 
         // 会員登録画面の表示

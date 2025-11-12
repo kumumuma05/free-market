@@ -25,7 +25,7 @@ Route::get('/purchase/{item}/success', [PurchaseController::class, 'success']);
 Route::get('/purchase/{item}/cancel', [PurchaseController::class, 'cancel']);
 
 /**
- * fortify認証済み（メール未承認はとおす）
+ * メール認証関係（ログイン必須）
  */
 Route::middleware('auth')->group(function() {
 
@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function() {
 /**
  * アプリ本体（ログイン+メール承認済み+プロフィール完了）
  */
-Route::middleware(['auth','profile.completed'])->group(function () {
+Route::middleware(['auth', 'verified', 'profile.completed'])->group(function () {
 
     // マイページ表示
     Route::get('/mypage', [MypageController::class, 'show']);

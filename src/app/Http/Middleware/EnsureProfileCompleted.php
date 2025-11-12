@@ -33,7 +33,7 @@ class EnsureProfileCompleted
                 !$request->is('email/verification-notification') &&
                 !$request->is('logout')
             ) {
-                return redirect('/email/verify');
+                return redirect('/email/verify')->with('status', 'メール認証を完了してください');
             }
         }
 
@@ -49,6 +49,7 @@ class EnsureProfileCompleted
         return $request->is('mypage/profile')
             || $request->is('mypage/profile/*')
             || $request->is('logout')
-            || $request->is('email/verify*');
+            || $request->is('email/verify*')
+            || $request->is('email/verification-notification');
     }
 }

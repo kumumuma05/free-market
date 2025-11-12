@@ -50,7 +50,7 @@ class ItemDetailController extends Controller
     }
 
     /**
-     * コメント登録・表示
+     * コメント登録
      */
     public function store(CommentRequest $request, Item $item)
     {
