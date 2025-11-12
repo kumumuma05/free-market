@@ -23,6 +23,7 @@ class PurchaseController extends Controller
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
+        // 配送先（セッションがあれば優先）
         $shipAddress = $request->session()->get("changed_address.$item_id", []);
         $shipping = [
         'shipping_postal' => $shipAddress['shipping_postal'] ?? ($user->postal),
@@ -36,7 +37,7 @@ class PurchaseController extends Controller
 
         $payment = (int)$request->session()->get("payment_method.$item_id", 0);
 
-        return view('/purchase/checkout', compact('item','user', 'shipping', 'payment'));
+        return view('purchase.checkout', compact('item','user', 'shipping', 'payment'));
     }
 
     /**
@@ -47,7 +48,7 @@ class PurchaseController extends Controller
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
-        return view('/purchase/address', compact('item','user'));
+        return view('purchase.address', compact('item','user'));
     }
 
     /**
@@ -82,16 +83,19 @@ class PurchaseController extends Controller
         $address = $sesAddress['shipping_address'] ?? $request->input('shipping_address');
         $building = $sesAddress['shipping_building'] ?? $request->input('shipping_building', '');
 
-        $payment = (int)($request->session()->get("payment_method.$item_id"));
+        $payment = (int)($request->session()->get("payment_method.$item_id", 0));
 
+        // 自分の商品は購入不可
         if ($item->user_id === Auth::id()) {
             return back();
         }
 
+        // 購入済み商品を弾く
         if (Purchase::where('item_id', $item->id)->exists()) {
             return back();
         }
 
+        // カード決済フローへ
         if ($payment === 2) {
 
             return $this->startStripeCheckout($item, [
@@ -101,6 +105,7 @@ class PurchaseController extends Controller
             ]);
         }
 
+        // コンビニ支払い時のDB登録
         Purchase::create([
             'item_id' =>$item->id,
             'buyer_id' =>Auth::id(),
@@ -110,6 +115,7 @@ class PurchaseController extends Controller
             'shipping_building' => $building,
         ]);
 
+        // セッションクリア
         $request->session()->forget("changed_address.$item_id");
         $request->session()->forget("payment_method.$item_id");
 
@@ -161,11 +167,14 @@ class PurchaseController extends Controller
         $item = Item::findOrFail($item_id);
 
         if (! Auth::check()) {
-        return redirect("/login");
+
+            return redirect("/login");
         }
 
         $sessionId = $request->query('session_id');
+
         if (! $sessionId) {
+
             return redirect("/purchase/{$item->id}");
         }
 
@@ -180,15 +189,17 @@ class PurchaseController extends Controller
         $paid = $session && $sessionPaid && $intentSucceeded;
 
         if (!$paid) {
+
             return redirect("/purchase/{$item->id}");
         }
 
         // 二重購入防止
         if (Purchase::where('item_id', $item->id)->exists()) {
+
             return redirect("/item/{$item->id}");
         }
 
-        // purchasesテーブルへ登録
+        // カード支払い時のDB登録
         $metadata = $session->metadata;
 
         Purchase::create([
@@ -205,5 +216,13 @@ class PurchaseController extends Controller
         $request->session()->forget("payment_method.$item_id");
 
         return redirect('/')->with('status', '商品の購入が完了しました。');
+    }
+
+    /**
+     * 失敗（キャンセル）時の戻り先
+     */
+    public function cancel($item_id)
+    {
+        return redirect("/purchase/{$item_id}");
     }
 }
