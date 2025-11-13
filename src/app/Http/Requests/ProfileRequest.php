@@ -41,7 +41,7 @@ class ProfileRequest extends FormRequest
             'profile_image.mimes' => '画像は拡張子が.jpegもしくはpngを選択してください',
             'name.required' => 'お名前を入力してください',
             'postal.required' => '郵便番号を入力してください',
-            'postal.regex' => '郵便番号はハイフンをつけてください',
+            'postal.regex' => '郵便番号はハイフンをつけた3桁-4桁（例123-4567）の形式で入力してください',
             'address.required' => '住所を入力してください',
         ];
     }

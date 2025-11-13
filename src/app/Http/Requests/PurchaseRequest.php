@@ -41,7 +41,7 @@ class PurchaseRequest extends FormRequest
 
         if (session()->has("payment_method.$itemId")) {
             $this->merge([
-                'payment_method' => session("payment_method.$itemI"),
+                'payment_method' => session("payment_method.$itemId"),
             ]);
         }
     }
@@ -55,7 +55,7 @@ class PurchaseRequest extends FormRequest
             'payment_method.required' => '支払方法を選択してください',
             'payment_method.in' => 'その支払い方法は無効です',
             'shipping_postal.required' => '配送先の郵便番号を入力してください',
-            'shipping_postal.regex' => '郵便番号はハイフンをつけてください',
+            'shipping_postal.regex' => '郵便番号はハイフンをつけた3桁-4桁（例123-4567）の形式で入力してください',
             'shipping_address.required' => '配送先の住所を入力してください',
         ];
     }

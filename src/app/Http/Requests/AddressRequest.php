@@ -37,7 +37,7 @@ class AddressRequest extends FormRequest
     {
         return[
             'shipping_postal.required' => '郵便番号を入力してください',
-            'shipping_postal.regex' => '郵便番号はハイフンをつけてください',
+            'shipping_postal.regex' => '郵便番号はハイフンをつけた3桁-4桁（例123-4567）の形式で入力してください',
             'shipping_address.required' => '住所を入力してください',
         ];
     }

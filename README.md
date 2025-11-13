@@ -52,16 +52,31 @@ PHPコンテナ上
 ```bash
 cp .env.example .env
 ```
-4. アプリキー作成  
+4. Stripe（カード決済）設置（※カード決済を使用する場合のみ）  
+ 本アプリのカード決済機能はStripeを利用しています。  
+ カード決済機能を利用する場合は、Stripeのテスト用APIキーを取得し、.envに設定してください。  
+.envファイル内
+```
+STRIPE_KEY= （Stripeのpublishable key）
+STRIPE_SECRET=（Stripe の Secret key）
+```
+
+5. アプリキー作成  
 PHPコンテナ上
 ```bash
 php artisan key:generate
 ```
-5. マイグレーション実行（初期データも同時投入）  
+6. マイグレーション実行（初期データも同時投入）  
 PHPコンテナ上
 ```bash
 php artisan migrate --seed
 ```
+7. Storage のリンク作成  
+ 画像のアップロード機能を使用するために、Storageディレクトリへのリンクを作成します。  
+ PHPコンテナ上
+ ```bash
+ php artisan storage:link
+ ```
 
 > ※ 使用しているOSによってはファイル権限が原因でエラーが発生する場合があります。
 >その際は環境に合わせて権限を調整してください。  
