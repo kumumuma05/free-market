@@ -27,7 +27,7 @@
 1. リポジトリをクローン  
 コマンドライン上
 ```bash
-git clone git@github.com:kumumuma05/check-test.git
+git clone git@github.com:kumumuma05/free-market.git
 cd free-market
 ```
 2. コンテナの起動  
