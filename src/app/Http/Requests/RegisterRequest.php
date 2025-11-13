@@ -17,13 +17,9 @@ class RegisterRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * バリデーションルール
      *
      * @return array
-     */
-
-    /**
-     * バリデーションルール
      */
     public function rules()
     {

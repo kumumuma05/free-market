@@ -21,7 +21,6 @@ class ExhibitionRequest extends FormRequest
      *
      * @return array
      */
-
     public function rules()
     {
         return [
@@ -35,7 +34,7 @@ class ExhibitionRequest extends FormRequest
     }
 
     /**
-     * セッション画像パスを本登録時のリクエストデータに統合してバリデーション可能にする
+     * セッションに一時保存された画像パスを現在のリクエストデータに統合してバリデーションで参照できるようにする
      */
     protected function prepareForValidation()
     {
@@ -51,7 +50,7 @@ class ExhibitionRequest extends FormRequest
         return [
             'product_name.required' => '商品名を入力してください',
             'description.required' => '商品の説明を入力してください',
-            'description.max' => '商品の説明は225文字以内でしてください',
+            'description.max' => '商品の説明は255文字以内でしてください',
             'image_path.required_without' => '商品画像を貼付してください',
             'image_path.image' => '商品画像は画像ファイルを選択してください',
             'image_path.mimes' => '拡張子はjpegまたはpngのみ有効です',

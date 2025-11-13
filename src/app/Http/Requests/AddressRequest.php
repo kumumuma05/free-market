@@ -17,11 +17,10 @@ class AddressRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * バリデーションルール
      *
      * @return array
      */
-
     public function rules()
     {
         return [
@@ -31,6 +30,9 @@ class AddressRequest extends FormRequest
         ];
     }
 
+    /**
+     * バリデーションメッセージ
+     */
     public function messages()
     {
         return[

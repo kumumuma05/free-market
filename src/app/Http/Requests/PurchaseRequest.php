@@ -17,14 +17,14 @@ class PurchaseRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * バリデーションルール
      *
      * @return array
      */
     public function rules()
     {
         return [
-            'payment_method' => 'required',
+            'payment_method' => 'required|integer|in:1,2',
             'shipping_postal' => 'required|regex:/^\d{3}-\d{4}$/',
             'shipping_address' => 'required',
             'shipping_building' => 'nullable',
@@ -36,15 +36,24 @@ class PurchaseRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        if (session()->has('payment_method')) {
-            $this->merge(['payment_method' => session('payment_method')]);
+
+        $itemId = $this->route('item_id');
+
+        if (session()->has("payment_method.$itemId")) {
+            $this->merge([
+                'payment_method' => session("payment_method.$itemI"),
+            ]);
         }
     }
 
+    /**
+     * バリデーションメッセージ
+     */
     public function messages()
     {
         return [
             'payment_method.required' => '支払方法を選択してください',
+            'payment_method.in' => 'その支払い方法は無効です',
             'shipping_postal.required' => '配送先の郵便番号を入力してください',
             'shipping_postal.regex' => '郵便番号はハイフンをつけてください',
             'shipping_address.required' => '配送先の住所を入力してください',

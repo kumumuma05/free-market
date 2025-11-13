@@ -18,7 +18,7 @@ class LoginRequest extends FortifyLoginRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * バリデーションルール
      *
      * @return array
      */

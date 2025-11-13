@@ -9,6 +9,7 @@ use App\Models\Item;
 
 class ProductSearchTest extends TestCase
 {
+    use RefreshDatabase;
 
     /**
      * 商品名で部分一致検索ができる

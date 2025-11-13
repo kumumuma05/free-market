@@ -17,7 +17,7 @@ class CommentRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * バリデーションルール
      *
      * @return array
      */
@@ -28,6 +28,9 @@ class CommentRequest extends FormRequest
         ];
     }
 
+    /**
+     * バリデーションメッセージ
+     */
     public function messages()
     {
         return [

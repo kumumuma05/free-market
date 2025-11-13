@@ -17,7 +17,7 @@ class ProfileRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * バリデーションルール
      *
      * @return array
      */
@@ -30,15 +30,6 @@ class ProfileRequest extends FormRequest
             'address' => 'required',
             'building' => 'nullable',
         ];
-    }
-
-    /**
-     * セッション画像を本登録時のリクエストに送る
-     */
-    protected function prepareForValidation()
-    {
-        if (session()->has('temp_image')) {
-            $this->merge(['temp_image' => session('temp_image')]);        }
     }
 
     /**
