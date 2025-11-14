@@ -80,7 +80,8 @@ php artisan migrate --seed
  ```
 - Windows + Docker + WSL 環境で VSCode がリンクを認識しない場合  
  public/storage が VSCode 上で正しく表示されないことがあります。  
- その場合のみ以下の方法でリンクを再作成してください。
+ その場合のみ以下の方法でリンクを再作成してください。  
+ PHPコンテナ上
 ```bash
 rm public/storage
 ln -s ../storage/app/public public/storage

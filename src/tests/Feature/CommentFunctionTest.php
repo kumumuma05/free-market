@@ -59,4 +59,28 @@ class CommentFunctionTest extends TestCase
         $item->refresh();
         $this->assertEquals($beforeCount +1, $item->comments()->count());
     }
+
+    /**
+     * ログイン前のユーザーはコメントを送信できない
+     */
+    public function test_guest_user_cannot_post_comment()
+    {
+        // 準備
+        $user = User::factory()->create();
+        $item = Item::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        // コメント送信前の件数
+        $beforeCount = comment::count();
+
+        // ゲスト状態でコメント送信
+        $response = $this->from("/item/{$item->id}")->post("/item/{$item->id}/comments", ['body' => 'テスト']);
+
+        // ログイン画面にリダイレクトされる
+        $response->assertRedirect('/login');
+
+        // コメントが増えていない
+        $this->assertEquals($beforeCount, Comment::count());
+    }
 }
