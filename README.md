@@ -73,10 +73,18 @@ php artisan migrate --seed
 ```
 7. Storage のリンク作成  
  画像のアップロード機能を使用するために、Storageディレクトリへのリンクを作成します。  
+- 通常のリンク作成  
  PHPコンテナ上
  ```bash
  php artisan storage:link
  ```
+- Windows + Docker + WSL 環境で VSCode がリンクを認識しない場合  
+ public/storage が VSCode 上で正しく表示されないことがあります。  
+ その場合のみ以下の方法でリンクを再作成してください。
+```bash
+rm public/storage
+ln -s ../storage/app/public public/storage
+```
 
 > ※ 使用しているOSによってはファイル権限が原因でエラーが発生する場合があります。
 >その際は環境に合わせて権限を調整してください。  
@@ -108,7 +116,7 @@ mysql -u root -p
 ```
 > ※パスワードはdocker-compose.ymlファイルに記載されているとおり「root」を入力する。
 - テスト用データベースを作成
-```bash
+```sql
 CREATE DATABASE demo_test;
 ```
 - MYSQLコンテナから出る
@@ -130,7 +138,7 @@ php artisan test
 - Laravel 8.83.29  
 - MySQL 8.0.26  
 - Nginx 1.21.1  
-- Stripe API を利用したカード決済機能を実装
+- Stripe API （カード決済）  
 
 ## ER図
 
