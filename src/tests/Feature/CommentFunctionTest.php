@@ -83,4 +83,69 @@ class CommentFunctionTest extends TestCase
         // コメントが増えていない
         $this->assertEquals($beforeCount, Comment::count());
     }
+
+    /**
+     * コメントが入力されていない場合、バリデーションメッセージが表示される
+     */
+    public function test_comment_validation_error_is_displayed_when_comment_is_empty()
+    {
+        // 準備
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $item = Item::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        // コメントを空欄で送信
+        $response = $this
+            ->from("/item/{$item->id}")
+            ->post("/item/{$item->id}/comments", [
+                'body' => '',
+            ]);
+
+        // 元のページにリダイレクトされる
+        $response->assertRedirect("/item/{$item->id}");
+
+        // セッションにバリデーションエラーが入っている
+        $response->assertSessionHasErrors(['body']);
+
+        // エラーメッセージを確認
+        $response = $this->get("/item/{$item->id}");
+        $response->assertSee('コメントを入力してください');
+    }
+
+    /**
+     * コメントが255文字以上の場合、バリデーションメッセージが表示される
+     */
+    public function test_comment_validation_error_is_displayed_when_comment_is_too_long()
+    {
+        // 準備
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $item = Item::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        // 255文字を超える文字列を生成
+        $longComment = str_repeat('あ', 260);
+
+        // コメント送信
+        $response = $this
+            ->from("/item/{$item->id}")
+            ->post("/item/{$item->id}/comments", [
+                'body' => $longComment,
+            ]);
+
+        // 元のページにリダイレクト
+        $response->assertRedirect("/item/{$item->id}");
+
+        // セッションにバリデーションエラーが入っている
+        $response->assertSessionHasErrors(['body']);
+
+        // エラーメッセージを確認
+        $response = $this->get("/item/{$item->id}");
+        $response->assertSee('コメントは255文字以内で入力してください');
+    }
 }
