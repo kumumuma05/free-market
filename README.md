@@ -98,7 +98,21 @@ php artisan migrate --seed
 ## テスト実施要領
   本アプリではPHPUnitを用いたFeatureテストを用意しています。テストにはテスト専用のデータベースを使用しています。テスト実施手順は下記のとおりです。  
 1. 準備（初回のみ）  
-テスト用マイグレーション実行(初期データも同時投入)  
+- MYSQL　コンテナに入る
+```bash
+docker-compose exec mysql bash
+```
+- MySQL にログイン（データベースの作成は権限の問題で管理者でログインする必要があります。）
+```bash
+mysql -u root -p
+```
+> ※パスワードはdocker-compose.ymlファイルに記載されているとおり「root」を入力する。
+- テスト用データベースを作成
+```bash
+CREATE DATABASE demo_test;
+```
+- MYSQLコンテナから出る
+- テスト用マイグレーション実行(初期データも同時投入)  
 PHPコンテナ上
 ```bash
 php artisan migrate --seed --env=testing
