@@ -15,11 +15,11 @@ class Category extends Model
 
     /**
      * このカテゴリに属する商品の一覧を取得
-     * - 中間テーブルcategory_item(category_id, item_id)を介してitemsに接続
+     * - 中間テーブルcategory_items(category_id, item_id)を介してitemsに接続
      */
     public function items()
     {
-        return $this->belongsToMany(Item::class);
+        return $this->belongsToMany(Item::class, 'category_items')->withTimestamps();
     }
 
 }

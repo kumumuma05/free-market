@@ -97,10 +97,10 @@ class Item extends Model
 
     /**
      * この商品に属するカテゴリの一覧を取得
-     * - 中間テーブルcategory_item(item_id, category_id)を介してcategoriesに接続
+     * - 中間テーブルcategory_items(item_id, category_id)を介してcategoriesに接続
      */
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'category_items')->withTimestamps();
     }
 }

@@ -45,7 +45,7 @@
         </div>
 
         <div class="shipping-address__button">
-            <button type="submit">変更する</button>
+            <button type="submit">更新する</button>
         </div>
     </form>
 </div>
