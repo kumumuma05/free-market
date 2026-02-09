@@ -27,7 +27,7 @@ class ProfileController extends Controller
     {
         // バリデーションチェック（仕様に準じる）
         $request->validate([
-            'profile_image' => 'image|mimes:jpeg,png'
+            'profile_image' => 'image|mimes:jpeg,png',
         ]);
 
         // ユーザー専用のセッションファイル保存用ディレクトリを作成
@@ -55,7 +55,6 @@ class ProfileController extends Controller
         $tempPath = $request->session()->get('temp_image');
 
         if ($tempPath && Storage::disk('public')->exists($tempPath)) {
-
             // プロフィール画像のディレクトリへの本登録
             $extension = pathinfo($tempPath, PATHINFO_EXTENSION) ?: 'jpg';
             $destDir = 'profile_image/' . auth()->id();
@@ -73,9 +72,9 @@ class ProfileController extends Controller
 
             // セッション＆一時ディレクトリ削除
             session()->forget('temp_image');
-            Storage::disk('public')->deleteDirectory('temp/profile_image/' . $user->id);
+            Storage::disk('public')->deleteDirectory('tmp/profile_image/' . $user->id);
         } else {
-            // 画像見変更の場合はprofile_imageキーを送らない
+            // 画像未変更の場合はprofile_imageキーを送らない
             unset($data['profile_image']);
         }
 
@@ -89,5 +88,4 @@ class ProfileController extends Controller
 
         return redirect('/mypage')->with('status', 'プロフィールを更新しました');
     }
-
 }

@@ -7,11 +7,11 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class EmailVerificationController extends Controller
 {
-
     /**
      * メール認証誘導画面表示
      */
-    public function notice() {
+    public function notice()
+    {
         return view('auth.verify-email');
     }
 

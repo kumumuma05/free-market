@@ -6,10 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 
-
 class ItemController extends Controller
 {
-
     /**
      * 商品一覧画面表示
      */
@@ -63,7 +61,7 @@ class ItemController extends Controller
         $tab = $request->query('tab', 'recommend');
 
         // マイリスト選択時（ログイン中）
-        if($user && $tab === 'mylist') {
+        if ($user && $tab === 'mylist') {
             // いいね済み商品から検索（自分が出品した商品以外）
             $query = $user->likedItems()->where('items.user_id', '!=', $user->id)->latest();
 

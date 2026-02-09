@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
 use App\Models\Comment;
@@ -13,12 +12,11 @@ class ItemDetailController extends Controller
     /**
      * 商品詳細画面表示
      */
-    public function show($item_id) {
-
-        $item = Item::findOrFail($item_id);
+    public function show($item_id)
+    {
+        $item = Item::with('categories')->findOrFail($item_id);
         $likeCount = $item->likedUsers()->count();
         $commentCount = $item->comments()->count();
-        $item->load('categories');
         $labels = Item::CONDITION;
         $isLiked = Auth::check()
             ? Auth::user()->likedItems()->where('item_id', $item->id)->exists()
@@ -54,7 +52,7 @@ class ItemDetailController extends Controller
      */
     public function store(CommentRequest $request, Item $item)
     {
-        if (!Auth::check()){
+        if (!Auth::check()) {
             return back();
         }
 

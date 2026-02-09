@@ -11,13 +11,11 @@ use App\Models\Item;
 
 class SellController extends Controller
 {
-
     /**
      * 商品出品画面表示
      */
     public function create(Request $request)
     {
-
         $categories = Category::all();
         $labels = Item::CONDITION;
         $image = $request->session()->get('temp_image');
@@ -33,7 +31,10 @@ class SellController extends Controller
         // バリデーションチェック（仕様に準じる）
         $request->validate([
             'image_path' => [
-                'required', 'file', 'image', 'mimes:jpeg,png',
+                'required',
+                'file',
+                'image',
+                'mimes:jpeg,png',
             ]
         ]);
 
@@ -65,7 +66,7 @@ class SellController extends Controller
 
         // 商品画像のstorageへの本登録
         $extension = pathinfo($tempImage, PATHINFO_EXTENSION) ?: 'jpg';
-        $destDir ='item_image/' . auth()->id();
+        $destDir = 'item_image/' . auth()->id();
         $dest = $destDir . '/' . Str::uuid() . '.' . $extension;
 
         Storage::disk('public')->makeDirectory($destDir);

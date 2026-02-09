@@ -10,11 +10,8 @@ use App\Models\Item;
 use App\Models\Purchase;
 use Stripe\StripeClient;
 
-
-
 class PurchaseController extends Controller
 {
-
     /**
      * 商品購入画面表示
      */
@@ -26,10 +23,10 @@ class PurchaseController extends Controller
         // 配送先（セッションがあれば優先）
         $shipAddress = $request->session()->get("changed_address.$item_id", []);
         $shipping = [
-        'shipping_postal' => $shipAddress['shipping_postal'] ?? ($user->postal),
-        'shipping_address' => $shipAddress['shipping_address'] ?? ($user->address),
-        'shipping_building' => $shipAddress['shipping_building'] ?? ($user->building),
-    ];
+            'shipping_postal' => $shipAddress['shipping_postal'] ?? ($user->postal),
+            'shipping_address' => $shipAddress['shipping_address'] ?? ($user->address),
+            'shipping_building' => $shipAddress['shipping_building'] ?? ($user->building),
+        ];
 
         if ($request->has('payment_method')) {
             $request->session()->put("payment_method.$item_id", $request->query('payment_method'));
@@ -37,7 +34,7 @@ class PurchaseController extends Controller
 
         $payment = (int)$request->session()->get("payment_method.$item_id", 0);
 
-        return view('purchase.checkout', compact('item','user', 'shipping', 'payment'));
+        return view('purchase.checkout', compact('item', 'user', 'shipping', 'payment'));
     }
 
     /**
@@ -48,7 +45,7 @@ class PurchaseController extends Controller
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
 
-        return view('purchase.address', compact('item','user'));
+        return view('purchase.address', compact('item', 'user'));
     }
 
     /**
@@ -72,9 +69,8 @@ class PurchaseController extends Controller
      */
     public function store(PurchaseRequest $request, $item_id)
     {
-
         $item = Item::findOrFail($item_id);
-        if (!Auth::check()){
+        if (!Auth::check()) {
             return back();
         }
 
@@ -97,7 +93,6 @@ class PurchaseController extends Controller
 
         // カード決済フローへ
         if ($payment === 2) {
-
             return $this->startStripeCheckout($item, [
                 'shipping_postal' => $postal,
                 'shipping_address' => $address,
@@ -107,8 +102,8 @@ class PurchaseController extends Controller
 
         // コンビニ支払い時のDB登録
         Purchase::create([
-            'item_id' =>$item->id,
-            'buyer_id' =>Auth::id(),
+            'item_id' => $item->id,
+            'buyer_id' => Auth::id(),
             'payment_method' => 1,
             'shipping_postal' => $postal,
             'shipping_address' => $address,
@@ -127,7 +122,6 @@ class PurchaseController extends Controller
      */
     private function startStripeCheckout(Item  $item, array $shipping)
     {
-
         $stripe = new StripeClient(config('services.stripe.secret'));
 
         // Checkoutセッション新規作成
@@ -167,14 +161,12 @@ class PurchaseController extends Controller
         $item = Item::findOrFail($item_id);
 
         if (! Auth::check()) {
-
             return redirect("/login");
         }
 
         $sessionId = $request->query('session_id');
 
         if (! $sessionId) {
-
             return redirect("/purchase/{$item->id}");
         }
 
@@ -185,17 +177,14 @@ class PurchaseController extends Controller
         // 支払が成功しているか確認（失敗しているときは購入画面へリダイレクト）
         $sessionPaid = $session->payment_status === 'paid';
         $intentSucceeded = $session->payment_intent->status === 'succeeded';
-
         $paid = $session && $sessionPaid && $intentSucceeded;
 
         if (!$paid) {
-
             return redirect("/purchase/{$item->id}");
         }
 
         // 二重購入防止
         if (Purchase::where('item_id', $item->id)->exists()) {
-
             return redirect("/item/{$item->id}");
         }
 
