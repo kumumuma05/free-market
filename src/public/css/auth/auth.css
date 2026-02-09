@@ -5,7 +5,6 @@
 
 .header {
     display: flex;
-    max-width: 1540px;
     margin: 0 auto;
     height: 82px;
     align-items: center;
@@ -20,19 +19,6 @@
 
 /* レスポンシブデザイン */
 @media screen and (min-width: 768px) and (max-width: 850px) {
-    .auth {
-        width: 100%;
-        margin: 0 auto;
-    }
-
-    .header__heading-logo {
-        width: 300px;
-        height: auto;
-        margin-left: 35px;
-    }
-}
-
-@media screen and (max-width: 767px) {
     .auth {
         width: 100%;
         margin: 0 auto;

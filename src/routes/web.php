@@ -27,7 +27,7 @@ Route::get('/purchase/{item}/cancel', [PurchaseController::class, 'cancel']);
 /**
  * メール認証関係（ログイン必須）
  */
-Route::middleware('auth')->group(function() {
+Route::middleware('auth')->group(function () {
 
     // メール認証誘導画面表示
     Route::get('/email/verify', [EmailVerificationController::class, 'notice']);
@@ -60,25 +60,19 @@ Route::middleware(['auth', 'verified', 'profile.completed'])->group(function () 
     Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'shippingUpdate']);
 
     // プロフィール編集画面表示
-    Route::get('mypage/profile', [ProfileController::class, 'edit']);
+    Route::get('/mypage/profile', [ProfileController::class, 'edit']);
     // プロフィール画像のセッションアップロード
-    Route::post('mypage/profile/session', [ProfileController::class, 'imagePostSession']);
+    Route::post('/mypage/profile/session', [ProfileController::class, 'imagePostSession']);
     // プロフィール更新
-    Route::patch('mypage/profile', [ProfileController::class, 'update']);
+    Route::patch('/mypage/profile', [ProfileController::class, 'update']);
 
     // 商品出品画面表示
     Route::get('/sell', [SellController::class, 'create']);
     // 商品画像のセッションアップロード
-    Route::post('sell/session', [SellController::class, 'imagePostSession']);
+    Route::post('/sell/session', [SellController::class, 'imagePostSession']);
     // 商品出品登録
     Route::post('/sell', [SellController::class, 'store']);
 });
-
-
-// Route::get('/email/verification-guide', [EmailVerificationController::class, 'showGuide'])->middleware('auth');
-
-
-
 
 
 

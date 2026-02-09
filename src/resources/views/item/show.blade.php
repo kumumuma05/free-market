@@ -9,21 +9,21 @@
 
         <!-- 商品画像 -->
         <div class="item-show__image">
-                <img src="{{ $item->image_url }}" alt="商品画像">
+            <img src="{{ $item->image_url }}" alt="商品画像">
         </div>
 
         <!-- 商品詳細 -->
         <div class="item-show__detail">
 
             <!-- 商品名・ブランド・価格 -->
-            <h2 class="item-show__detail-title">
+            <h1 class="item-show__detail-title">
                 {{ $item->product_name }}
-            </h2>
+            </h1>
             <div class="item-show__detail-brand">
                 {{ $item->brand }}
             </div>
             <div class="item-show__detail-price">
-                ¥<span>{{ number_format($item->price) }} </span>(税込)
+                ¥<span>{{ number_format($item->price) }}</span>(税込)
             </div>
 
             <!-- いいね・コメントカウント -->
@@ -53,14 +53,14 @@
 
             <!-- 購入手続きリンク -->
             @if($item->is_sold)
-                <button disabled class="item-show__purchase-link is-disabled">売り切れ</button>
+                <div class="item-show__purchase-link is-disabled">売り切れ</div>
             @else
                 <a class="item-show__purchase-link" href="/purchase/{{ $item->id }}">購入手続きへ</a>
             @endif
 
             <!-- 商品説明 -->
             <div class="item-detail__description">
-                <h3 class="item-detail__description-title">商品説明</h3>
+                <h2 class="item-detail__description-title">商品説明</h2>
                 <div class="item-detail__description-body">
                     {!! nl2br(e($item->description)) !!}
                 </div>
@@ -68,7 +68,7 @@
 
             <!-- 商品の情報 -->
             <div class="item-detail__information">
-                <h3 class="item-detail__information-title">商品の情報</h3>
+                <h2 class="item-detail__information-title">商品の情報</h2>
                 <dl class="item-detail__item-info">
                     <dt>カテゴリー</dt>
                     <dd>
@@ -83,13 +83,13 @@
 
             <!-- コメント表示 -->
             <div class="item-detail__comment">
-                <h3 class="item-detail__comment-title">コメント( {{ $item->comments->count() }} ) </h3>
+                <h2 class="item-detail__comment-title">コメント({{ $item->comments->count() }} ) </h2>
                 @foreach($item->comments as $comment)
                     <div class="item-detail__comment-user">
                         <img class="item-detail__comment-user-avatar" src="{{ $comment->user->profile_image_url }}" alt="">
                         <p class="item-detail__comment-user-name">{{ $comment->user->name }}</p>
                     </div>
-                    <p class="item-detail__comment-body">{!! nl2br(e( $comment->body)) !!}</p>
+                    <p class="item-detail__comment-body">{!! nl2br(e($comment->body)) !!}</p>
                 @endforeach
             </div>
 
@@ -107,6 +107,5 @@
             </form>
 
         </div>
-
     </div>
 @endsection

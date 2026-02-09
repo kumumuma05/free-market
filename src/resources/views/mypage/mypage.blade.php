@@ -21,7 +21,7 @@
             </div>
 
             <div class="profile-info__user-name">
-                <h2>{{ $user->name }}</h2>
+                <h1 class="profile-info__user-heading">{{ $user->name }}</h1>
             </div>
 
             <div class="profile-info__action">

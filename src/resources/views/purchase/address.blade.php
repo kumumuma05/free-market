@@ -8,9 +8,9 @@
 <div class="shipping-address">
 
     <!-- タイトル -->
-    <h2 class="shipping-address__title">
+    <h1 class="shipping-address__title">
         住所の変更
-    </h2>
+    </h1>
 
     <!-- アドレス入力フォーム -->
     <form class="shipping-address__form" action="/purchase/address/{{ $item->id }}" method="post">

@@ -86,7 +86,7 @@ body {
     .header__logo {
         width: 350px;
         margin-left: 30px;
-        }
+    }
 
     .header__search-input {
         width: 480px;
@@ -98,56 +98,6 @@ body {
 }
 
 @media screen and (min-width: 768px) and (max-width: 850px) {
-    .header {
-        display: grid;
-        grid-template-areas:
-            "logo nav"
-            "search search";
-        gap: 15px;
-        height: auto;
-        padding: 15px 0;
-    }
-
-    .header__logo {
-        grid-area: logo;
-        width: 300px;
-        margin-left: 30px;
-    }
-
-    .header__search {
-        display: flex;
-        grid-area: search;
-        margin-left: 30px;
-        justify-content: center;
-    }
-
-    .header__nav {
-        grid-area: nav;
-    }
-
-    .header__search-input {
-        box-sizing: border-box;
-        max-width: 500px;
-        height: 40px;
-        padding: 10px 30px;
-        font-size: 20px;
-    }
-
-    .nav__pill {
-        font-size: 20px;
-    }
-
-    .header__nav-list {
-        gap: 10px;
-    }
-
-    .header__nav-item--listing {
-        width: 70px;
-        height: 40px;
-    }
-}
-
-@media screen and (max-width: 768px) {
     .header {
         display: grid;
         grid-template-areas:

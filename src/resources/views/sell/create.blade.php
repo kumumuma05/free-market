@@ -8,7 +8,7 @@
     <div class="sell">
 
         <!-- タイトル -->
-        <h2 class="sell__title">商品の出品</h2>
+        <h1 class="sell__title">商品の出品</h1>
 
         <!-- 画像 -->
         <section class="sell__section">
@@ -23,7 +23,7 @@
 
                 <form class="sell-form" action="/sell/session" method="post" enctype="multipart/form-data">
                     @csrf
-                    <input type="file" id="image_path"  name="image_path" accept="image/*" hidden  onchange="this.form.submit()" />
+                    <input type="file" id="image_path" name="image_path" accept="image/*" hidden onchange="this.form.submit()" />
                 </form>
 
                 @error('image_path')
@@ -38,11 +38,11 @@
 
             <!-- 商品の詳細 -->
             <section class="sell__section">
-                <h3 class="sell__section-title">商品の詳細</h3>
+                <h2 class="sell__section-title">商品の詳細</h2>
 
                 <!-- カテゴリ選択 -->
                 <div class="sell__group">
-                    <label class="sell__group-label" for="category">カテゴリー</label>
+                    <label class="sell__group-label">カテゴリー</label>
                     @foreach($categories as $category)
                         <input class="sell__category-input" type="checkbox" name="category_ids[]" id="category-{{ $category->id }}" value="{{ $category->id }}" {{ in_array($category->id, old('category_ids', [])) ? 'checked' : '' }} />
                         <label class="sell__category-label" for="category-{{ $category->id }}">{{ $category->name }}</label>
@@ -72,7 +72,7 @@
 
             <!-- 商品名と説明 -->
             <section class="sell__section">
-                <h3 class="sell__section-title">商品名と説明</h3>
+                <h2 class="sell__section-title">商品名と説明</h2>
 
                 <!-- 商品名 -->
                 <div class="sell__group">

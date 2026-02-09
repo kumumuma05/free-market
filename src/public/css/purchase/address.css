@@ -58,9 +58,3 @@
         max-width: 530px;
     }
 }
-
-@media screen and (max-width: 768px) {
-    .shipping-address {
-        max-width: 530px;
-    }
-}

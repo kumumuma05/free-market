@@ -61,18 +61,17 @@
         <aside class="purchase-confirm">
             <form class="purchase-confirm__form" action="/purchase/{{$item->id}}" method="post">
                 @csrf
-                <div class="purchase-confirm__definition-inner">
-                    <dl class="purchase-confirm__definition">
-                        <div class="purchase-confirm__definition-set">
-                            <dt>商品代金</dt>
-                            <dd><span>¥</span> {{ number_format($item->price) }}</dd>
-                        </div>
-                        <div class="purchase-confirm__definition-set">
-                            <dt>支払方法</dt>
-                            <dd>{{ ['1' => 'コンビニ払い', '2' => 'カード払い'][$payment] ?? '選択してください' }}</dd>
-                        </div>
-                    </dl>
-                </div>
+
+                <dl class="purchase-confirm__definition">
+                    <div class="purchase-confirm__definition-set">
+                        <dt>商品代金</dt>
+                        <dd><span>¥</span> {{ number_format($item->price) }}</dd>
+                    </div>
+                    <div class="purchase-confirm__definition-set">
+                        <dt>支払方法</dt>
+                        <dd>{{ ['1' => 'コンビニ払い', '2' => 'カード払い'][$payment] ?? '選択してください' }}</dd>
+                    </div>
+                </dl>
 
                 <input type="hidden" name="shipping_postal" value="{{ $shipping['shipping_postal'] }}">
                 <input type="hidden" name="shipping_address" value="{{  $shipping['shipping_address'] }}" />

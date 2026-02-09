@@ -194,20 +194,7 @@
         align-items: normal;
     }
 
-    .purchase-conf__form {
+    .purchase-confirm__form {
         margin: 0 70px;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .purchase {
-        display: flex;
-        flex-direction: column;
-        margin: 80px 80px;
-        align-items: normal;
-    }
-
-    .purchase-conf__form {
-        margin: 0 60px;
     }
 }

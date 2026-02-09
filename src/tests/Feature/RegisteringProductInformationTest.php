@@ -63,7 +63,7 @@ class RegisteringProductInformationTest extends TestCase
         // カテゴリの紐付け確認
         $item = Item::where('product_name', 'テスト商品')->firstOrFail();
         foreach ($categories as $category) {
-            $this->assertDatabaseHas('category_item', [
+            $this->assertDatabaseHas('category_items', [
                 'item_id'     => $item->id,
                 'category_id' => $category->id,
             ]);

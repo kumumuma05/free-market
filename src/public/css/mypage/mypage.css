@@ -30,7 +30,7 @@
     border-radius: 90px;
 }
 
-.profile-info__user-name h2 {
+.profile-info__user-heading {
     font-size: 36px;
     margin-left: -180px;
 }
@@ -139,42 +139,12 @@
         margin: 80px auto;
     }
 
-    .profile-info__user-name h2 {
+    .profile-info__user-heading {
         font-size: 36px;
         margin-left: 0;
     }
 
     .profile-info__action{
-        align-self: end;
-    }
-
-    .profile-info__action-link {
-        width: 200px;
-        height: 40px;
-        font-size: 20px;
-    }
-
-    .mypage-tab__link:first-child {
-        padding-left: 90px;
-    }
-
-    .item-list {
-        grid-template-columns: repeat(2, minmax(290px, 1fr));
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .profile-info {
-        max-width: 600px;
-        margin: 80px auto;
-    }
-
-    .profile-info__user-name h2 {
-        font-size: 36px;
-        margin-left: 0;
-    }
-
-    .profile-info__action {
         align-self: end;
     }
 

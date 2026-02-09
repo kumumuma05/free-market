@@ -6,9 +6,8 @@
 
 @section('content')
     <div class="item-index">
-
         <!-- セッションメッセージ表示 -->
-        @if(session('status'))
+        @if (session('status'))
             <div class="item-index__alert">
                 {{ session('status') }}
             </div>
@@ -17,17 +16,17 @@
         <!-- タブ -->
         <div class="item-index__tab-menu">
             <a class="item-index__tab-menu-link {{ $activeTab === 'recommend' ? 'item-index__tab-menu-link--active' : '' }}" href="/">おすすめ</a>
-            <a class="item-index__tab-menu-link {{ $activeTab === 'mylist' ? 'item-index__tab-menu-link--active' : '' }}" href="/?tab=mylist&keyword={{ urlencode($keyword ?? request('keyword', '' )) }}">マイリスト</a>
+            <a class="item-index__tab-menu-link {{ $activeTab === 'mylist' ? 'item-index__tab-menu-link--active' : '' }}" href="/?tab=mylist&keyword={{ urlencode($keyword ?? request('keyword', '')) }}">マイリスト</a>
         </div>
 
         <!-- 一覧 -->
         <ul class="item-index__list">
-            @foreach($items as $item)
+            @foreach ($items as $item)
                 <li class="item-index__list-item">
                     <a class="item-index__list-card" href="/item/{{ $item->id }}">
                         <div class="item-index__list-card-image">
                             <img src="{{ $item->image_url }}" alt="商品画像">
-                            @if($item->is_sold)
+                            @if ($item->is_sold)
                                 <span class="item-index__list-card-sold">Sold</span>
                             @endif
                         </div>

@@ -17,17 +17,17 @@
 
         <!-- タイトル -->
         <div class="profile__title">
-            <h2>プロフィール設定</h2>
+            <h1 class="profile__heading">プロフィール設定</h1>
         </div>
 
         <!-- 画像選択 -->
         <div class="profile__image-wrap">
-            <img class="profile__image" src="{{ $user->profile_image_url }}" alt="">
+            <img class="profile__image" src="{{ $user->profile_image_url }}" alt="プロフィール画像">
             <label class="profile__image-label" for="profile-image">画像を選択する</label>
         </div>
         <div class="profile__error">
             @error('profile_image')
-                {{ $message}}
+                {{ $message }}
             @enderror
         </div>
 
@@ -47,7 +47,7 @@
                 <input type="text" name="name" value="{{ old('name',  $user->name) }}" />
                 <div class="profile__error">
                     @error('name')
-                        {{ $message}}
+                        {{ $message }}
                     @enderror
                 </div>
             </div>
@@ -58,7 +58,7 @@
                 <input type="text" name="postal" value="{{ old('postal',  $user->postal) }}" />
                 <div class="profile__error">
                     @error('postal')
-                        {{ $message}}
+                        {{ $message }}
                     @enderror
                 </div>
             </div>
@@ -69,7 +69,7 @@
                 <input type="text" name="address" value="{{  old('address', $user->address) }}" />
                 <div class="profile__error">
                     @error('address')
-                        {{ $message}}
+                        {{ $message }}
                     @enderror
                 </div>
             </div>
