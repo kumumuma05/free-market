@@ -82,7 +82,7 @@ Route::middleware(['auth', 'verified', 'profile.completed'])->group(function () 
     // 取引メッセージ削除
     Route::delete('/transaction/{purchase}/messages/{message}', [TransactionController::class, 'destroy']);
 
-    // 完了メール送信
+    // 取引完了（メール送信）
     Route::post('transaction/{purchase}/complete', [TransactionController::class, 'complete']);
 
     // 評価
