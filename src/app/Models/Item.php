@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Purchase;
+use App\Models\User;
 
 class Item extends Model
 {
     use HasFactory;
 
-    // 一括代入可能カラム
     protected $fillable = [
         'user_id',
         'product_name',
@@ -38,7 +41,7 @@ class Item extends Model
      */
     public function scopeKeywordSearch($query, $keyword)
     {
-        if(!empty($keyword)) {
+        if (!empty($keyword)) {
             $query->where('product_name', 'like', '%' . $keyword . '%');
         }
 
@@ -52,7 +55,7 @@ class Item extends Model
      */
     public function getImageUrlAttribute()
     {
-        if(preg_match('#^https?://#', $this->image_path)){
+        if (preg_match('#^https?://#', $this->image_path)) {
             return $this->image_path;
         }
 

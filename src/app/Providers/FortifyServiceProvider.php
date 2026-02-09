@@ -3,20 +3,10 @@
 namespace App\Providers;
 
 use App\Actions\Fortify\CreateNewUser;
-// use App\Actions\Fortify\ResetUserPassword;
-// use App\Actions\Fortify\UpdateUserPassword;
-// use App\Actions\Fortify\UpdateUserProfileInformation;
-// use App\Http\Requests\LoginRequest;
-// use App\Http\Requests\RegisterRequest;
-// use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
-// use Illuminate\Support\Str;
-// use Illuminate\Support\Facades\Validator;
-// use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 use App\Http\Responses\RegisterResponse as AppRegisterResponse;
@@ -24,8 +14,6 @@ use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
 use App\Http\Requests\LoginRequest as AppLoginRequest;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use App\Http\Responses\LoginResponse;
-
-
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -39,7 +27,6 @@ class FortifyServiceProvider extends ServiceProvider
 
         // ログイン時のレスポンス変更
         $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
-
 
         // ログイン画面でFormRequestを使用
         $this->app->bind(FortifyLoginRequest::class, AppLoginRequest::class);
@@ -69,6 +56,5 @@ class FortifyServiceProvider extends ServiceProvider
 
             return Limit::perMinute(10)->by($email . $request->ip());
         });
-
     }
 }

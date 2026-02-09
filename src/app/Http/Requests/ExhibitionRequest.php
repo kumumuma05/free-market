@@ -39,7 +39,8 @@ class ExhibitionRequest extends FormRequest
     protected function prepareForValidation()
     {
         if (session()->has('temp_image')) {
-            $this->merge(['temp_image' => session('temp_image')]);        }
+            $this->merge(['temp_image' => session('temp_image')]);
+        }
     }
 
     /**

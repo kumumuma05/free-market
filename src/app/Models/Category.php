@@ -10,8 +10,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    // 一括代入可能カラム
-    protected $fillable = ['name',];
+    protected $fillable = ['name'];
 
     /**
      * このカテゴリに属する商品の一覧を取得

@@ -5,9 +5,8 @@
 @endsection
 
 @section('content')
-
     <!-- セッションメッセージ -->
-    @if(session('status'))
+    @if (session('status'))
         <div class="session__alert">
             {{ session('status') }}
         </div>
@@ -27,5 +26,4 @@
             <button class="verify-email__form-button" type="submit">認証メールを再送する</button>
         </form>
     </div>
-
 @endsection

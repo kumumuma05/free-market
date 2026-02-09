@@ -9,7 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
-
+use App\Models\Comment;
+use App\Models\Item;
+use App\Models\Purchase;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -20,8 +22,6 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<int, string>
      */
-
-    // 一括代入可能カラム
     protected $fillable = [
         'name',
         'email',
@@ -30,7 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'postal',
         'address',
         'building',
-        'profile_completed'
+        'profile_completed',
     ];
 
     /**

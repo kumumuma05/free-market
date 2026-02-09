@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Faker\Factory as FakerFactory;
 use App\Models\User;
-use App\models\Item;
+use App\Models\Item;
 
 class PurchaseFactory extends Factory
 {

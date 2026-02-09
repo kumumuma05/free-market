@@ -15,7 +15,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-
         User::updateOrCreate(
             ['email' => 'user1@test.com'],
             [

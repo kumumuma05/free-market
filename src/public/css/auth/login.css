@@ -83,15 +83,3 @@
         margin: 0 auto;
     }
 }
-
-@media screen and (max-width: 768px) {
-    .content {
-        width: 100%;
-        margin: 0 auto;
-    }
-
-    .login {
-        width: 500px;
-        height: auto;
-    }
-}

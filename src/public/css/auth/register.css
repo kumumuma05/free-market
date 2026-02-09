@@ -67,27 +67,7 @@
 
 /* レスポンシブデザイン */
 @media screen and (min-width: 768px) and (max-width: 850px) {
-    .content {
-        width: 100%;
-        margin: 0 auto;
-    }
-
     .register {
-        width: 90%;
-        max-width: 500px;
-        margin: 0 auto;
-        height: auto;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .content {
-        width: 100%;
-        margin: 0 auto;
-    }
-
-    .register {
-        width: 90%;
         max-width: 500px;
         margin: 0 auto;
         height: auto;

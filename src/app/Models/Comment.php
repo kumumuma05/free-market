@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Item;
+use App\Models\User;
 
 class Comment extends Model
 {
     use HasFactory;
 
-    // 一括代入可能カラム
     protected $fillable = [
         'item_id',
         'user_id',
