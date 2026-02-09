@@ -22,6 +22,8 @@ class CreatePurchasesTable extends Migration
             $table->string('shipping_postal', 10);
             $table->string('shipping_address');
             $table->string('shipping_building')->nullable();
+            $table->string('status')->default('trading');
+            $table->datetime('completed_at')->nullable();
             $table->timestamps();
         });
     }
