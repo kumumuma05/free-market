@@ -23,6 +23,8 @@ class CreateItemsTable extends Migration
             $table->tinyInteger('condition');
             $table->string('image_path');
             $table->boolean('is_sold')->default(false);
+            $table->string('status')->default('trading');
+            $table->datetime('completed_at')->nullable();
             $table->timestamps();
         });
     }
