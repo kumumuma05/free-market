@@ -72,8 +72,22 @@ Route::middleware(['auth', 'verified', 'profile.completed'])->group(function () 
     Route::post('/sell/session', [SellController::class, 'imagePostSession']);
     // 商品出品登録
     Route::post('/sell', [SellController::class, 'store']);
-});
 
+    // 取引チャット画面表示
+    Route::get('/transaction/{purchase}', [TransactionController::class,'show']);
+    //　取引チャットメッセージ送信
+    Route::post('/transaction/{purchase}/messages', [TransactionController::class, 'store']);
+    // 取引メッセージ更新
+    Route::put('/transaction/{purchase}/messages/{message}', [TransactionController::class, 'update']);
+    // 取引メッセージ削除
+    Route::delete('/transaction/{purchase}/messages/{message}', [TransactionController::class, 'destroy']);
+
+    // 完了メール送信
+    Route::post('transaction/{purchase}/complete', [TransactionController::class, 'complete']);
+
+    // 評価
+    Route::post('/ratings', [RatingController::class, 'store']);
+});
 
 
 
