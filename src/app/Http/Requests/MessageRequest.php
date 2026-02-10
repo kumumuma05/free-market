@@ -13,7 +13,7 @@ class MessageRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,21 @@ class MessageRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'body' => 'required|string|max:400',
+            'image' => 'nullable|image|mimes:jpeg,png',
+        ];
+    }
+
+    /**
+     * パリシーションメッセージ
+     */
+    public function messages()
+    {
+        return [
+            'body.required' => '本文を入力してください',
+            'body.max' => '本文は400文字以内で入力してください',
+            'image.mimes' => '「png」または「jpeg」形式でアップロードしてください',
+            'image.image' => '画像ファイルを選択してください',
         ];
     }
 }

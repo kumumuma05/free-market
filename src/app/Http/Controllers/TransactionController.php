@@ -40,7 +40,7 @@ class TransactionController extends Controller
     /**
      * メッセージの登録（送信）
      */
-    public function store(Request $request, Purchase $purchase)
+    public function store(MessageRequest $request, Purchase $purchase)
     {
         // アクセス制限（購入者と出品者のみ）
         $this->authorizePurchase($purchase);
@@ -53,10 +53,113 @@ class TransactionController extends Controller
         Message::create([
             'purchase_id' => $purchase->id,
             'sender_id' => Auth::id(),
-            'body' => $body,
+            'body' => $request->body,
             'image_path' => $imagePath,
         ]);
 
-        return redirect();
+        return back();
+    }
+
+    /**
+     * メッセージ編集
+     */
+    public function update(MessageRequest $request, Purchase $purchase, Message $message)
+    {
+        // アクセス制限
+        $this->authorizePurchase($purchase);
+        $this->authorizeMessage($purchase, $message);
+
+        // 自分の投稿のみ編集可
+        if ($message->sender_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $update = [
+            'body' => $request->body,
+        ];
+
+        // 画像編集
+        if ($request->hasFile('image')) {
+            if ($message->image_path) {
+                Storage::disk('public')->delete($message->image_path);
+            }
+            $path = $request->file('image')->store('messages', 'public');
+            $update['image_path'] = $path;
+        }
+
+        $message->update($update);
+
+        return back();
+    }
+
+    /**
+     * メッセージ削除
+     */
+    public function destroy(Purchase $purchase, Message $message)
+    {
+        // アクセス制限
+        $this->authorizePurchase($purchase);
+        $this->authorizeMessage($purchase, $message);
+
+        // 自分の投稿だけ削除可
+        if ($message->sender_id !== Auth::id()) {
+            abort(403);
+        }
+
+        // 画像があればファイルも消す
+        if ($message->image_path) {
+            Storage::disk('public')->delete($message->image_path);
+        }
+        $message -> delete();
+
+        return back();
+    }
+
+    /**
+     * 取引完了判断
+     */
+    public function complete(Purchase $purchase)
+    {
+        // アクセス制限
+        $this->authorizePurchase($purchase);
+        if ($purchase->buyer_id !== Auth::id()) {
+            abort(403);
+        }
+
+        // すでに完了なら何もしない（2度押し対策）
+        if ($purchase->isCompleted()) {
+            return back();
+        }
+
+        $purchase->update([
+            'status' => Purchase::STATUS_COMPLETED,
+            'completed_at' => now(),
+        ]);
+
+        // メール送信
+
+        return back();
+    }
+
+    /**
+     * 「購入者」と「出品者」のみが操作できるように制限
+     */
+    private function authorizePurchase(Purchase $purchase) :void
+    {
+        $userId = Auth::id();
+        $sellerId = $purchase->item->user_id;
+
+        if ($purchase->buyer_id !== $userId && $sellerId !== $userId) {
+            abort(403);
+        }
+    }
+
+    /**
+     * メッセージが指定の取引に属しているか確認
+     */
+    private function authorizeMessage(Purchase $purchase, Message $message): variant_mod{
+        if ($message->purchase_id !== $purchase->id) {
+            abort(404);
+        }
     }
 }
