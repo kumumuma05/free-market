@@ -137,6 +137,10 @@ class TransactionController extends Controller
         ]);
 
         // メール送信
+        $purchase->load(['item.user', 'buyer']);
+
+        $sellerEmail = $purchase->item->user->email;
+        Mail::to($sellerEmail)->send(new TransactionCompleteMail($purchase));
 
         return back();
     }
