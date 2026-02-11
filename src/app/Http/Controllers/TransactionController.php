@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Purchase;
 use App\Models\Message;
 use App\Models\Rating;
+use App\Http\Requests\MessageRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+
 
 class TransactionController extends Controller
 {
@@ -34,7 +36,9 @@ class TransactionController extends Controller
         $isBuyer = ($purchase->buyer_id === $userId);
         $isSeller = ($purchase->item->user_id === $userId);
 
-        return view('transaction.show', compact('purchase', 'messages', 'myRating', 'isBuyer', 'isSeller'));
+        $editingMessage = null;
+
+        return view('transaction.show', compact('purchase', 'messages', 'myRating', 'isBuyer', 'isSeller', 'editingMessage'));
     }
 
     /**
@@ -46,7 +50,7 @@ class TransactionController extends Controller
         $this->authorizePurchase($purchase);
 
         $imagePath = null;
-        if ($request->hasFail('image')) {
+        if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('chat_images', 'public');
         }
 
@@ -59,6 +63,35 @@ class TransactionController extends Controller
 
         return back();
     }
+
+    /**
+     * メッセージ編集画面表示(同じチャット画面を編集モードで表示)
+     */
+    public function editInline(Purchase $purchase, Message $message)
+    {
+    // アクセス制限
+    $this->authorizePurchase($purchase);
+
+    // この取引のメッセージか確認
+    if ($message->purchase_id !== $purchase->id) {
+        abort(404);
+    }
+
+    // 自分の投稿のみ編集可
+    if ($message->sender_id !== Auth::id()) {
+        abort(403);
+    }
+
+    $messages = $purchase->messages()->latest()->get();
+
+    $isBuyer = auth()->id() === $purchase->buyer_id;
+    $isSeller = auth()->id() === $purchase->item->user_id;
+    $myRating = $purchase->ratings()->where('rater_id', auth()->id())->first();
+
+    $editingMessage = $message;
+
+    return view('transaction.show', compact('purchase', 'messages', 'myRating', 'isBuyer', 'isSeller', 'editingMessage'));
+}
 
     /**
      * メッセージ編集

@@ -24,6 +24,8 @@ class CreatePurchasesTable extends Migration
             $table->string('shipping_building')->nullable();
             $table->string('status')->default('trading');
             $table->datetime('completed_at')->nullable();
+            $table->timestamp('buyer_last_read_at')->nullable();
+            $table->timestamp('seller_last_read_at')->nullable();
             $table->timestamps();
         });
     }

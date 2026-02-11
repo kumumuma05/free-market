@@ -8,6 +8,8 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\MypageController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\EmailVerificationController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\RatingController;
 
 /**
  * 公開ルート
@@ -75,8 +77,10 @@ Route::middleware(['auth', 'verified', 'profile.completed'])->group(function () 
 
     // 取引チャット画面表示
     Route::get('/transaction/{purchase}', [TransactionController::class,'show']);
-    //　取引チャットメッセージ送信
+    // 取引チャットメッセージ送信
     Route::post('/transaction/{purchase}/messages', [TransactionController::class, 'store']);
+    // 編集モードでチャット表示（同じ画面を返すだけ）
+    Route::get('/transaction/{purchase}/messages/{message}/edit', [TransactionController::class, 'editInline']);
     // 取引メッセージ更新
     Route::put('/transaction/{purchase}/messages/{message}', [TransactionController::class, 'update']);
     // 取引メッセージ削除
@@ -88,19 +92,3 @@ Route::middleware(['auth', 'verified', 'profile.completed'])->group(function () 
     // 評価
     Route::post('/ratings', [RatingController::class, 'store']);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

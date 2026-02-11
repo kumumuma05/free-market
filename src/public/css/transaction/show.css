@@ -1,0 +1,226 @@
+.transaction {
+    display: flex;
+    gap: 0;
+    min-height: calc(100vh - 120px);
+    background: #fff;
+}
+
+/* left */
+.transaction__sidebar {
+    width: 260px;
+    background: #7b7b7b;
+    padding: 14px;
+    color: #fff;
+}
+
+.transaction__sidebar-title {
+    font-size: 14px;
+    margin: 0 0 12px;
+}
+
+/* right */
+.transaction__main {
+    flex: 1;
+    padding: 0;
+}
+
+.transaction__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    border-bottom: 1px solid #ddd;
+}
+
+.transaction__header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.transaction__avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #d9d9d9;
+}
+
+.transaction__header-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.transaction__complete-btn {
+    border: 1px solid #ff6b6b;
+    color: #ff6b6b;
+    background: #fff;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.transaction__complete-btn:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+/* item */
+.transaction__item {
+    display: flex;
+    gap: 14px;
+    padding: 14px 18px;
+    border-bottom: 1px solid #ddd;
+}
+
+.transaction__item-img {
+    width: 110px;
+    height: 90px;
+    background: #d9d9d9;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+.transaction__item-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.transaction__item-name {
+    margin: 4px 0 8px;
+    font-size: 16px;
+    font-weight: 700;
+}
+.transaction__item-price {
+    margin: 0;
+    font-size: 13px;
+    color: #444;
+}
+
+/* messages */
+.transaction__messages {
+    padding: 18px;
+    height: 420px;
+    overflow-y: auto;
+}
+
+.transaction__empty {
+    color: #666;
+    font-size: 13px;
+}
+
+.message {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+}
+
+.message--other { align-items: flex-start; }
+.message--mine  { align-items: flex-end; margin-left: auto; }
+
+.message__meta {
+    display: flex;
+    gap: 10px;
+    font-size: 11px;
+    color: #777;
+    margin-bottom: 6px;
+}
+
+.message__bubble {
+    background: #e9e9e9;
+    border-radius: 12px;
+    padding: 10px 12px;
+}
+
+.message--mine .message__bubble {
+    background: #d8f3ff;
+}
+
+.message__text {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.message__image img {
+    margin-top: 10px;
+    max-width: 260px;
+    border-radius: 10px;
+    display: block;
+}
+
+/* edit/delete */
+.message__actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+    font-size: 12px;
+}
+.message__actions button {
+    background: transparent;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    padding: 0;
+}
+.message__edit summary {
+    cursor: pointer;
+    color: #555;
+}
+.message__edit textarea {
+    width: 260px;
+    margin: 8px 0 6px;
+}
+.message__edit input[type="file"] {
+    display: block;
+    margin-bottom: 6px;
+}
+
+/* form */
+.transaction__form {
+    border-top: 1px solid #ddd;
+    padding: 12px 18px;
+}
+
+.transaction__form-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.transaction__form-input {
+    flex: 1;
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+}
+
+.transaction__upload {
+    border: 1px solid #ff6b6b;
+    color: #ff6b6b;
+    padding: 6px 10px;
+    border-radius: 16px;
+    font-size: 12px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.transaction__send {
+    height: 36px;
+    padding: 0 14px;
+    border: none;
+    background: #ff6b6b;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.transaction__error {
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: #d00;
+}
