@@ -49,7 +49,7 @@
 
                 @foreach($tradingPurchases as $purchase)
                     <li class="item-list__item">
-                        <a class="item-list__card"href="/transactions/{{ $purchase->id }}">
+                        <a class="item-list__card"href="/transaction/{{ $purchase->id }}">
 
                         <div class="item-list__card-image">
                             <img src="{{ $purchase->item->image_url }}" alt="商品画像">

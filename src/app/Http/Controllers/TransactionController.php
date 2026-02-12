@@ -6,6 +6,7 @@ use App\Models\Purchase;
 use App\Models\Message;
 use App\Models\Rating;
 use App\Http\Requests\MessageRequest;
+use App\Mail\TransactionCompletedMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +25,7 @@ class TransactionController extends Controller
         // メッセージの表示
         $messages = $purchase->messages()
             ->with('sender')
-            ->latest()
+            ->oldest()
             ->get();
 
         // 評価状況（評価済みか）
@@ -36,9 +37,24 @@ class TransactionController extends Controller
         $isBuyer = ($purchase->buyer_id === $userId);
         $isSeller = ($purchase->item->user_id === $userId);
 
-        $editingMessage = null;
+        // その他の取引表示（左サイドバー用）
+        $sidebarPurchases = Purchase::query()
+            ->where('status', Purchase::STATUS_TRADING)
+            ->where(function ($query) use ($userId) {
+                $query->where('buyer_id', $userId)
+                    ->orWhereHas('item', function($itemQuery) use ($userId) {
+                        $itemQuery->where('user_id', $userId);
+                    });
+            })
+            ->whereKeyNot($purchase->id)
+            ->with('item')
+            ->withMax('messages', 'created_at')
+            ->orderByRaw('COALESCE(messages_max_created_at, purchases.created_at) DESC')
+            ->get();
 
-        return view('transaction.show', compact('purchase', 'messages', 'myRating', 'isBuyer', 'isSeller', 'editingMessage'));
+            $editingMessage = null;
+
+        return view('transaction.show', compact('purchase', 'messages', 'myRating', 'isBuyer', 'isSeller', 'editingMessage', 'sidebarPurchases'));
     }
 
     /**
@@ -82,7 +98,7 @@ class TransactionController extends Controller
         abort(403);
     }
 
-    $messages = $purchase->messages()->latest()->get();
+    $messages = $purchase->messages()->oldest()->get();
 
     $isBuyer = auth()->id() === $purchase->buyer_id;
     $isSeller = auth()->id() === $purchase->item->user_id;
@@ -122,7 +138,7 @@ class TransactionController extends Controller
 
         $message->update($update);
 
-        return back();
+        return redirect("/transaction/{$purchase->id}");
     }
 
     /**
@@ -175,7 +191,8 @@ class TransactionController extends Controller
         $sellerEmail = $purchase->item->user->email;
         Mail::to($sellerEmail)->send(new TransactionCompleteMail($purchase));
 
-        return back();
+        return redirect("/transaction/{$purchase->id}")
+        ->with('show_rating_modal', true);
     }
 
     /**
@@ -194,7 +211,8 @@ class TransactionController extends Controller
     /**
      * メッセージが指定の取引に属しているか確認
      */
-    private function authorizeMessage(Purchase $purchase, Message $message): variant_mod{
+    private function authorizeMessage(Purchase $purchase, Message $message): void
+    {
         if ($message->purchase_id !== $purchase->id) {
             abort(404);
         }

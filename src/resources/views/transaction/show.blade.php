@@ -10,7 +10,12 @@
         <!-- 左サイド -->
         <aside class="transaction__sidebar">
             <p class="transaction__sidebar-title">その他の取引</p>
-            <!-- あとで、リスト作る -->
+
+            @foreach($sidebarPurchases as $sidePurchase)
+                <a class="transaction__sidebar-link" href="/transaction/{{ $sidePurchase->id }}">
+                    {{ $sidePurchase->item->product_name }}
+                </a>
+            @endforeach
         </aside>
 
         <!-- 右メイン -->
@@ -96,7 +101,7 @@
                                 <form action="/transaction/{{ $purchase->id }}/messages/{{ $message->id }}" method="post" onsubmit="return confirm('削除しますか？')">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="messate__delete-button" type="submit">削除</button>
+                                    <button class="message__delete-button" type="submit">削除</button>
                                 </form>
                             </div>
                         @endif
@@ -113,6 +118,13 @@
                     $isEditing = !empty($editingMessage);
                 @endphp
 
+                @error('body')
+                        <p class="transaction__error">{{ $message }}</p>
+                    @enderror
+                    @error('image')
+                        <p class="transaction__error">{{ $message }}</p>
+                @enderror
+
                 <form action="{{ $isEditing ? "/transaction/{$purchase->id}/messages/{$editingMessage->id}" : "/transaction/{$purchase->id}/messages" }}" method="post" enctype="multipart/form-data">
                     @csrf
 
@@ -121,7 +133,7 @@
                     @endif
 
                     <div class="transaction__form-row">
-                        <textarea class="transaction__form-input" name="body" placeholder="取引メッセージを記入してください">{{ old('body', $isEditing ? $editingMessage->body : '') }}</textarea>
+                        <textarea class="transaction__form-textarea" name="body" placeholder="取引メッセージを記入してください">{{ old('body', $isEditing ? $editingMessage->body : '') }}</textarea>
 
                         <label class="transaction__upload">
                             <input type="file" name="image" accept="image/*" hidden>
@@ -132,15 +144,29 @@
                             <img src="{{ asset('images/紙飛行機.jpg') }}" alt="紙飛行機">
                         </button>
                     </div>
-
-                    @error('body')
-                        <p class="transaction__error">{{ $message }}</p>
-                    @enderror
-                    @error('image')
-                        <p class="transaction__error">{{ $message }}</p>
-                    @enderror
                 </form>
             </section>
         </main>
+
+        @php
+  $showRatingModal = session('show_rating_modal')&& !$myRating;
+@endphp
+
+<div class="rating-modal {{ $showRatingModal ? 'is-open' : '' }}">
+  <a class="rating-modal__overlay" href="/transaction/{{ $purchase->id }}"></a>
+
+  <div class="rating-modal__panel" role="dialog" aria-modal="true">
+    <p class="rating-modal__title">取引が完了しました。</p>
+
+    {{-- ★評価フォーム（例） --}}
+    <form method="post" action="/transaction/{{ $purchase->id }}/ratings">
+      @csrf
+      {{-- 星UIはあなたの実装に合わせて --}}
+      <button type="submit">送信する</button>
+    </form>
+
+    <a class="rating-modal__close" href="/transaction/{{ $purchase->id }}">×</a>
+  </div>
+</div>
     </div>
 @endsection
