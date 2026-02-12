@@ -11,8 +11,8 @@ class RatingController extends Controller
         // アクセス制限
         $this->authorizePurchase($purchase);
 
-        // 取引完了後だけ評価可能
-        if (! $purchase->isCompleted()) {
+        // 評価待ちの時だけ評価可能
+        if (! $purchase->isWaitingRating()) {
             abort(403);
         }
 
@@ -29,9 +29,8 @@ class RatingController extends Controller
             'score' => ['required', 'integer', 'between:1,5'],
         ]);
 
-        $sellerId = $purchase->item->user_id;
+        $sellerId = $purchase->item->seller_id;
         $buyerId  = $purchase->buyer_id;
-
         $raterId = Auth::id();
         $rateeId = ($raterId === $buyerId) ? $sellerId : $buyerId;
 
@@ -42,6 +41,15 @@ class RatingController extends Controller
                 'ratee_id' => $rateeId,
                 'score' => $validated['score'],
         ]);
+
+        // 両者の評価が終了後取引終了登録
+        $ratingsCount = $purchase->ratings()->count();
+        if ($ratingsCount >=2) {
+            $purchase->update([
+                'status' => Purchase::STATUS_COMPLETED,
+                'completed_at' => now(),
+            ]);
+        }
 
         return redirect('/');
     }

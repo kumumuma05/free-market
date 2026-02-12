@@ -44,6 +44,7 @@ class Purchase extends Model
      * 取引ステータス
      */
     public const STATUS_TRADING   = 'trading';
+    public const STATUS_WAITING_RATING = 'waiting_rating';
     public const STATUS_COMPLETED = 'completed';
 
     /**
@@ -99,6 +100,14 @@ class Purchase extends Model
     public function isTrading(): bool
     {
         return $this->status === self::STATUS_TRADING;
+    }
+
+    /**
+     * 取引が「評価待ち」か判定する
+     */
+    public function isWaitingRating(): bool
+    {
+        return $this->status === self::STATUS_WAITING_RATING;
     }
 
     /**

@@ -29,10 +29,12 @@ class TransactionController extends Controller
             ->oldest()
             ->get();
 
-        // 評価状況（評価済みか）
+        // 評価モーダルの表示
         $myRating = $purchase->ratings()
             ->where('rater_id', Auth::id())
             ->first();
+
+        $shouldShowRatingModal = $purchase->status === Purchase::STATUS_WAITING_RATING && empty($myRating);
 
         $userId = auth()->id();
         $isBuyer = ($purchase->buyer_id === $userId);
@@ -181,16 +183,15 @@ class TransactionController extends Controller
             return back();
         }
 
+        // 取引完了処理
+        $purchase->update([
+            'status' => Purchase::STATUS_WAITING_RATING,
+        ]);
         // メール送信
         $purchase->load(['item.seller', 'buyer']);
-
         $sellerEmail = $purchase->item->seller->email;
-        Mail::to($sellerEmail)->send(new TransactionCompletedMail($purchase));
 
-        $purchase->update([
-            'status' => Purchase::STATUS_COMPLETED,
-            'completed_at' => now(),
-        ]);
+        Mail::to($sellerEmail)->send(new TransactionCompletedMail($purchase));
 
         return redirect("/transaction/{$purchase->id}")
         ->with('show_rating_modal', true);
