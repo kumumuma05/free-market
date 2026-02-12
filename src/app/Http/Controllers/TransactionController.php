@@ -33,8 +33,7 @@ class TransactionController extends Controller
         $myRating = $purchase->ratings()
             ->where('rater_id', Auth::id())
             ->first();
-
-        $shouldShowRatingModal = $purchase->status === Purchase::STATUS_WAITING_RATING && empty($myRating);
+        $showRatingModal = $purchase->status === Purchase::STATUS_WAITING_RATING && empty($myRating);
 
         $userId = auth()->id();
         $isBuyer = ($purchase->buyer_id === $userId);
@@ -57,7 +56,7 @@ class TransactionController extends Controller
 
             $editingMessage = null;
 
-        return view('transaction.show', compact('purchase', 'messages', 'myRating', 'isBuyer', 'isSeller', 'editingMessage', 'sidebarPurchases'));
+        return view('transaction.show', compact('purchase', 'messages', 'myRating', 'isBuyer', 'isSeller', 'editingMessage', 'showRatingModal', 'sidebarPurchases'));
     }
 
     /**

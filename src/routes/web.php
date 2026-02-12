@@ -90,5 +90,5 @@ Route::middleware(['auth', 'verified', 'profile.completed'])->group(function () 
     Route::post('transaction/{purchase}/complete', [TransactionController::class, 'complete']);
 
     // 評価
-    Route::post('/ratings', [RatingController::class, 'store']);
+    Route::post('/transaction/{purchase}/ratings', [RatingController::class, 'store']);
 });

@@ -150,61 +150,76 @@
             </section>
         </main>
 
+        @if ($showRatingModal)
+            <div class="rating-modal">
+                <div class="rating-modal__header">
+                    <p class="rating-modal__guidance">取引が完了しました。</p>
+                </div>
+
+                <form method="post" action="/transaction/{{ $purchase->id }}/ratings">
+                    @csrf
+                    <div class="rating-modal__body">
+                        <p class="rating-modal__rating-text">
+                            今回の取引相手はどうでしたか？
+                        </p>
+                        <div class="rating-modal__rating" aria-label="評価">
+                            <input id="star5" type="radio" name="score" value="5" required>
+                            <label for="star5" title="5">★</label>
+
+                            <input id="star4" type="radio" name="score" value="4" required>
+                            <label for="star4" title="4">★</label>
+
+                            <input id="star3" type="radio" name="score" value="3" required>
+                            <label for="star3" title="3">★</label>
+
+                            <input id="star2" type="radio" name="score" value="2" required>
+                            <label for="star2" title="2">★</label>
+
+                            <input id="star1" type="radio" name="score" value="1" required>
+                            <label for="star1" title="1">★</label>
+                        </div>
+                    </div>
+
+                    <div class="rating-modal__footer">
+                        <button class="rating-modal__form-button" type="submit">送信する</button>
+                    </div>
+                </form>
+            </div>
+        @endif
+
         <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const textarea = document.getElementById("transaction-message");
-  if (!textarea) return;
+            document.addEventListener("DOMContentLoaded", () => {
+                const textarea = document.getElementById("transaction-message");
+                if (!textarea) return;
 
-  const key = textarea.dataset.draftKey;
-  if (!key) return;
+                const key = textarea.dataset.draftKey;
+                if (!key) return;
 
-  const isEditing = {{ !empty($editingMessage) ? 'true' : 'false' }};
+                const isEditing = {{ !empty($editingMessage) ? 'true' : 'false' }};
 
-  // 画面を開いたときに復元（編集中は復元しない）
-  if (!isEditing) {
-    const saved = localStorage.getItem(key);
-    if (saved && !textarea.value) {
-      textarea.value = saved;
-    }
-  }
+                    // 画面を開いたときに復元（編集中は復元しない）
+                    if (!isEditing) {
+                        const saved = localStorage.getItem(key);
+                    if (saved && !textarea.value) {
+                        textarea.value = saved;
+                    }
+                }
 
-  // 入力するたび保存
-  textarea.addEventListener("input", () => {
-    if (textarea.value.trim() === "") {
-      localStorage.removeItem(key);
-    } else {
-      localStorage.setItem(key, textarea.value);
-    }
-  });
+                // 入力するたび保存
+                textarea.addEventListener("input", () => {
+                    if (textarea.value.trim() === "") {
+                    localStorage.removeItem(key);
+                    } else {
+                    localStorage.setItem(key, textarea.value);
+                    }
+                });
 
-  // 送信したら下書き削除
-  const form = textarea.closest("form");
-  form?.addEventListener("submit", () => {
-    localStorage.removeItem(key);
-  });
-});
-</script>
-
-
-@php
-    $showRatingModal = session('show_rating_modal') && empty($myRating);
-@endphp
-
-<div class="rating-modal {{ $showRatingModal ? 'is-open' : '' }}">
-  <a class="rating-modal__overlay" href="/transaction/{{ $purchase->id }}"></a>
-
-  <div class="rating-modal__panel" role="dialog" aria-modal="true">
-    <p class="rating-modal__title">取引が完了しました。</p>
-
-    {{-- ★評価フォーム（例） --}}
-    <form method="post" action="/transaction/{{ $purchase->id }}/ratings">
-      @csrf
-      {{-- 星UIはあなたの実装に合わせて --}}
-      <button type="submit">送信する</button>
-    </form>
-
-    <a class="rating-modal__close" href="/transaction/{{ $purchase->id }}">×</a>
-  </div>
-</div>
+                // 送信したら下書き削除
+                const form = textarea.closest("form");
+                form?.addEventListener("submit", () => {
+                    localStorage.removeItem(key);
+                });
+            });
+        </script>
     </div>
 @endsection

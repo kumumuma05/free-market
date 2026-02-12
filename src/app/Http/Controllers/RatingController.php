@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Rating;
+use App\Models\Purchase;
+
 
 class RatingController extends Controller
 {
-    public function storeRating(Request $request, Purchase $purchase)
+    public function store(Request $request, Purchase $purchase)
     {
         // アクセス制限
         $this->authorizePurchase($purchase);

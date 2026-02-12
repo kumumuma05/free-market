@@ -23,7 +23,10 @@ class MypageController extends Controller
             $authUserId = $user->id;
 
             $tradingPurchases = Purchase::query()
-                ->where('status', Purchase::STATUS_TRADING)
+                ->whereIn('status', [
+                    Purchase::STATUS_TRADING,
+                    Purchase::STATUS_WAITING_RATING
+                ])
                 ->where(function ($query) use ($authUserId) {
                     // 自分が購入者の取引
                     $query->where('buyer_id', $authUserId);

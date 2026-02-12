@@ -266,30 +266,84 @@
 
 /* 評価モーダル */
 .rating-modal {
-    display: none;
     position: fixed;
-    inset: 0;
-    z-index: 9999;
-}
-
-.rating-modal.is-open {
-    display: block;
-}
-
-.rating-modal__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,.4);
-}
-
-.rating-modal__panel {
-    position: absolute;
-    left: 50%;
-    top: 50%;
+    left: 59%;
+    top: 62%;
     transform: translate(-50%, -50%);
-    background: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    width: min(520px, 90vw);
+    background: #fdfce6;
+    border: 1px solid #000;
+    border-radius: 15px;
+    width: 600px;
+    height: 367px;
+    z-index: 1000;
+}
+
+.rating-modal__guidance {
+    margin: 0;
+    font-size: 35px;
+    padding: 16px 22px;
+}
+
+.rating-modal__body {
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding: 16px 20px 30px 20px;
+}
+
+.rating-modal__rating-text {
+    margin: 0;
+    padding-bottom: 20px;
+    font-size: 20px;
+    color: #868686;
+}
+
+.rating-modal__rating {
+    display: inline-flex;
+    flex-direction: row-reverse; /* 右から左へ。hoverの塗りつぶしが簡単になる */
+    gap: 14px;
+    font-size: 100px; /* お好みで */
+    line-height: 1;
+}
+
+/* radioは見せない */
+.rating-modal__rating input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* デフォルトはグレー */
+.rating-modal__rating label {
+    color: #d9d9d9;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* hover中：hoverした星と、それより左（＝小さい点数側）を塗る */
+.rating-modal__rating label:hover,
+.rating-modal__rating label:hover ~ label {
+  color: #fff048;
+}
+
+/* 選択済み：checked の星と、それより左を塗る */
+.rating-modal__rating input[type="radio"]:checked ~ label {
+  color: #fff048;
+}
+
+.rating-modal__footer {
+    display: flex;
+    padding: 15px;
+    justify-content: end;
+}
+
+.rating-modal__form-button {
+    width: 127px;
+    height: 50px;
+    border: none;
+    background: #ff8282;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 24px;
+    line-height: 1;
 }
 
