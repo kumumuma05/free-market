@@ -10,6 +10,7 @@ use App\Mail\TransactionCompletedMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 
 
 class TransactionController extends Controller
@@ -180,16 +181,16 @@ class TransactionController extends Controller
             return back();
         }
 
+        // メール送信
+        $purchase->load(['item.seller', 'buyer']);
+
+        $sellerEmail = $purchase->item->seller->email;
+        Mail::to($sellerEmail)->send(new TransactionCompletedMail($purchase));
+
         $purchase->update([
             'status' => Purchase::STATUS_COMPLETED,
             'completed_at' => now(),
         ]);
-
-        // メール送信
-        $purchase->load(['item.user', 'buyer']);
-
-        $sellerEmail = $purchase->item->user->email;
-        Mail::to($sellerEmail)->send(new TransactionCompleteMail($purchase));
 
         return redirect("/transaction/{$purchase->id}")
         ->with('show_rating_modal', true);

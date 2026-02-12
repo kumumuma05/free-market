@@ -11,11 +11,13 @@
         <aside class="transaction__sidebar">
             <p class="transaction__sidebar-title">その他の取引</p>
 
-            @foreach($sidebarPurchases as $sidePurchase)
-                <a class="transaction__sidebar-link" href="/transaction/{{ $sidePurchase->id }}">
-                    {{ $sidePurchase->item->product_name }}
-                </a>
-            @endforeach
+            @if (! $isBuyer)
+                @foreach($sidebarPurchases as $sidePurchase)
+                    <a class="transaction__sidebar-link" href="/transaction/{{ $sidePurchase->id }}">
+                        {{ $sidePurchase->item->product_name }}
+                    </a>
+                @endforeach
+            @endif
         </aside>
 
         <!-- 右メイン -->
@@ -133,7 +135,7 @@
                     @endif
 
                     <div class="transaction__form-row">
-                        <textarea class="transaction__form-textarea" name="body" placeholder="取引メッセージを記入してください">{{ old('body', $isEditing ? $editingMessage->body : '') }}</textarea>
+                        <textarea id="transaction-message" data-draft-key="draft:transaction:{{ $purchase->id }}:user:{{ auth()->id() }}" class="transaction__form-textarea" name="body" placeholder="取引メッセージを記入してください">{{ old('body', $isEditing ? $editingMessage->body : '') }}</textarea>
 
                         <label class="transaction__upload">
                             <input type="file" name="image" accept="image/*" hidden>
@@ -148,8 +150,44 @@
             </section>
         </main>
 
-        @php
-  $showRatingModal = session('show_rating_modal')&& !$myRating;
+        <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const textarea = document.getElementById("transaction-message");
+  if (!textarea) return;
+
+  const key = textarea.dataset.draftKey;
+  if (!key) return;
+
+  const isEditing = {{ !empty($editingMessage) ? 'true' : 'false' }};
+
+  // 画面を開いたときに復元（編集中は復元しない）
+  if (!isEditing) {
+    const saved = localStorage.getItem(key);
+    if (saved && !textarea.value) {
+      textarea.value = saved;
+    }
+  }
+
+  // 入力するたび保存
+  textarea.addEventListener("input", () => {
+    if (textarea.value.trim() === "") {
+      localStorage.removeItem(key);
+    } else {
+      localStorage.setItem(key, textarea.value);
+    }
+  });
+
+  // 送信したら下書き削除
+  const form = textarea.closest("form");
+  form?.addEventListener("submit", () => {
+    localStorage.removeItem(key);
+  });
+});
+</script>
+
+
+@php
+    $showRatingModal = session('show_rating_modal') && empty($myRating);
 @endphp
 
 <div class="rating-modal {{ $showRatingModal ? 'is-open' : '' }}">

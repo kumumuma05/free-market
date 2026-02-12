@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Purchase;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 

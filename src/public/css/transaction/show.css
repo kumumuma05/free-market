@@ -264,28 +264,32 @@
     color: #d00;
 }
 
+/* 評価モーダル */
 .rating-modal {
-  display: none;
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
 }
 
 .rating-modal.is-open {
-  display: block;
+    display: block;
 }
 
 .rating-modal__overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.4);
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.4);
 }
 
 .rating-modal__panel {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  width: min(520px, 90vw);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: min(520px, 90vw);
 }
 
