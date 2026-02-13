@@ -23,6 +23,32 @@ class TransactionController extends Controller
         // アクセス制限（購入者と出品者のみ）
         $this->authorizePurchase($purchase);
 
+        // メッセージ既読トリガー
+        $purchase->load('item');
+        $userId = auth()->id();
+        $isBuyer = ($purchase->buyer_id === $userId);
+        $isSeller = ($purchase->item->user_id === $userId);
+
+        $lastReadAt= $isBuyer ? $purchase->buyer_last_read_at : $purchase->seller_last_read_at;
+
+        $query = $purchase->messages()
+            ->where('sender_id', '!=', $userId);
+
+        if ($lastReadAt !== null) {
+            $query->where('created_at', '>', $lastReadAt);
+        }
+
+        $hasUnread = $query->exists();
+
+        if ($hasUnread) {
+            $now = now();
+            if($isBuyer) {
+                $purchase->update(['buyer_last_read_at' => $now]);
+            } else {
+                $purchase->update(['seller_last_read_at' => $now]);
+            }
+        }
+
         // メッセージの表示
         $messages = $purchase->messages()
             ->with('sender')
