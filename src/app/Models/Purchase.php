@@ -25,10 +25,14 @@ class Purchase extends Model
         'shipping_building',
         'status',
         'completed_at',
+        'buyer_last_read_at',
+        'seller_last_read_at',
     ];
 
     protected $casts = [
         'completed_at' => 'datetime',
+        'buyer_last_read_at' => 'datetime',
+        'seller_last_read_at' => 'datetime',
     ];
 
     /**
