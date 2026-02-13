@@ -14,50 +14,63 @@ class MypageController extends Controller
     {
         $user = auth()->user();
         $tab = $request->query('page', 'sell');
+        $authUserId = $user->id;
 
         $items = collect();
-        $tradingPurchases = collect();
         $tradingCount = 0;
 
+        // 取引中の商品表示
+        // 未読メッセージのある商品数をカウント表示
+        $tradingPurchases = $this->getTradingPurchases($authUserId);
+
+        foreach ($tradingPurchases as $purchase) {
+            $unreadCount = $this->countUnreadMessages($purchase, $authUserId);
+
+            if ($unreadCount > 0) {
+                $tradingCount++;
+            }
+
+            // 未読メッセージ数を表示するのはtradingタブだけ
+            if ($tab === 'trading') {
+                $purchase->unread_count = $unreadCount;
+            }
+        }
+
         // タブ表示
-        if ($tab === 'trading') {
-            $authUserId = $user->id;
-
-            $tradingPurchases = Purchase::query()
-                ->whereIn('status', [
-                    Purchase::STATUS_TRADING,
-                    Purchase::STATUS_WAITING_RATING
-                ])
-                ->where(function ($query) use ($authUserId) {
-                    // 自分が購入者の取引
-                    $query->where('buyer_id', $authUserId);
-
-                    // もしくは自分が出品者の取引
-                    $query->orWhereHas('item', function ($itemQuery) use ($authUserId) {
-                            $itemQuery->where('user_id', $authUserId);
-                        });
-                })
-                ->with('item')
-                ->withMax('messages', 'created_at')
-                ->orderByDesc('messages_max_created_at')
-                ->get();
-
-                // 各取引の未読メッセージを算出
-                // 未読が1件以上ある取引数を集計
-                foreach ($tradingPurchases as $purchase) {
-                    $purchase->unread_count = $this->countUnreadMessages($purchase, $authUserId);
-
-                    if ($purchase->unread_count > 0) {
-                        $tradingCount++;
-                    }
-                }
-        } elseif ($tab === 'buy') {
+        if ($tab === 'buy') {
             $items = $user->purchasedItems()->latest()->get();
-        } else {
+            $tradingPurchases = collect();
+        } elseif ($tab === 'sell') {
             $items = $user->items()->latest()->get();
+            $tradingPurchases = collect();
         }
 
         return view('mypage.mypage', compact('items', 'user', 'tab', 'tradingPurchases', 'tradingCount'));
+    }
+
+    /**
+     * 取引中の商品を抽出(メッセージが新しい順)
+     */
+    private function getTradingPurchases(int $authUserId)
+    {
+        return Purchase::query()
+            ->whereIn('status', [
+                Purchase::STATUS_TRADING,
+                Purchase::STATUS_WAITING_RATING
+            ])
+            ->where(function ($query) use ($authUserId) {
+                // 自分が購入者の取引
+                $query->where('buyer_id', $authUserId);
+
+                // もしくは自分が出品者の取引
+                $query->orWhereHas('item', function ($itemQuery) use ($authUserId) {
+                        $itemQuery->where('user_id', $authUserId);
+                    });
+            })
+            ->with('item')
+            ->withMax('messages', 'created_at')
+            ->orderByDesc('messages_max_created_at')
+            ->get();
     }
 
     /**

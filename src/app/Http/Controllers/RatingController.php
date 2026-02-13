@@ -33,7 +33,7 @@ class RatingController extends Controller
             'score' => ['required', 'integer', 'between:1,5'],
         ]);
 
-        $sellerId = $purchase->item->seller_id;
+        $sellerId = $purchase->item->user_id;
         $buyerId  = $purchase->buyer_id;
         $raterId = Auth::id();
         $rateeId = ($raterId === $buyerId) ? $sellerId : $buyerId;
