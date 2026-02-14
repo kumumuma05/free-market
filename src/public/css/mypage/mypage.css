@@ -11,10 +11,16 @@
 /* アバター・ユーザー名・編集ボタン */
 .profile-info {
     display: flex;
-    width: 1017px;
+    width: 1020px;
     justify-content: space-between;
     align-items: center;
-    margin: 80px auto 80px 310px;
+    margin: 80px auto 80px 320px;
+}
+
+.profile-info__main {
+    display: flex;
+    align-items: center;
+    gap: 30px;
 }
 
 .profile-info__avatar {
@@ -30,9 +36,29 @@
     border-radius: 90px;
 }
 
-.profile-info__user-heading {
+.profile-info__heading {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-info__name {
     font-size: 36px;
-    margin-left: -180px;
+    margin-left: 30px;
+}
+
+.profile-info__rating {
+    display: flex;
+    gap: 4px;
+    line-height: 1;
+}
+
+.profile-info__rating-star {
+    font-size: 40px;
+    color: #d9d9d9;
+}
+
+.profile-info__rating-star--active {
+    color: #fff048;
 }
 
 .profile-info__action-link{
@@ -166,17 +192,12 @@
 
 @media screen and (min-width: 768px) and (max-width: 850px) {
     .profile-info {
-        max-width: 600px;
+        max-width: 630px;
         margin: 80px auto;
     }
 
-    .profile-info__user-heading {
-        font-size: 36px;
-        margin-left: 0;
-    }
-
-    .profile-info__action{
-        align-self: end;
+    .profile-info__main {
+        gap:10px
     }
 
     .profile-info__action-link {

@@ -46,10 +46,15 @@ class MypageController extends Controller
         }
 
         // 評価の表示
-        $averageRating = $user->ratings()->avg('score');
-        $ratingsCount = $user->ratings()->count();
+        $ratingsCount = $user->receivedRatings()->count();
+        $averageRating = null;
 
-        return view('mypage.mypage', compact('items', 'user', 'tab', 'tradingPurchases', 'tradingCount', 'averageRating', 'ratingCount'));
+        if ($ratingsCount > 0) {
+            $averageRating = round($user->receivedRatings()->avg('score'));
+        }
+
+
+        return view('mypage.mypage', compact('items', 'user', 'tab', 'tradingPurchases', 'tradingCount', 'averageRating', 'ratingsCount'));
     }
 
     /**

@@ -16,21 +16,27 @@
 
         <!-- アバター・ユーザ名・編集ボタン -->
         <div class="profile-info">
-            <div class="profile-info__avatar">
-                <img class="profile-info__avatar-img" src="{{ $user->profile_image_url }}" alt="プロフィール画像">
-            </div>
-
-            <div class="profile-info__user-name">
-                <h1 class="profile-info__user-heading">{{ $user->name }}</h1>
-            </div>
-
-            @if ($ratingsCount > 0)
-                <div class="profile-info__rating">
-                    @for ($i = 1; $i <= 5; $i++)
-                        @if ($i <= round($averageRating))
-                            ★
-                        
+            <div class="profile-info__main">
+                <div class="profile-info__avatar">
+                    <img class="profile-info__avatar-img" src="{{ $user->profile_image_url }}" alt="プロフィール画像">
                 </div>
+
+                <div class="profile-info__heading">
+                    <h1 class="profile-info__name">
+                        {{ $user->name }}
+                    </h1>
+
+                    @if ($ratingsCount > 0)
+                        <div class="profile-info__rating">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <span class="profile-info__rating-star {{ $i <= $averageRating ? 'profile-info__rating-star--active' : '' }}">
+                                    ★
+                                </span>
+                            @endfor
+                        </div>
+                    @endif
+                </div>
+            </div>
 
             <div class="profile-info__action">
                 <a class="profile-info__action-link" href="/mypage/profile">プロフィールを編集</a>
