@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
             ['email' => 'user1@test.com'],
             [
                 'name' => '北海　太郎',
+                'email' => 'user1@test.com',
                 'password' => Hash::make('password'),
                 'profile_image' => 'images/profile_image/01.png',
                 'postal' => '011-2222',
@@ -31,6 +32,7 @@ class UsersTableSeeder extends Seeder
             ['email' => 'user2@test.com'],
             [
                 'name' => '札幌　花子',
+                'email' => 'user2@test.com',
                 'password' => Hash::make('password'),
                 'profile_image' => 'images/profile_image/02.png',
                 'postal' => '022-3333',
@@ -42,7 +44,8 @@ class UsersTableSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'user3@test.com'],
             [
-                'name' => 'hokki taro',
+                'name' => '北海道　道産子',
+                'email' => 'user3@test.com',
                 'password' => Hash::make('password'),
                 'profile_image' => 'images/profile_image/03.png',
                 'postal' => '555-5555',

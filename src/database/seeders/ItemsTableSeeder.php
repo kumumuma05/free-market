@@ -4,8 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Item;
+use App\Models\User;
 
-class itemsTableSeeder extends Seeder
+class ItemsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +15,8 @@ class itemsTableSeeder extends Seeder
      */
     public function run()
     {
+        $user1 = User::where('email', 'user1@test.com')->firstOrFail();
+        $user2 = User::where('email', 'user2@test.com')->firstOrFail();
 
         Item::create([
             'product_name' => '腕時計',
@@ -23,7 +26,7 @@ class itemsTableSeeder extends Seeder
             'condition' => 1,
             'image_path' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Armani+Mens+Clock.jpg',
             'is_sold' => false,
-            'user_id' => 1,
+            'user_id' => $user1->id,
         ]);
         Item::create([
             'product_name' => 'HDD',
@@ -33,7 +36,7 @@ class itemsTableSeeder extends Seeder
             'condition' => 2,
             'image_path' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/HDD+Hard+Disk.jpg',
             'is_sold' => false,
-            'user_id' => 2,
+            'user_id' => $user1->id,
         ]);
         Item::create([
             'product_name' => '玉ねぎ3束',
@@ -43,7 +46,7 @@ class itemsTableSeeder extends Seeder
             'condition' => 3,
             'image_path' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/iLoveIMG+d.jpg',
             'is_sold' => false,
-            'user_id' => 3,
+            'user_id' => $user1->id,
         ]);
         Item::create([
             'product_name' => '革靴',
@@ -53,7 +56,7 @@ class itemsTableSeeder extends Seeder
             'condition' => 4,
             'image_path' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Leather+Shoes+Product+Photo.jpg',
             'is_sold' => false,
-            'user_id' => 1,
+            'user_id' => $user1->id,
         ]);
         Item::create([
             'product_name' => 'ノートPC',
@@ -63,7 +66,7 @@ class itemsTableSeeder extends Seeder
             'condition' => 1,
             'image_path' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Living+Room+Laptop.jpg',
             'is_sold' => false,
-            'user_id' => 2,
+            'user_id' => $user1->id,
         ]);
         Item::create([
             'product_name' => 'マイク',
@@ -73,7 +76,7 @@ class itemsTableSeeder extends Seeder
             'condition' => 2,
             'image_path' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Music+Mic+4632231.jpg',
             'is_sold' => false,
-            'user_id' => 3,
+            'user_id' => $user2->id,
         ]);
         Item::create([
             'product_name' => 'ショルダーバッグ',
@@ -83,7 +86,7 @@ class itemsTableSeeder extends Seeder
             'condition' => 3,
             'image_path' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Purse+fashion+pocket.jpg',
             'is_sold' => false,
-            'user_id' => 1,
+            'user_id' => $user2->id,
         ]);
         Item::create([
             'product_name' => 'タンブラー',
@@ -93,7 +96,7 @@ class itemsTableSeeder extends Seeder
             'condition' => 4,
             'image_path' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Tumbler+souvenir.jpg',
             'is_sold' => false,
-            'user_id' => 2,
+            'user_id' => $user2->id,
         ]);
         Item::create([
             'product_name' => 'コーヒーミル',
@@ -103,7 +106,7 @@ class itemsTableSeeder extends Seeder
             'condition' => 1,
             'image_path' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Waitress+with+Coffee+Grinder.jpg',
             'is_sold' => false,
-            'user_id' => 3,
+            'user_id' => $user2->id,
         ]);
         Item::create([
             'product_name' => 'メイクセット',
@@ -113,7 +116,7 @@ class itemsTableSeeder extends Seeder
             'condition' => 2,
             'image_path' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/外出メイクアップセット.jpg',
             'is_sold' => false,
-            'user_id' => 1,
+            'user_id' => $user2->id,
         ]);
     }
 }
