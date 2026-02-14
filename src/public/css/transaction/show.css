@@ -25,9 +25,16 @@
 }
 
 .transaction__sidebar-link {
+    width: 100%;
     height: 40px;
+    line-height: 40px;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     text-decoration: none;
     background: #eeefeb;
+    border: none;
     border-radius: 5px;
     color: #000;
     font-size: 24px;
@@ -37,6 +44,7 @@
 .transaction__main {
     flex: 1;
     padding: 0;
+    min-width: 0;
 }
 
 .transaction__header {
@@ -51,6 +59,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    flex: 1;
+    min-width: 0;
 }
 
 .transaction__avatar img {
@@ -105,6 +115,10 @@
     margin: 35px 0 30px;
     font-size: 48px;
     font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 790px;
 }
 .transaction__item-price {
     margin: 0;
@@ -133,7 +147,7 @@
 .message--other {
     align-items: flex-start;
 }
-.message--mine  {
+.message--mine {
     align-items: flex-end;
     margin-left: auto;
 }
@@ -200,7 +214,7 @@
     font-size: 15px;
     color: #5f5f5f;
     line-height: 1;
-    text-shadow: 0px 4px 4px rgba(0,0,0,0.25);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     cursor: pointer;
 }
 
@@ -260,7 +274,7 @@
 
 .transaction__error {
     margin: 0 8px;
-    font-size: 16px;
+    font-size: 18px;
     color: #d00;
 }
 
@@ -299,35 +313,31 @@
 
 .rating-modal__rating {
     display: inline-flex;
-    flex-direction: row-reverse; /* 右から左へ。hoverの塗りつぶしが簡単になる */
+    flex-direction: row-reverse;
     gap: 14px;
-    font-size: 100px; /* お好みで */
+    font-size: 100px;
     line-height: 1;
 }
 
-/* radioは見せない */
 .rating-modal__rating input[type="radio"] {
     position: absolute;
     opacity: 0;
     pointer-events: none;
 }
 
-/* デフォルトはグレー */
 .rating-modal__rating label {
     color: #d9d9d9;
     cursor: pointer;
     user-select: none;
 }
 
-/* hover中：hoverした星と、それより左（＝小さい点数側）を塗る */
 .rating-modal__rating label:hover,
 .rating-modal__rating label:hover ~ label {
-  color: #fff048;
+    color: #fff048;
 }
 
-/* 選択済み：checked の星と、それより左を塗る */
 .rating-modal__rating input[type="radio"]:checked ~ label {
-  color: #fff048;
+    color: #fff048;
 }
 
 .rating-modal__footer {
@@ -347,3 +357,78 @@
     line-height: 1;
 }
 
+/* レスポンシブデザイン */
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .transaction__sidebar {
+        max-width: 200px;
+        padding: 16px;
+    }
+
+    .transaction__sidebar-title {
+        font-size: 22px;
+        letter-spacing: 0;
+    }
+
+    .transaction__sidebar-link {
+        font-size: 22px;
+        height: 36px;
+        line-height: 34px;
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .transaction__header {
+        padding: 12px 16px;
+    }
+
+    .transaction__header-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 500px;
+    }
+
+    .transaction__complete-button {
+        width: 130px;
+        height: 30px;
+        font-size: 14px;
+        padding: 0;
+    }
+
+    .transaction__item {
+        padding: 13px 24px;
+    }
+
+    .transaction__item-name {
+        font-size: 36px;
+        margin-bottom: 45px;
+        max-width: 270px;
+    }
+
+    .transaction__messages {
+        padding: 26px 20px;
+    }
+
+    .transaction__form {
+        padding: 12px 25px;
+    }
+
+    .transaction__form-row {
+        gap: 12px;
+    }
+
+    .transaction__form-textarea::placeholder {
+        font-size: 16px;
+    }
+
+    .transaction__upload {
+        width: 100px;
+        font-size: 14px;
+    }
+
+    .transaction__send {
+        margin-left: -12px;
+    }
+}

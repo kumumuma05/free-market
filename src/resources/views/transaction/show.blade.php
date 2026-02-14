@@ -11,11 +11,11 @@
         <aside class="transaction__sidebar">
             <p class="transaction__sidebar-title">その他の取引</p>
 
-            @if (! $isBuyer)
+            @if (!$isBuyer)
                 @foreach($sidebarPurchases as $sidePurchase)
-                    <a class="transaction__sidebar-link" href="/transaction/{{ $sidePurchase->id }}">
+                    <button type="submit" form="transactionForm" formaction="/transaction/{{ $purchase->id }}/switch" formmethod="post" name="to_purchase_id" value="{{ $sidePurchase->id }}" class="transaction__sidebar-link transaction__sidebar-link--button">
                         {{ $sidePurchase->item->product_name }}
-                    </a>
+                    </button>
                 @endforeach
             @endif
         </aside>
@@ -120,14 +120,14 @@
                     $isEditing = !empty($editingMessage);
                 @endphp
 
-                @error('body')
-                        <p class="transaction__error">{{ $message }}</p>
-                    @enderror
-                    @error('image')
-                        <p class="transaction__error">{{ $message }}</p>
-                @enderror
+                @if ($errors->has('body'))
+                    <p class="transaction__error">{{ $errors->first('body') }}</p>
+                @endif
+                @if ($errors->has('image'))
+                    <p class="transaction__error">{{ $errors->first('image') }}</p>
+                @endif
 
-                <form action="{{ $isEditing ? "/transaction/{$purchase->id}/messages/{$editingMessage->id}" : "/transaction/{$purchase->id}/messages" }}" method="post" enctype="multipart/form-data">
+                <form id="transactionForm" action="{{ $isEditing ? "/transaction/{$purchase->id}/messages/{$editingMessage->id}" : "/transaction/{$purchase->id}/messages" }}" method="post" enctype="multipart/form-data">
                     @csrf
 
                     @if ($isEditing)
@@ -135,7 +135,7 @@
                     @endif
 
                     <div class="transaction__form-row">
-                        <textarea id="transaction-message" data-draft-key="draft:transaction:{{ $purchase->id }}:user:{{ auth()->id() }}" class="transaction__form-textarea" name="body" placeholder="取引メッセージを記入してください">{{ old('body', $isEditing ? $editingMessage->body : '') }}</textarea>
+                        <textarea id="transaction-message" data-draft-key="draft:transaction:{{ $purchase->id }}:user:{{ auth()->id() }}" class="transaction__form-textarea" name="body" placeholder="取引メッセージを記入してください">{{ old('body', $isEditing ? $editingMessage->body : $draftBody) }}</textarea>
 
                         <label class="transaction__upload">
                             <input type="file" name="image" accept="image/*" hidden>
@@ -186,40 +186,5 @@
                 </form>
             </div>
         @endif
-
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const textarea = document.getElementById("transaction-message");
-                if (!textarea) return;
-
-                const key = textarea.dataset.draftKey;
-                if (!key) return;
-
-                const isEditing = {{ !empty($editingMessage) ? 'true' : 'false' }};
-
-                    // 画面を開いたときに復元（編集中は復元しない）
-                    if (!isEditing) {
-                        const saved = localStorage.getItem(key);
-                    if (saved && !textarea.value) {
-                        textarea.value = saved;
-                    }
-                }
-
-                // 入力するたび保存
-                textarea.addEventListener("input", () => {
-                    if (textarea.value.trim() === "") {
-                    localStorage.removeItem(key);
-                    } else {
-                    localStorage.setItem(key, textarea.value);
-                    }
-                });
-
-                // 送信したら下書き削除
-                const form = textarea.closest("form");
-                form?.addEventListener("submit", () => {
-                    localStorage.removeItem(key);
-                });
-            });
-        </script>
     </div>
 @endsection

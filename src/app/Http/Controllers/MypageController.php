@@ -32,7 +32,7 @@ class MypageController extends Controller
 
             // 未読メッセージ数を表示するのはtradingタブだけ
             if ($tab === 'trading') {
-                $purchase->unread_count = $unreadCount;
+                $purchase->setAttribute('unread_count', $unreadCount);
             }
         }
 
@@ -52,7 +52,6 @@ class MypageController extends Controller
         if ($ratingsCount > 0) {
             $averageRating = round($user->receivedRatings()->avg('score'));
         }
-
 
         return view('mypage.mypage', compact('items', 'user', 'tab', 'tradingPurchases', 'tradingCount', 'averageRating', 'ratingsCount'));
     }
@@ -74,7 +73,7 @@ class MypageController extends Controller
                 // もしくは自分が出品者の取引
                 $query->orWhereHas('item', function ($itemQuery) use ($authUserId) {
                         $itemQuery->where('user_id', $authUserId);
-                    });
+                });
             })
             ->with('item')
             ->withMax('messages', 'created_at')

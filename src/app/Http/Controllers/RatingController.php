@@ -48,7 +48,7 @@ class RatingController extends Controller
 
         // 両者の評価が終了後取引終了登録
         $ratingsCount = $purchase->ratings()->count();
-        if ($ratingsCount >=2) {
+        if ($ratingsCount >= 2) {
             $purchase->update([
                 'status' => Purchase::STATUS_COMPLETED,
                 'completed_at' => now(),
@@ -63,6 +63,8 @@ class RatingController extends Controller
      */
     private function authorizePurchase(Purchase $purchase): void
     {
+        $purchase->loadMissing('item');
+
         $userId = Auth::id();
         $sellerId = $purchase->item->user_id;
 
