@@ -24,6 +24,14 @@
                 <h1 class="profile-info__user-heading">{{ $user->name }}</h1>
             </div>
 
+            @if ($ratingsCount > 0)
+                <div class="profile-info__rating">
+                    @for ($i = 1; $i <= 5; $i++)
+                        @if ($i <= round($averageRating))
+                            ★
+                        
+                </div>
+
             <div class="profile-info__action">
                 <a class="profile-info__action-link" href="/mypage/profile">プロフィールを編集</a>
             </div>

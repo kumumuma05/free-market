@@ -45,7 +45,11 @@ class MypageController extends Controller
             $tradingPurchases = collect();
         }
 
-        return view('mypage.mypage', compact('items', 'user', 'tab', 'tradingPurchases', 'tradingCount'));
+        // 評価の表示
+        $averageRating = $user->ratings()->avg('score');
+        $ratingsCount = $user->ratings()->count();
+
+        return view('mypage.mypage', compact('items', 'user', 'tab', 'tradingPurchases', 'tradingCount', 'averageRating', 'ratingCount'));
     }
 
     /**
