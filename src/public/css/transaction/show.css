@@ -431,4 +431,29 @@
     .transaction__send {
         margin-left: -12px;
     }
+
+    .rating-modal {
+    left: 50%;
+    width: 460px;
+    height: 300px;
+    }
+
+    .rating-modal__guidance {
+        font-size: 26px;
+    }
+
+    .rating-modal__rating-text {
+        padding-bottom: 20px;
+        font-size: 18px;
+    }
+
+    .rating-modal__rating {
+        font-size: 70px;
+    }
+
+    .rating-modal__form-button {
+        width: 115px;
+        height: 35px;
+        font-size: 20px;
+    }
 }
