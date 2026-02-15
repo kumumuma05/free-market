@@ -11,13 +11,13 @@
         <aside class="transaction__sidebar">
             <p class="transaction__sidebar-title">その他の取引</p>
 
-            @if (!$isBuyer)
-                @foreach($sidebarPurchases as $sidePurchase)
-                    <button type="submit" form="transactionForm" formaction="/transaction/{{ $purchase->id }}/switch" formmethod="post" name="to_purchase_id" value="{{ $sidePurchase->id }}" class="transaction__sidebar-link transaction__sidebar-link--button">
-                        {{ $sidePurchase->item->product_name }}
-                    </button>
-                @endforeach
-            @endif
+            @forelse($sidebarPurchases as $sidePurchase)
+                <button type="submit" form="transactionForm" formaction="/transaction/{{ $purchase->id }}/switch" formmethod="post" name="to_purchase_id" value="{{ $sidePurchase->id }}" class="transaction__sidebar-link transaction__sidebar-link--button">
+                    {{ $sidePurchase->item->product_name }}
+                </button>
+            @empty
+                <!-- 何も表示しない -->
+            @endforelse
         </aside>
 
         <!-- 右メイン -->

@@ -78,7 +78,7 @@ Route::middleware(['auth', 'verified', 'profile.completed'])->group(function () 
 
     // 取引チャット画面表示
     Route::get('/transaction/{purchase}', [TransactionController::class,'show']);
-    Route::post('/transaction/{purchase}/switch', [TransactionController::class, 'switch']);
+    Route::match(['post', 'put'], '/transaction/{purchase}/switch', [TransactionController::class, 'switch']);
     // 取引チャットメッセージ操作
     Route::post('/transaction/{purchase}/messages', [MessageController::class, 'store']);
     Route::get('/transaction/{purchase}/messages/{message}/edit', [MessageController::class, 'editInline']);
@@ -86,7 +86,7 @@ Route::middleware(['auth', 'verified', 'profile.completed'])->group(function () 
     Route::delete('/transaction/{purchase}/messages/{message}', [MessageController::class, 'destroy']);
 
     // 取引完了（メール送信）
-    Route::post('transaction/{purchase}/complete', [TransactionController::class, 'complete']);
+    Route::post('/docker-compose.ymltransaction/{purchase}/complete', [TransactionController::class, 'complete']);
 
     // 評価
     Route::post('/transaction/{purchase}/ratings', [RatingController::class, 'store']);
