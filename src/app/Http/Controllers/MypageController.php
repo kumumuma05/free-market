@@ -62,10 +62,18 @@ class MypageController extends Controller
     private function getTradingPurchases(int $authUserId)
     {
         return Purchase::query()
-            ->whereIn('status', [
-                Purchase::STATUS_TRADING,
-                Purchase::STATUS_WAITING_RATING
-            ])
+            ->where(function ($statusQuery) use ($authUserId) {
+                // 取引中は常に対象
+                $statusQuery->where('status', Purchase::STATUS_TRADING)
+                    // 評価待ちは「自分が未評価」のときだけ対象
+                    ->orWhere(function ($waitingRatingQuery) use ($authUserId) {
+                        $waitingRatingQuery
+                            ->where('status', Purchase::STATUS_WAITING_RATING)
+                            ->whereDoesntHave('ratings', function ($ratingQuery) use ($authUserId) {
+                                $ratingQuery->where('rater_id', $authUserId);
+                            });
+                    });
+            })
             ->where(function ($query) use ($authUserId) {
                 // 自分が購入者の取引
                 $query->where('buyer_id', $authUserId);
@@ -77,7 +85,9 @@ class MypageController extends Controller
             })
             ->with('item')
             ->withMax('messages', 'created_at')
-            ->orderByDesc('messages_max_created_at')
+            ->orderByRaw('messages_max_created_at IS NULL ASC') // メッセージあり優先
+            ->orderByDesc('messages_max_created_at')            // メッセージ最新順
+            ->orderByDesc('purchases.created_at')               // メッセージなしは取引開始順
             ->get();
     }
 

@@ -58,7 +58,18 @@ class TransactionController extends Controller
 
         // その他の取引表示（左サイドバー用）
         $sidebarPurchases = Purchase::query()
-            ->where('status', Purchase::STATUS_TRADING)
+            ->where(function ($statusQuery) use ($userId) {
+                // 取引中は常に対象
+                $statusQuery->where('status', Purchase::STATUS_TRADING)
+                    // 評価待ちは「自分が未評価」のときだけ対象
+                    ->orWhere(function ($waitingRatingQuery) use ($userId) {
+                        $waitingRatingQuery
+                            ->where('status', Purchase::STATUS_WAITING_RATING)
+                            ->whereDoesntHave('ratings', function ($ratingQuery) use ($userId) {
+                                $ratingQuery->where('rater_id', $userId);
+                            });
+                    });
+            })
             ->where(function ($query) use ($userId) {
                 $query->where('buyer_id', $userId)
                     ->orWhereHas('item', function($itemQuery) use ($userId) {
@@ -68,7 +79,9 @@ class TransactionController extends Controller
             ->whereKeyNot($purchase->id)
             ->with('item')
             ->withMax('messages', 'created_at')
-            ->orderByRaw('COALESCE(messages_max_created_at, purchases.created_at) DESC')
+            ->orderByRaw('messages_max_created_at IS NULL ASC') // メッセージあり優先
+            ->orderByDesc('messages_max_created_at')            // メッセージ最新順
+            ->orderByDesc('purchases.created_at')               // メッセージなしは取引開始順
             ->get();
 
         $editingMessage = null;
@@ -129,7 +142,7 @@ class TransactionController extends Controller
         Mail::to($sellerEmail)->send(new TransactionCompletedMail($purchase));
 
         return redirect("/transaction/{$purchase->id}")
-        ->with('show_rating_modal', true);
+            ->with('show_rating_modal', true);
     }
 
     /**

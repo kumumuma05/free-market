@@ -138,7 +138,7 @@
                         <textarea id="transaction-message" data-draft-key="draft:transaction:{{ $purchase->id }}:user:{{ auth()->id() }}" class="transaction__form-textarea" name="body" placeholder="取引メッセージを記入してください">{{ old('body', $isEditing ? $editingMessage->body : $draftBody) }}</textarea>
 
                         <label class="transaction__upload">
-                            <input type="file" name="image" accept="image/*" hidden>
+                            <input class="transaction__file" type="file" name="image" accept="image/*" hidden>
                             画像を追加
                         </label>
 

@@ -196,8 +196,27 @@
         margin: 80px auto;
     }
 
+    .profile-info__avatar {
+    width: 130px;
+    height: 130px;
+}
+
+    .profile-info__avatar-img {
+        width: 130px;
+        height: 130px;
+    }
+
     .profile-info__main {
         gap:10px;
+    }
+
+    .profile-info__name {
+        font-size: 34px;
+        margin-left: 15px;
+        max-width: 240px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .profile-info__action-link {
